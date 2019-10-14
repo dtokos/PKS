@@ -12,15 +12,15 @@ void ServerApp::run() {
 		cout << "opening server "<< endl;
 		server.open();
 		cout << "accepting server "<< endl;
-		int fd = server.accept();
-		cout << "accepted " << fd << endl;
+		Socket s = server.accept();
+		cout << "accepted " << endl;
 		//cout << "reading " << fd << endl;
-		while (valread = read(fd, buffer, 1024)) {
+		while ((valread = s.read(buffer, 1024))) {
 			cout << "got " << valread << " " << buffer << endl;
-			cout << "replying " << fd << endl;
-			send(fd, buffer, valread, 0);
+			cout << "replying " << endl;
+			s.write(buffer, valread);
 		}
-		cout << "done " << fd << endl;
+		cout << "done " << endl;
 		cout << "closing server" << endl;
 		server.close();
 		cout << "end" << endl;

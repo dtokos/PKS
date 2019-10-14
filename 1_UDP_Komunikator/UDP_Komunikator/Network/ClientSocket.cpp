@@ -1,6 +1,6 @@
 #include "ClientSocket.hpp"
 
-ClientSocket::ClientSocket(int fileDescriptor) : fileDescriptor(fileDescriptor) {}
+ClientSocket::ClientSocket(int fileDescriptor) : Socket(fileDescriptor) {}
 
 ClientSocket ClientSocket::connect(IP ip, Port port) {
 	int fd;
@@ -17,13 +17,4 @@ ClientSocket ClientSocket::connect(IP ip, Port port) {
 		throw SocketConnectError("Could not connect to specified address");
 	
 	return ClientSocket(fd);
-}
-
-void ClientSocket::write(void *data, unsigned length) {
-	send(fileDescriptor, data, length, 0);
-}
-
-void ClientSocket::read(void *data, unsigned length) {
-	//TODO: change to recv
-	::recv(fileDescriptor, data, length, 0);
 }

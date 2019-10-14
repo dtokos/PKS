@@ -8,10 +8,11 @@
 #include <errno.h>
 #include "IP.hpp"
 #include "Port.hpp"
+#include "Socket.hpp"
 
 using namespace std;
 
-class ClientSocket {
+class ClientSocket : public Socket {
 public:
 	class SocketError : public exception {
 	public:
@@ -34,12 +35,9 @@ public:
 	};
 	
 	static ClientSocket connect(IP ip, Port port);
-	void write(void *data, unsigned length);
-	void read(void *data, unsigned length);
 	
 private:
 	ClientSocket(int fileDescriptor);
-	int fileDescriptor;
 };
 
 #endif

@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include "Port.hpp"
+#include "Socket.hpp"
 
 class ServerSocket {
 public:
@@ -47,7 +48,7 @@ public:
 	
 	static ServerSocket fromPort(Port port);
 	void open();
-	int accept();
+	Socket accept();
 	void close();
 	
 private:

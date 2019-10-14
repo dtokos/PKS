@@ -27,14 +27,14 @@ void ServerSocket::open() {
 		throw SocketOpenError();
 }
 
-int ServerSocket::accept() {
+Socket ServerSocket::accept() {
 	int clientFD, addressLength = sizeof(sockaddr);
 	sockaddr address;
 	
 	if ((clientFD = ::accept(fileDescriptor, (struct sockaddr *)&address, (socklen_t*)&addressLength)) < 0)
 		throw SocketAcceptError();
 	
-	return clientFD;
+	return Socket(clientFD);
 }
 
 void ServerSocket::close() {

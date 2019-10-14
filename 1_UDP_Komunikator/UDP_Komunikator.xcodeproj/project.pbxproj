@@ -1,0 +1,425 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9821AEC4235490390075F06F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEC3235490390075F06F /* main.cpp */; };
+		9821AED9235492270075F06F /* ServerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AED7235492270075F06F /* ServerApp.cpp */; };
+		9821AEDC235492940075F06F /* ClientApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEDA235492940075F06F /* ClientApp.cpp */; };
+		9821AEE0235493A80075F06F /* Port.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEDE235493A80075F06F /* Port.cpp */; };
+		9821AEE2235499180075F06F /* TestPort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE1235499180075F06F /* TestPort.mm */; };
+		9821AEE32354993A0075F06F /* Port.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEDE235493A80075F06F /* Port.cpp */; };
+		9821AEE623549CAE0075F06F /* IP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE423549CAE0075F06F /* IP.cpp */; };
+		9821AEE723549CB60075F06F /* IP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE423549CAE0075F06F /* IP.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9821AEBE235490390075F06F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9821AEC0235490390075F06F /* UDP_Komunikator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UDP_Komunikator; sourceTree = BUILT_PRODUCTS_DIR; };
+		9821AEC3235490390075F06F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9821AECE2354908D0075F06F /* Test_UDP_Komunikator.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_UDP_Komunikator.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9821AED22354908D0075F06F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9821AED7235492270075F06F /* ServerApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerApp.cpp; sourceTree = "<group>"; };
+		9821AED8235492270075F06F /* ServerApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ServerApp.hpp; sourceTree = "<group>"; };
+		9821AEDA235492940075F06F /* ClientApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClientApp.cpp; sourceTree = "<group>"; };
+		9821AEDB235492940075F06F /* ClientApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClientApp.hpp; sourceTree = "<group>"; };
+		9821AEDE235493A80075F06F /* Port.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Port.cpp; sourceTree = "<group>"; };
+		9821AEDF235493A80075F06F /* Port.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Port.hpp; sourceTree = "<group>"; };
+		9821AEE1235499180075F06F /* TestPort.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestPort.mm; sourceTree = "<group>"; };
+		9821AEE423549CAE0075F06F /* IP.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IP.cpp; sourceTree = "<group>"; };
+		9821AEE523549CAE0075F06F /* IP.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IP.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9821AEBD235490390075F06F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9821AECB2354908D0075F06F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9821AEB7235490390075F06F = {
+			isa = PBXGroup;
+			children = (
+				9821AEC2235490390075F06F /* UDP_Komunikator */,
+				9821AECF2354908D0075F06F /* Test_UDP_Komunikator */,
+				9821AEC1235490390075F06F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9821AEC1235490390075F06F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9821AEC0235490390075F06F /* UDP_Komunikator */,
+				9821AECE2354908D0075F06F /* Test_UDP_Komunikator.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9821AEC2235490390075F06F /* UDP_Komunikator */ = {
+			isa = PBXGroup;
+			children = (
+				9821AEDD2354939B0075F06F /* Network */,
+				9821AED6235492150075F06F /* App */,
+				9821AEC3235490390075F06F /* main.cpp */,
+			);
+			path = UDP_Komunikator;
+			sourceTree = "<group>";
+		};
+		9821AECF2354908D0075F06F /* Test_UDP_Komunikator */ = {
+			isa = PBXGroup;
+			children = (
+				9821AEE1235499180075F06F /* TestPort.mm */,
+				9821AED22354908D0075F06F /* Info.plist */,
+			);
+			path = Test_UDP_Komunikator;
+			sourceTree = "<group>";
+		};
+		9821AED6235492150075F06F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9821AED8235492270075F06F /* ServerApp.hpp */,
+				9821AED7235492270075F06F /* ServerApp.cpp */,
+				9821AEDB235492940075F06F /* ClientApp.hpp */,
+				9821AEDA235492940075F06F /* ClientApp.cpp */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		9821AEDD2354939B0075F06F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				9821AEE523549CAE0075F06F /* IP.hpp */,
+				9821AEE423549CAE0075F06F /* IP.cpp */,
+				9821AEDF235493A80075F06F /* Port.hpp */,
+				9821AEDE235493A80075F06F /* Port.cpp */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9821AEBF235490390075F06F /* UDP_Komunikator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9821AEC7235490390075F06F /* Build configuration list for PBXNativeTarget "UDP_Komunikator" */;
+			buildPhases = (
+				9821AEBC235490390075F06F /* Sources */,
+				9821AEBD235490390075F06F /* Frameworks */,
+				9821AEBE235490390075F06F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UDP_Komunikator;
+			productName = UDP_Komunikator;
+			productReference = 9821AEC0235490390075F06F /* UDP_Komunikator */;
+			productType = "com.apple.product-type.tool";
+		};
+		9821AECD2354908D0075F06F /* Test_UDP_Komunikator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9821AED52354908D0075F06F /* Build configuration list for PBXNativeTarget "Test_UDP_Komunikator" */;
+			buildPhases = (
+				9821AECA2354908D0075F06F /* Sources */,
+				9821AECB2354908D0075F06F /* Frameworks */,
+				9821AECC2354908D0075F06F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Test_UDP_Komunikator;
+			productName = Test_UDP_Komunikator;
+			productReference = 9821AECE2354908D0075F06F /* Test_UDP_Komunikator.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9821AEB8235490390075F06F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = dtokos;
+				TargetAttributes = {
+					9821AEBF235490390075F06F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					9821AECD2354908D0075F06F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 9821AEBB235490390075F06F /* Build configuration list for PBXProject "UDP_Komunikator" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9821AEB7235490390075F06F;
+			productRefGroup = 9821AEC1235490390075F06F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9821AEBF235490390075F06F /* UDP_Komunikator */,
+				9821AECD2354908D0075F06F /* Test_UDP_Komunikator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9821AECC2354908D0075F06F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9821AEBC235490390075F06F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9821AEE623549CAE0075F06F /* IP.cpp in Sources */,
+				9821AED9235492270075F06F /* ServerApp.cpp in Sources */,
+				9821AEC4235490390075F06F /* main.cpp in Sources */,
+				9821AEE0235493A80075F06F /* Port.cpp in Sources */,
+				9821AEDC235492940075F06F /* ClientApp.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9821AECA2354908D0075F06F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9821AEE723549CB60075F06F /* IP.cpp in Sources */,
+				9821AEE32354993A0075F06F /* Port.cpp in Sources */,
+				9821AEE2235499180075F06F /* TestPort.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9821AEC5235490390075F06F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9821AEC6235490390075F06F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9821AEC8235490390075F06F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9821AEC9235490390075F06F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9821AED32354908D0075F06F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Test_UDP_Komunikator/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dtokos.Test-UDP-Komunikator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9821AED42354908D0075F06F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Test_UDP_Komunikator/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dtokos.Test-UDP-Komunikator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9821AEBB235490390075F06F /* Build configuration list for PBXProject "UDP_Komunikator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9821AEC5235490390075F06F /* Debug */,
+				9821AEC6235490390075F06F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9821AEC7235490390075F06F /* Build configuration list for PBXNativeTarget "UDP_Komunikator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9821AEC8235490390075F06F /* Debug */,
+				9821AEC9235490390075F06F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9821AED52354908D0075F06F /* Build configuration list for PBXNativeTarget "Test_UDP_Komunikator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9821AED32354908D0075F06F /* Debug */,
+				9821AED42354908D0075F06F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9821AEB8235490390075F06F /* Project object */;
+}

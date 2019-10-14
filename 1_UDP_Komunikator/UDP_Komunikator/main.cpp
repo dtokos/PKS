@@ -30,7 +30,9 @@ int main(int argc, const char * argv[]) {
 }
 
 void printMenu() {
-	cout << "[1] Lauch server" << endl << "[2] Launch client" << endl << "[0] Exit" << endl;
+	cout << "[1] Lauch server" << endl
+		<< "[2] Launch client" << endl
+		<< "[0] Exit" << endl;
 }
 
 char getChoice() {

@@ -15,6 +15,8 @@
 		9821AEE32354993A0075F06F /* Port.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEDE235493A80075F06F /* Port.cpp */; };
 		9821AEE623549CAE0075F06F /* IP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE423549CAE0075F06F /* IP.cpp */; };
 		9821AEE723549CB60075F06F /* IP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE423549CAE0075F06F /* IP.cpp */; };
+		9821AEEA2354A8A40075F06F /* ServerSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE82354A8A40075F06F /* ServerSocket.cpp */; };
+		9821AEEC2354A8B60075F06F /* TestIP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEEB2354A8B60075F06F /* TestIP.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,9 @@
 		9821AEE1235499180075F06F /* TestPort.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestPort.mm; sourceTree = "<group>"; };
 		9821AEE423549CAE0075F06F /* IP.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IP.cpp; sourceTree = "<group>"; };
 		9821AEE523549CAE0075F06F /* IP.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IP.hpp; sourceTree = "<group>"; };
+		9821AEE82354A8A40075F06F /* ServerSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerSocket.cpp; sourceTree = "<group>"; };
+		9821AEE92354A8A40075F06F /* ServerSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ServerSocket.hpp; sourceTree = "<group>"; };
+		9821AEEB2354A8B60075F06F /* TestIP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestIP.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +99,7 @@
 		9821AECF2354908D0075F06F /* Test_UDP_Komunikator */ = {
 			isa = PBXGroup;
 			children = (
+				9821AEEB2354A8B60075F06F /* TestIP.mm */,
 				9821AEE1235499180075F06F /* TestPort.mm */,
 				9821AED22354908D0075F06F /* Info.plist */,
 			);
@@ -118,6 +124,8 @@
 				9821AEE423549CAE0075F06F /* IP.cpp */,
 				9821AEDF235493A80075F06F /* Port.hpp */,
 				9821AEDE235493A80075F06F /* Port.cpp */,
+				9821AEE92354A8A40075F06F /* ServerSocket.hpp */,
+				9821AEE82354A8A40075F06F /* ServerSocket.cpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9821AEE623549CAE0075F06F /* IP.cpp in Sources */,
+				9821AEEA2354A8A40075F06F /* ServerSocket.cpp in Sources */,
 				9821AED9235492270075F06F /* ServerApp.cpp in Sources */,
 				9821AEC4235490390075F06F /* main.cpp in Sources */,
 				9821AEE0235493A80075F06F /* Port.cpp in Sources */,
@@ -221,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9821AEEC2354A8B60075F06F /* TestIP.mm in Sources */,
 				9821AEE723549CB60075F06F /* IP.cpp in Sources */,
 				9821AEE32354993A0075F06F /* Port.cpp in Sources */,
 				9821AEE2235499180075F06F /* TestPort.mm in Sources */,

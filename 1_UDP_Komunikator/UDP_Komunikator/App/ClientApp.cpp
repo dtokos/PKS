@@ -17,7 +17,7 @@ IP ClientApp::getIP() {
 		try {
 			return IP::fromString(ip);
 		} catch (IP::InvalidIP e) {
-			cout << "IP " << e.ip << " is invalid" << endl;
+			cerr << "[ERR] IP " << e.ip << " is invalid" << endl;
 		}
 	}
 }
@@ -32,7 +32,7 @@ Port ClientApp::getPort() {
 		try {
 			return Port::fromNumber(portNumber);
 		} catch (Port::PortOutOfRange e) {
-			cout << "Port " << e.portNumber << " is invalid" << endl;
+			cerr << "[ERR] Port " << e.portNumber << " is invalid" << endl;
 			
 			if (cin.fail()) {
 				cin.clear();

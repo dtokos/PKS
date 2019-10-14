@@ -12,3 +12,7 @@ Port Port::fromNumber(int number) {
 unsigned short Port::getNumber() {
 	return number;
 }
+
+unsigned short Port::getNormalizedNumber() {
+	return htons(number);
+}

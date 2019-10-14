@@ -20,6 +20,7 @@ public:
 	
 	static Port fromNumber(int number);
 	unsigned short getNumber();
+	unsigned short getNormalizedNumber();
 	
 private:
 	Port(int number);

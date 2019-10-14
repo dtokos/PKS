@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "../Network/Port.hpp"
+#include "../Network/ServerSocket.hpp"
 
 using namespace std;
 

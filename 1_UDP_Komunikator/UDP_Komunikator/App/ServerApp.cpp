@@ -2,6 +2,9 @@
 
 void ServerApp::run() {
 	Port port = getPort();
+	char buffer[1024];
+	int valread;
+	
 	cout << "we have port " << port.getNumber() << endl;
 	try {
 		cout << "creating server "<< endl;
@@ -9,8 +12,15 @@ void ServerApp::run() {
 		cout << "opening server "<< endl;
 		server.open();
 		cout << "accepting server "<< endl;
-		int a = server.accept();
-		cout << "accepted " << a << endl;
+		int fd = server.accept();
+		cout << "accepted " << fd << endl;
+		//cout << "reading " << fd << endl;
+		while (valread = read(fd, buffer, 1024)) {
+			cout << "got " << valread << " " << buffer << endl;
+			cout << "replying " << fd << endl;
+			send(fd, buffer, valread, 0);
+		}
+		cout << "done " << fd << endl;
 		cout << "closing server" << endl;
 		server.close();
 		cout << "end" << endl;

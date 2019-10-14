@@ -10,3 +10,7 @@ IP IP::fromString(string addressString) {
 	
 	return IP(address);
 }
+
+in_addr IP::getAddress() {
+	return address;
+}

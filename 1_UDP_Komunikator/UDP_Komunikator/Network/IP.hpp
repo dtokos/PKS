@@ -21,6 +21,7 @@ public:
 	};
 	
 	static IP fromString(string addressString);
+	in_addr getAddress();
 	
 private:
 	IP(in_addr address);

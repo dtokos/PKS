@@ -5,6 +5,7 @@
 #include <string>
 #include "../Network/IP.hpp"
 #include "../Network/Port.hpp"
+#include "../Network/ClientSocket.hpp"
 
 using namespace std;
 

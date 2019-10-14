@@ -17,6 +17,7 @@
 		9821AEE723549CB60075F06F /* IP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE423549CAE0075F06F /* IP.cpp */; };
 		9821AEEA2354A8A40075F06F /* ServerSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEE82354A8A40075F06F /* ServerSocket.cpp */; };
 		9821AEEC2354A8B60075F06F /* TestIP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEEB2354A8B60075F06F /* TestIP.mm */; };
+		9821AEEF2354C1D60075F06F /* ClientSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEED2354C1D60075F06F /* ClientSocket.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,8 @@
 		9821AEE82354A8A40075F06F /* ServerSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerSocket.cpp; sourceTree = "<group>"; };
 		9821AEE92354A8A40075F06F /* ServerSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ServerSocket.hpp; sourceTree = "<group>"; };
 		9821AEEB2354A8B60075F06F /* TestIP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestIP.mm; sourceTree = "<group>"; };
+		9821AEED2354C1D60075F06F /* ClientSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClientSocket.cpp; sourceTree = "<group>"; };
+		9821AEEE2354C1D60075F06F /* ClientSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClientSocket.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				9821AEDE235493A80075F06F /* Port.cpp */,
 				9821AEE92354A8A40075F06F /* ServerSocket.hpp */,
 				9821AEE82354A8A40075F06F /* ServerSocket.cpp */,
+				9821AEEE2354C1D60075F06F /* ClientSocket.hpp */,
+				9821AEED2354C1D60075F06F /* ClientSocket.cpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				9821AED9235492270075F06F /* ServerApp.cpp in Sources */,
 				9821AEC4235490390075F06F /* main.cpp in Sources */,
 				9821AEE0235493A80075F06F /* Port.cpp in Sources */,
+				9821AEEF2354C1D60075F06F /* ClientSocket.cpp in Sources */,
 				9821AEDC235492940075F06F /* ClientApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

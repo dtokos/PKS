@@ -1,6 +1,7 @@
 #ifndef ServerSocket_hpp
 #define ServerSocket_hpp
 
+#include <iostream>
 #include <exception>
 #include <string>
 #include <sys/socket.h>
@@ -10,7 +11,7 @@
 #include "Port.hpp"
 #include "Socket.hpp"
 
-class ServerSocket {
+class ServerSocket : public Socket {
 public:
 	class SocketError : public exception {
 	public:
@@ -47,13 +48,14 @@ public:
 	};
 	
 	static ServerSocket fromPort(Port port);
-	void open();
 	Socket accept();
 	void close();
 	
 private:
-	ServerSocket(int fileDescriptor);
-	int fileDescriptor;
+	ServerSocket(int fileDescriptor, sockaddr_in address);
+	void receiveSYN();
+	void sendSYNACK();
+	void receiveACK();
 };
 
 #endif

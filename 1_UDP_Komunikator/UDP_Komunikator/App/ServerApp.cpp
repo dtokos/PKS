@@ -3,23 +3,23 @@
 void ServerApp::run() {
 	Port port = getPort();
 	char buffer[1024];
-	int valread;
+	char inputAction = 0;
+	string message;
+	char *msgPtr;
+	int messageLength;
 	
 	cout << "we have port " << port.getNumber() << endl;
 	try {
 		cout << "creating server "<< endl;
 		ServerSocket server = ServerSocket::fromPort(port);
-		cout << "opening server "<< endl;
-		server.open();
 		cout << "accepting server "<< endl;
 		Socket s = server.accept();
 		cout << "accepted " << endl;
 		//cout << "reading " << fd << endl;
-		while ((valread = s.read(buffer, 1024))) {
-			cout << "got " << valread << " " << buffer << endl;
-			cout << "replying " << endl;
-			s.write(buffer, valread);
-		}
+		
+		
+		
+		
 		cout << "done " << endl;
 		cout << "closing server" << endl;
 		server.close();
@@ -47,7 +47,8 @@ Port ServerApp::getPort() {
 	
 	while (true) {
 		cout << "Enter port(1024 - 65535): ";
-		cin >> portNumber;
+		//cin >> portNumber;
+		portNumber = 9001;
 		
 		try {
 			return Port::fromNumber(portNumber);

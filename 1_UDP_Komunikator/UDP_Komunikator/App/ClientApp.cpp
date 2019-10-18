@@ -3,23 +3,24 @@
 void ClientApp::run() {
 	IP ip = getIP();
 	Port port = getPort();
-	string msg;
-	char buff[1024];
+	char buffer[1024];
+	char inputAction = 0;
+	string message;
+	char *msgPtr;
+	int messageLength;
+	
 	try {
 		cout << "try to connect" << endl;
-		ClientSocket socket = ClientSocket::connect(ip, port);
-		void *asd = (void *)msg.c_str();
-		while (cin >> msg) {
-			socket.write(asd, msg.length());
-			socket.read(buff, 1024);
-			cout << "Received message: " << buff << endl;
-		}
-		
+		ClientSocket socket = ClientSocket::fromIPAndPort(ip, port);
+		socket.connect();
 		cout << "connected" << endl;
 	} catch (ClientSocket::SocketConnectError e) {
 		cerr << "[ERR] Could not connect to address" << endl;
 		cerr << "[ERR] " << e.what() << endl;
 		cerr << "[ERR] " << e.error << endl;
+	} catch (Socket::SocketError e) {
+		cerr << "[ERR] Could not connect to address" << endl;
+		cerr << "[ERR] " << e.what() << endl;
 	}
 }
 
@@ -28,7 +29,8 @@ IP ClientApp::getIP() {
 	
 	while (true) {
 		cout << "Enter IPv4 address: ";
-		cin >> ip;
+		//cin >> ip;
+		ip = "127.0.0.1";
 		
 		try {
 			return IP::fromString(ip);
@@ -43,7 +45,8 @@ Port ClientApp::getPort() {
 	
 	while (true) {
 		cout << "Enter port(1024 - 65535): ";
-		cin >> portNumber;
+		//cin >> portNumber;
+		portNumber = 9001;
 		
 		try {
 			return Port::fromNumber(portNumber);

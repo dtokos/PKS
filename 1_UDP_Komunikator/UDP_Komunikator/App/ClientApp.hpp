@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <sys/poll.h>
+#include <unistd.h>
 #include "../Network/IP.hpp"
 #include "../Network/Port.hpp"
 #include "../Network/ClientSocket.hpp"

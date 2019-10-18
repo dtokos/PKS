@@ -1,6 +1,6 @@
 #include "ServerSocket.hpp"
 
-ServerSocket::ServerSocket(int fileDescriptor) : fileDescriptor(fileDescriptor) {}
+ServerSocket::ServerSocket(int fileDescriptor, sockaddr_in address) : Socket(fileDescriptor, address) {}
 
 ServerSocket ServerSocket::fromPort(Port port) {
 	int fd, options = 1;
@@ -10,7 +10,7 @@ ServerSocket ServerSocket::fromPort(Port port) {
 		.sin_port = port.getNormalizedNumber(),
 	};
 	
-	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+	if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) == 0)
 		throw SocketCreateError("Could not get socket file descriptor");
 	
 	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &options, sizeof(options)))
@@ -19,22 +19,58 @@ ServerSocket ServerSocket::fromPort(Port port) {
 	if (::bind(fd, (struct sockaddr *)&address, sizeof(address)) < 0)
 		throw SocketCreateError("Could not bind socket to address");
 	
-	return ServerSocket(fd);
-}
-
-void ServerSocket::open() {
-	if (::listen(fileDescriptor, 1) < 0)
-		throw SocketOpenError();
+	return ServerSocket(fd, address);
 }
 
 Socket ServerSocket::accept() {
-	int clientFD, addressLength = sizeof(sockaddr);
-	sockaddr address;
+	cout << "-- Start Handshake --\n";
+	receiveSYN();
+	sendSYNACK();
+	receiveACK();
+	cout << "-- Handshake successfull --\n";
 	
-	if ((clientFD = ::accept(fileDescriptor, (struct sockaddr *)&address, (socklen_t*)&addressLength)) < 0)
-		throw SocketAcceptError();
+	return Socket(fileDescriptor, address);
+}
+
+void ServerSocket::receiveSYN() {
+	cout << "-- Start receive SYN --\n";
+	while (true) {
+		receiveSegment();
+		
+		if (receivedSegment.type == Segment::Type::SYN) {
+			cout << "-- End receive SYN --\n";
+			break;
+		}
+		
+		cout << "-- Not SYN segment --\n";
+	}
+}
+
+void ServerSocket::sendSYNACK() {
+	cout << "-- Start send SYN_ACK --\n";
+	sendSegment(Segment::makeSYNACK());
+	cout << "-- End send SYN_ACK --\n";
+}
+
+void ServerSocket::receiveACK() {
+	int retries = 0;
+	int timeout = 1;
+	bool receiveResult;
+	cout << "-- Start receive ACK --\n";
+	while (retries++ < 10) {
+		receiveResult = receiveSegment(timeout);
+		
+		if (!receiveResult || receivedSegment.type != Segment::Type::ACK) {
+			cout << "-- Timeout or wrong segment --\n";
+			sendSYNACK();
+		} else {
+			cout << "-- End receive ACK --\n";
+			return;
+		}
+	}
 	
-	return Socket(clientFD);
+	cout << "-- FAILED receive ACK --\n";
+	throw Socket::SocketError("RDP handshake failed");
 }
 
 void ServerSocket::close() {

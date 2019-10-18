@@ -34,10 +34,15 @@ public:
 		}
 	};
 	
-	static ClientSocket connect(IP ip, Port port);
+	static ClientSocket fromIPAndPort(IP ip, Port port);
+	void connect();
 	
 private:
-	ClientSocket(int fileDescriptor);
+	ClientSocket(int fileDescriptor, sockaddr_in address);
+
+	void sendSYN();
+	void receiveSYNACK();
+	void sendACK();
 };
 
 #endif

@@ -5,12 +5,76 @@ Socket::Socket(int fileDescriptor, sockaddr_in address) :
 	address(address),
 	addressLength(sizeof(address)) {}
 
+void Socket::write(const void *data, size_t length) {
+	Segment s;
+	s.setType(Segment::Type::DATA);
+	s.setSequenceNumber(0);
+	char *d = (char *)data;
+	
+	while (length > 0) {
+		s.setSequenceNumber(leastNotAcknowledged);
+		s.setData(d, min(SegmentMaxLength, length));
+		s.setChecksum();
+		length -= s.dataLength();
+		
+		while (true) {
+			sendSegment(s);
+			receiveSegment(readingTimeout);
+			
+			if (receivedSegment.type() == Segment::Type::ACK && receivedSegment.acceptanceNumber() == leastNotAcknowledged) {
+				leastNotAcknowledged++;
+				break;
+			}
+		}
+		
+		d += s.dataLength();
+		s.setSequenceNumber(leastNotAcknowledged);
+	}
+}
+
+int Socket::read(void *buffer, int length) {
+	if (readBufferIndex + unreadCount == readBuffer.size()) {
+		memcpy(buffer, readBuffer.data() + readBufferIndex, unreadCount);
+		length = unreadCount;
+		readBufferIndex = unreadCount = 0;
+		
+		return length;
+	}
+	
+	if (unreadCount >= length) {
+		memcpy(buffer, readBuffer.data(), length);
+		unreadCount -= length;
+		readBufferIndex += length;
+		
+		return length;
+	}
+	
+	while (true) {
+		receiveSegment();
+		
+		if (receivedSegment.type() == Segment::Type::DATA && lastAcknowledged + 1 == receivedSegment.sequenceNumber()) {
+			sendSegment(Segment::makeACK(receivedSegment.sequenceNumber()));
+			lastAcknowledged++;
+			break;
+		} else if (receivedSegment.type() == Segment::Type::DATA && lastAcknowledged == receivedSegment.sequenceNumber()) {
+			sendSegment(Segment::makeACK(receivedSegment.sequenceNumber()));
+		}
+	}
+	
+	
+	
+	return ;
+}
+
 void Socket::sendSegment(const Segment &segment) {
-	::sendto(fileDescriptor, &segment, segment.length(), 0, (sockaddr *)&address, addressLength);
+	cout << "sending: " << segment.length() << " " << segment.calculateChecksum() << endl;
+	::sendto(fileDescriptor, (const void *)&segment, segment.length(), 0, (sockaddr *)&address, addressLength);
 }
 
 void Socket::receiveSegment() {
-	::recvfrom(fileDescriptor, &receivedSegment, receivedSegment.maxLength(), MSG_WAITALL, (sockaddr *)&address, &addressLength);
+	do {
+		::recvfrom(fileDescriptor, &receivedSegment, SegmentMaxLength + SegmentHeaderLength, MSG_WAITALL, (sockaddr *)&address, &addressLength);
+	} while (!receivedSegment.isValid());
 }
 
 bool Socket::receiveSegment(int timeout) {
@@ -39,5 +103,5 @@ Socket::Segment::Type Socket::peakSegmentType() {
 	
 	::recvfrom(fileDescriptor, &peakBuffer, SegmentHeaderLength, MSG_PEEK, (sockaddr *)&address, &addressLength);
 	
-	return ((Segment *)peakBuffer)->type;
+	return ((Segment *)peakBuffer)->type();
 }

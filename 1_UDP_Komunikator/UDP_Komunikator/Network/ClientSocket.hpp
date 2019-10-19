@@ -14,24 +14,9 @@ using namespace std;
 
 class ClientSocket : public Socket {
 public:
-	class SocketError : public exception {
-	public:
-		string error;
-		
-		SocketError() : error(strerror(errno)) {};
-		virtual const char * what () const throw () = 0;
-	};
-	
 	class SocketConnectError : public SocketError {
-	private:
-		string message;
-		
 	public:
-		SocketConnectError(string message) : message(message) {};
-		
-		const char * what () const throw () {
-			return message.c_str();;
-		}
+		SocketConnectError(string message) : SocketError(message) {}
 	};
 	
 	static ClientSocket fromIPAndPort(IP ip, Port port);

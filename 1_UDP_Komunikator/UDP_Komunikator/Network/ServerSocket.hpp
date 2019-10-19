@@ -13,38 +13,9 @@
 
 class ServerSocket : public Socket {
 public:
-	class SocketError : public exception {
-	public:
-		string error;
-		
-		SocketError() : error(strerror(errno)) {};
-		virtual const char * what () const throw () = 0;
-	};
-	
-	class SocketCreateError : public SocketError {
-	private:
-		string message;
-		
-	public:
-		SocketCreateError(string message) : message(message) {}
-		
-		const char * what () const throw () {
-			return message.c_str();
-		}
-	};
-	
-	class SocketOpenError : public SocketError {
-	public:
-		const char * what () const throw () {
-			return "Could not open socket";
-		}
-	};
-	
 	class SocketAcceptError : public SocketError {
 	public:
-		const char * what () const throw () {
-			return "Could not accept socket";
-		}
+		SocketAcceptError(string message) : SocketError(message) {}
 	};
 	
 	static ServerSocket fromPort(Port port);

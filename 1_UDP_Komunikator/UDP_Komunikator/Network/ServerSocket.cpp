@@ -23,54 +23,40 @@ ServerSocket ServerSocket::fromPort(Port port) {
 }
 
 Socket ServerSocket::accept() {
-	cout << "-- Start Handshake --\n";
 	receiveSYN();
 	sendSYNACK();
 	receiveACK();
-	cout << "-- Handshake successfull --\n";
 	
 	return Socket(fileDescriptor, address);
 }
 
 void ServerSocket::receiveSYN() {
-	cout << "-- Start receive SYN --\n";
 	while (true) {
 		receiveSegment();
-		
-		if (receivedSegment.type == Segment::Type::SYN) {
-			cout << "-- End receive SYN --\n";
-			break;
-		}
-		
-		cout << "-- Not SYN segment --\n";
+		if (receivedSegment.type() == Segment::Type::SYN)
+			return;
 	}
 }
 
 void ServerSocket::sendSYNACK() {
-	cout << "-- Start send SYN_ACK --\n";
 	sendSegment(Segment::makeSYNACK());
-	cout << "-- End send SYN_ACK --\n";
 }
 
 void ServerSocket::receiveACK() {
 	int retries = 0;
-	int timeout = 1;
 	bool receiveResult;
-	cout << "-- Start receive ACK --\n";
+	
 	while (retries++ < 10) {
-		receiveResult = receiveSegment(timeout);
+		receiveResult = receiveSegment(readingTimeout);
 		
-		if (!receiveResult || receivedSegment.type != Segment::Type::ACK) {
-			cout << "-- Timeout or wrong segment --\n";
-			sendSYNACK();
-		} else {
-			cout << "-- End receive ACK --\n";
+		if (receiveResult && receivedSegment.type() == Segment::Type::ACK)
 			return;
-		}
+		
+		readingTimeout *= 2;
+		sendSYNACK();
 	}
 	
-	cout << "-- FAILED receive ACK --\n";
-	throw Socket::SocketError("RDP handshake failed");
+	throw SocketAcceptError("RDP handshake failed");
 }
 
 void ServerSocket::close() {

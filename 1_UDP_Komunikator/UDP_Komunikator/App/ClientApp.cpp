@@ -3,22 +3,25 @@
 void ClientApp::run() {
 	IP ip = getIP();
 	Port port = getPort();
-	char buffer[1024];
-	char inputAction = 0;
 	string message;
-	char *msgPtr;
-	int messageLength;
 	
 	try {
 		cout << "try to connect" << endl;
 		ClientSocket socket = ClientSocket::fromIPAndPort(ip, port);
 		socket.connect();
 		cout << "connected" << endl;
-	} catch (ClientSocket::SocketConnectError e) {
+		while (true) {
+			getline(cin, message);
+			
+			if (message.length() == 1 && message[0] == '0')
+				break;
+			
+			socket.write(message.c_str(), message.length());
+		}
+	} catch (ClientSocket::SocketCreateError e) {
 		cerr << "[ERR] Could not connect to address" << endl;
 		cerr << "[ERR] " << e.what() << endl;
-		cerr << "[ERR] " << e.error << endl;
-	} catch (Socket::SocketError e) {
+	} catch (ClientSocket::SocketConnectError e) {
 		cerr << "[ERR] Could not connect to address" << endl;
 		cerr << "[ERR] " << e.what() << endl;
 	}

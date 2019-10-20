@@ -19,6 +19,7 @@
 		9821AEEC2354A8B60075F06F /* TestIP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEEB2354A8B60075F06F /* TestIP.mm */; };
 		9821AEEF2354C1D60075F06F /* ClientSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEED2354C1D60075F06F /* ClientSocket.cpp */; };
 		9821AEF22354D2120075F06F /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEF02354D2120075F06F /* Socket.cpp */; };
+		98891843235CE65600CD0479 /* Segment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98891841235CE65600CD0479 /* Segment.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +55,8 @@
 		9821AEEE2354C1D60075F06F /* ClientSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClientSocket.hpp; sourceTree = "<group>"; };
 		9821AEF02354D2120075F06F /* Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cpp; sourceTree = "<group>"; };
 		9821AEF12354D2120075F06F /* Socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hpp; sourceTree = "<group>"; };
+		98891841235CE65600CD0479 /* Segment.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Segment.cpp; sourceTree = "<group>"; };
+		98891842235CE65600CD0479 /* Segment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Segment.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +139,8 @@
 				9821AEED2354C1D60075F06F /* ClientSocket.cpp */,
 				9821AEF12354D2120075F06F /* Socket.hpp */,
 				9821AEF02354D2120075F06F /* Socket.cpp */,
+				98891842235CE65600CD0479 /* Segment.hpp */,
+				98891841235CE65600CD0479 /* Segment.cpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				9821AEE0235493A80075F06F /* Port.cpp in Sources */,
 				9821AEEF2354C1D60075F06F /* ClientSocket.cpp in Sources */,
 				9821AEDC235492940075F06F /* ClientApp.cpp in Sources */,
+				98891843235CE65600CD0479 /* Segment.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

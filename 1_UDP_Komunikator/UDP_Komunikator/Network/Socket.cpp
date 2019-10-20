@@ -33,7 +33,7 @@ void Socket::write(const void *data, size_t length) {
 }
 
 int Socket::read(void *buffer, int length) {
-	if (readBufferIndex + unreadCount == readBuffer.size()) {
+	/*if (readBufferIndex + unreadCount == readBuffer.size()) {
 		memcpy(buffer, readBuffer.data() + readBufferIndex, unreadCount);
 		length = unreadCount;
 		readBufferIndex = unreadCount = 0;
@@ -47,7 +47,7 @@ int Socket::read(void *buffer, int length) {
 		readBufferIndex += length;
 		
 		return length;
-	}
+	}*/
 	
 	while (true) {
 		receiveSegment();
@@ -63,7 +63,7 @@ int Socket::read(void *buffer, int length) {
 	
 	
 	
-	return ;
+	return receivedSegment.copyData(buffer, length);
 }
 
 void Socket::sendSegment(const Segment &segment) {
@@ -93,7 +93,7 @@ bool Socket::receiveSegment(int timeout) {
 	}
 }
 
-Socket::Segment::Type Socket::peakSegmentType() {
+Segment::Type Socket::peakSegmentType() {
 	pollfd pollFD = pollfd {
 		.fd = fileDescriptor,
 		.events = POLLIN,

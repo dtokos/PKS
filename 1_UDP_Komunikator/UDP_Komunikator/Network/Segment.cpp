@@ -75,7 +75,7 @@ uint16_t Segment::calculateChecksum() const {
 	return (uint16_t)(~sum);
 }
 
-uint32_t Segment::sequenceNumber() {
+uint32_t Segment::sequenceNumber() const {
 	return *SegmentSequenceNumber;
 }
 

@@ -45,8 +45,11 @@ public:
 	static const int InitialReadingTimeout = 200;
 	
 	Socket(int fileDescriptor, sockaddr_in address, int readingTimeout = InitialReadingTimeout, State state = DISCONNECTED);
+	Socket(Socket const& other);
+	~Socket();
 	void write(const void *data, size_t length);
 	int read(void *buffer, int count);
+	void disconnect();
 	
 protected:
 	int fileDescriptor, readingTimeout;
@@ -56,7 +59,9 @@ protected:
 	Segment receivedSegment, peakedSegment;
 	uint32_t lastAcknowledged = 0, leastNotAcknowledged = 1;
 	ReadBuffer readBuffer;
-	thread readingThread, writingThread;
+	thread readingThread;
+	condition_variable writingCV, readingCV;
+	mutable mutex writingMutex, readingMutex;
 	
 	void sendSegment(const Segment &segment);
 	void receiveSegment();

@@ -30,7 +30,7 @@ public:
 	void setChecksum();
 	uint16_t calculateChecksum() const;
 	
-	uint32_t sequenceNumber();
+	uint32_t sequenceNumber() const;
 	void setSequenceNumber(uint32_t sequenceNumber);
 	
 	uint32_t acceptanceNumber();

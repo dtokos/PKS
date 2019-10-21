@@ -8,6 +8,25 @@ Socket::Socket(int fileDescriptor, sockaddr_in address, int readingTimeout, Stat
 		setState(state);
 	}
 
+Socket::Socket(Socket const& other) {
+	lock_guard<mutex> lock(other.writingMutex);
+	
+	fileDescriptor = other.fileDescriptor;
+	readingTimeout = other.readingTimeout;
+	address = other.address;
+	addressLength = other.addressLength;
+	receivedSegment = other.receivedSegment;
+	peakedSegment = other.peakedSegment;
+	lastAcknowledged = other.lastAcknowledged;
+	leastNotAcknowledged = other.leastNotAcknowledged;
+	readBuffer = other.readBuffer;
+	setState(other.state);
+};
+
+Socket::~Socket() {
+	setState(DISCONNECTED);
+}
+
 void Socket::write(const void *data, size_t length) {
 	Segment s;
 	s.setType(Segment::Type::DATA);
@@ -22,12 +41,15 @@ void Socket::write(const void *data, size_t length) {
 		
 		while (++retries < 10) {
 			sendSegment(s);
-			receiveSegment(readingTimeout);
 			
-			if (receivedSegment.type() == Segment::Type::ACK && receivedSegment.acceptanceNumber() == leastNotAcknowledged) {
-				leastNotAcknowledged++;
+			unique_lock<mutex> lock(writingMutex);
+			bool didReceiveACK = writingCV.wait_for(lock, chrono::milliseconds(readingTimeout), [this, s] {
+				return leastNotAcknowledged > s.sequenceNumber();
+			});
+			lock.unlock();
+			
+			if (didReceiveACK)
 				break;
-			}
 			
 			increaseReadingTimeout();
 		}
@@ -41,21 +63,16 @@ void Socket::write(const void *data, size_t length) {
 }
 
 int Socket::read(void *buffer, int length) {
-	if (readBuffer.hasData())
-		return readBuffer.read((char *)buffer, length);
-	
-	while (true) {
-		receiveSegment();
-		
-		if (receivedSegment.type() == Segment::Type::DATA && lastAcknowledged + 1 == receivedSegment.sequenceNumber()) {
-			sendSegment(Segment(receivedSegment.sequenceNumber()));
-			lastAcknowledged++;
-			readBuffer.add(receivedSegment);
-			break;
-		} else if (receivedSegment.type() == Segment::Type::DATA && lastAcknowledged == receivedSegment.sequenceNumber()) {
-			sendSegment(Segment(receivedSegment.sequenceNumber()));
-		}
+	if (!readBuffer.hasData()) {
+		unique_lock<mutex> lock(readingMutex);
+		readingCV.wait_for(lock, chrono::milliseconds(1000), [this] {
+			return readBuffer.hasData();
+		});
+		lock.unlock();
 	}
+	
+	if (!readBuffer.hasData())
+		return 0;
 	
 	return readBuffer.read((char *)buffer, length);
 }
@@ -83,7 +100,7 @@ bool Socket::receiveSegment(int timeout) {
 		default:
 			::recvfrom(fileDescriptor, &receivedSegment, Segment::MaxLength, MSG_WAITALL, (sockaddr *)&address, &addressLength);
 			if (!receivedSegment.isValid()) {
-				/* send NAK */
+				/* TODO: send NAK */
 				return false;
 			}
 			
@@ -102,7 +119,7 @@ bool Socket::peakSegment(int timeout) {
 			return false;
 			
 		default:
-			::recvfrom(fileDescriptor, &peakedSegment, Segment::HeaderLength, MSG_PEEK, (sockaddr *)&address, &addressLength);
+			::recvfrom(fileDescriptor, &peakedSegment, Segment::MaxLength, MSG_PEEK, (sockaddr *)&address, &addressLength);
 			return true;
 	}
 }
@@ -115,14 +132,17 @@ void Socket::increaseReadingTimeout() {
 }
 
 void Socket::setState(State newState) {
+	State oldState = state;
+	state = newState;
+	
 	switch (newState) {
 		case ESTABLISHED:
-			if (state != ESTABLISHED)
+			if (oldState != ESTABLISHED)
 				startThreads();
 			break;
 			
 		case DISCONNECTED:
-			if (state == ESTABLISHED)
+			if (oldState == ESTABLISHED)
 				stopThreads();
 			break;
 	}
@@ -130,17 +150,15 @@ void Socket::setState(State newState) {
 
 void Socket::startThreads() {
 	readingThread = thread(&Socket::readingLoop, this);
-	writingThread = thread(&Socket::writingLoop, this);
 }
 
 void Socket::stopThreads() {
 	readingThread.join();
-	writingThread.join();
 }
 
 void Socket::readingLoop() {
 	while (state == ESTABLISHED) {
-		 if (!peakSegment(10))
+		 if (!peakSegment(100))
 			 continue;
 		
 		if (!peakedSegment.isValid()) {
@@ -154,11 +172,13 @@ void Socket::readingLoop() {
 			if (lastAcknowledged + 1 == receivedSegment.sequenceNumber()) {
 				sendSegment(Segment(receivedSegment.sequenceNumber()));
 				lastAcknowledged++;
-				readBuffer.add(receivedSegment);
-				break;
-			} else if (lastAcknowledged == receivedSegment.sequenceNumber()) {
+				{
+					lock_guard<mutex> lock(readingMutex);
+					readBuffer.add(receivedSegment);
+				}
+				readingCV.notify_all();
+			} else if (lastAcknowledged == receivedSegment.sequenceNumber())
 				sendSegment(Segment(receivedSegment.sequenceNumber()));
-			}
 			
 			continue;
 		}
@@ -166,8 +186,13 @@ void Socket::readingLoop() {
 		if (peakedSegment.type() == Segment::Type::ACK) {
 			receiveSegment();
 			
-			if (receivedSegment.acceptanceNumber() >= leastNotAcknowledged)
-				leastNotAcknowledged = receivedSegment.acceptanceNumber();
+			if (receivedSegment.acceptanceNumber() >= leastNotAcknowledged) {
+				{
+					lock_guard<mutex> lock(writingMutex);
+					leastNotAcknowledged = receivedSegment.acceptanceNumber() + 1;
+				}
+				writingCV.notify_all();
+			}
 		}
 		
 		// ---- read data into buffer if available space
@@ -181,4 +206,8 @@ void Socket::writingLoop() {
 		// write data from buffer
 		// wait for ACK
 	}
+}
+
+void Socket::disconnect() {
+	setState(State::DISCONNECTED);
 }

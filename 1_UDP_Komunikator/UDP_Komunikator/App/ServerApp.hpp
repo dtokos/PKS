@@ -7,19 +7,16 @@
 #include <sys/poll.h>
 #include "../Network/Port.hpp"
 #include "../Network/ServerSocket.hpp"
+#include "./App.hpp"
 
 using namespace std;
 
-class ServerApp {
+class ServerApp : public App {
 public:
 	void run();
 	
 private:
 	Port getPort();
-	thread readingThread;
-	bool isOpen = true;
-	void readFrom(Socket &socket);
-	void printMenu();
 };
 
 #endif

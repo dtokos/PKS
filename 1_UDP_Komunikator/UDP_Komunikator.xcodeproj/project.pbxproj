@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98161905235E18C000A50B13 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98161903235E18C000A50B13 /* App.cpp */; };
 		9821AEC4235490390075F06F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEC3235490390075F06F /* main.cpp */; };
 		9821AED9235492270075F06F /* ServerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AED7235492270075F06F /* ServerApp.cpp */; };
 		9821AEDC235492940075F06F /* ClientApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9821AEDA235492940075F06F /* ClientApp.cpp */; };
@@ -39,6 +40,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		98161903235E18C000A50B13 /* App.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
+		98161904235E18C000A50B13 /* App.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
 		9821AEC0235490390075F06F /* UDP_Komunikator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UDP_Komunikator; sourceTree = BUILT_PRODUCTS_DIR; };
 		9821AEC3235490390075F06F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9821AECE2354908D0075F06F /* Test_UDP_Komunikator.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_UDP_Komunikator.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +133,8 @@
 				9821AED7235492270075F06F /* ServerApp.cpp */,
 				9821AEDB235492940075F06F /* ClientApp.hpp */,
 				9821AEDA235492940075F06F /* ClientApp.cpp */,
+				98161904235E18C000A50B13 /* App.hpp */,
+				98161903235E18C000A50B13 /* App.cpp */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				9821AED9235492270075F06F /* ServerApp.cpp in Sources */,
 				9821AEC4235490390075F06F /* main.cpp in Sources */,
 				9821AEF22354D2120075F06F /* Socket.cpp in Sources */,
+				98161905235E18C000A50B13 /* App.cpp in Sources */,
 				9821AEE0235493A80075F06F /* Port.cpp in Sources */,
 				9821AEEF2354C1D60075F06F /* ClientSocket.cpp in Sources */,
 				98CF853A235D8EF400DBFC26 /* ReadBuffer.cpp in Sources */,

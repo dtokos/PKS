@@ -7,10 +7,10 @@ void ClientApp::run() {
 	string message;
 	
 	try {
-		cout << "try to connect" << endl;
+		cout << "Connecting" << endl;
 		ClientSocket socket = ClientSocket::fromIPAndPort(ip, port);
 		socket.connect();
-		cout << "connected" << endl;
+		cout << "Connectd" << endl;
 		
 		readingThread = thread(&ClientApp::readFrom, this, ref(socket));
 		
@@ -22,10 +22,9 @@ void ClientApp::run() {
 			
 			switch (choice) {
 				case '1':
+					cout << "Enter your message: ";
 					getline(cin, message);
-					cout << "-- Start Write --\n";
 					socket.write(message.c_str(), message.length());
-					cout << "-- End Write --\n";
 					break;
 					
 				case '0':
@@ -34,8 +33,7 @@ void ClientApp::run() {
 			}
 		}
 		
-		readingThread.join();
-		
+		socket.disconnect();
 	} catch (ClientSocket::SocketCreateError e) {
 		cerr << "[ERR] Could not connect to address" << endl;
 		cerr << "[ERR] " << e.what() << endl;
@@ -45,6 +43,9 @@ void ClientApp::run() {
 	} catch (ClientSocket::SocketWriteError e) {
 		cerr << "[ERR] " << e.what() << endl;
 	}
+	
+	isOpen = false;
+	readingThread.join();
 }
 
 IP ClientApp::getIP() {
@@ -82,20 +83,4 @@ Port ClientApp::getPort() {
 			}
 		}
 	}
-}
-
-void ClientApp::readFrom(Socket &socket) {
-	char buffer[20];
-	
-	while (isOpen) {
-		cout << "-- Reading loop --\n";
-		int len = socket.read(buffer, 20);
-		buffer[len] = '\0';
-		cout << buffer << endl;
-	}
-}
-
-void ClientApp::printMenu() {
-	cout << "[1] Send Message" << endl
-	<< "[0] Exit" << endl;
 }

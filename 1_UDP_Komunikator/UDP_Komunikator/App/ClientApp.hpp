@@ -9,20 +9,17 @@
 #include "../Network/IP.hpp"
 #include "../Network/Port.hpp"
 #include "../Network/ClientSocket.hpp"
+#include "./App.hpp"
 
 using namespace std;
 
-class ClientApp {
+class ClientApp : public App {
 public:
 	void run();
 	
 private:
 	IP getIP();
 	Port getPort();
-	thread readingThread;
-	bool isOpen = true;
-	void readFrom(Socket &socket);
-	void printMenu();
 };
 
 #endif

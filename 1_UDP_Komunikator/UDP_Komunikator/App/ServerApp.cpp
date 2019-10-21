@@ -7,9 +7,9 @@ void ServerApp::run() {
 	
 	try {
 		ServerSocket server = ServerSocket::fromPort(port);
-		cout << "accepting" << endl;
+		cout << "Waiting for connection" << endl;
 		Socket s = server.accept();
-		cout << "connected" << endl;
+		cout << "A client connected" << endl;
 		
 		readingThread = thread(&ServerApp::readFrom, this, ref(s));
 		
@@ -21,10 +21,9 @@ void ServerApp::run() {
 			
 			switch (choice) {
 				case '1':
+					cout << "Enter your message: ";
 					getline(cin, message);
-					cout << "-- Start Write --\n";
 					s.write(message.c_str(), message.length());
-					cout << "-- End Write --\n";
 					break;
 					
 				case '0':
@@ -33,6 +32,7 @@ void ServerApp::run() {
 			}
 		}
 		
+		s.disconnect();
 		readingThread.join();
 		
 		server.close();
@@ -65,20 +65,4 @@ Port ServerApp::getPort() {
 			}
 		}
 	}
-}
-
-void ServerApp::readFrom(Socket &socket) {
-	char buffer[20];
-	
-	while (isOpen) {
-		cout << "-- Reading loop --\n";
-		int len = socket.read(buffer, 20);
-		buffer[len] = '\0';
-		cout << buffer << endl;
-	}
-}
-
-void ServerApp::printMenu() {
-	cout << "[1] Send Message" << endl
-		<< "[0] Exit" << endl;
 }

@@ -2,6 +2,7 @@
 #define Socket_hpp
 
 #include <iostream>
+#include <thread>
 #include <array>
 #include <exception>
 #include <string>
@@ -14,6 +15,12 @@
 using namespace std;
 
 class Socket {
+protected:
+	enum State {
+		DISCONNECTED,
+		ESTABLISHED,
+	};
+	
 public:
 	class SocketError : public exception {
 	public:
@@ -37,7 +44,7 @@ public:
 	
 	static const int InitialReadingTimeout = 200;
 	
-	Socket(int fileDescriptor, sockaddr_in address, int readingTimeout = InitialReadingTimeout);
+	Socket(int fileDescriptor, sockaddr_in address, int readingTimeout = InitialReadingTimeout, State state = DISCONNECTED);
 	void write(const void *data, size_t length);
 	int read(void *buffer, int count);
 	
@@ -45,17 +52,22 @@ protected:
 	int fileDescriptor, readingTimeout;
 	sockaddr_in address;
 	socklen_t addressLength;
-	Segment receivedSegment;
-	char peakBuffer[Segment::HeaderLength];
-	Segment *peakedSegment;
+	State state = State::DISCONNECTED;
+	Segment receivedSegment, peakedSegment;
 	uint32_t lastAcknowledged = 0, leastNotAcknowledged = 1;
 	ReadBuffer readBuffer;
+	thread readingThread, writingThread;
 	
 	void sendSegment(const Segment &segment);
 	void receiveSegment();
 	bool receiveSegment(int timeout);
 	bool peakSegment(int timeout);
 	void increaseReadingTimeout();
+	void setState(State newState);
+	void startThreads();
+	void stopThreads();
+	void readingLoop();
+	void writingLoop();
 };
 
 #endif

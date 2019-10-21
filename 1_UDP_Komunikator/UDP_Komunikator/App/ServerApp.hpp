@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <thread>
 #include <sys/poll.h>
 #include "../Network/Port.hpp"
 #include "../Network/ServerSocket.hpp"
@@ -15,6 +16,10 @@ public:
 	
 private:
 	Port getPort();
+	thread readingThread;
+	bool isOpen = true;
+	void readFrom(Socket &socket);
+	void printMenu();
 };
 
 #endif

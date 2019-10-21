@@ -2,6 +2,7 @@
 #define ClientApp_hpp
 
 #include <iostream>
+#include <thread>
 #include <string>
 #include <sys/poll.h>
 #include <unistd.h>
@@ -18,6 +19,10 @@ public:
 private:
 	IP getIP();
 	Port getPort();
+	thread readingThread;
+	bool isOpen = true;
+	void readFrom(Socket &socket);
+	void printMenu();
 };
 
 #endif

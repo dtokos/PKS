@@ -23,7 +23,7 @@ void ClientSocket::connect() {
 	sendSYN();
 	receiveSYNACK();
 	sendACK();
-
+	setState(State::ESTABLISHED);
 }
 
 void ClientSocket::sendSYN() {

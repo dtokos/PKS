@@ -1,11 +1,12 @@
 #include "Socket.hpp"
 
-Socket::Socket(int fileDescriptor, sockaddr_in address, int readingTimeout) :
+Socket::Socket(int fileDescriptor, sockaddr_in address, int readingTimeout, State state) :
 	fileDescriptor(fileDescriptor),
 	address(address),
 	addressLength(sizeof(address)),
-	peakedSegment((Segment *)peakBuffer),
-	readingTimeout(readingTimeout) {}
+	readingTimeout(readingTimeout) {
+		setState(state);
+	}
 
 void Socket::write(const void *data, size_t length) {
 	Segment s;
@@ -20,7 +21,6 @@ void Socket::write(const void *data, size_t length) {
 		length -= s.dataLength();
 		
 		while (++retries < 10) {
-			cout << retries << endl;
 			sendSegment(s);
 			receiveSegment(readingTimeout);
 			
@@ -31,7 +31,7 @@ void Socket::write(const void *data, size_t length) {
 			
 			increaseReadingTimeout();
 		}
-		cout << retries << " == 10" << endl;
+		
 		if (retries == 10)
 			throw SocketWriteError("Could not send data");
 		
@@ -57,8 +57,6 @@ int Socket::read(void *buffer, int length) {
 		}
 	}
 	
-	
-	
 	return readBuffer.read((char *)buffer, length);
 }
 
@@ -83,7 +81,12 @@ bool Socket::receiveSegment(int timeout) {
 			return false;
 			
 		default:
-			receiveSegment();
+			::recvfrom(fileDescriptor, &receivedSegment, Segment::MaxLength, MSG_WAITALL, (sockaddr *)&address, &addressLength);
+			if (!receivedSegment.isValid()) {
+				/* send NAK */
+				return false;
+			}
+			
 			return true;
 	}
 }
@@ -99,7 +102,7 @@ bool Socket::peakSegment(int timeout) {
 			return false;
 			
 		default:
-			::recvfrom(fileDescriptor, &peakBuffer, Segment::HeaderLength, MSG_PEEK, (sockaddr *)&address, &addressLength);
+			::recvfrom(fileDescriptor, &peakedSegment, Segment::HeaderLength, MSG_PEEK, (sockaddr *)&address, &addressLength);
 			return true;
 	}
 }
@@ -109,4 +112,73 @@ void Socket::increaseReadingTimeout() {
 		readingTimeout *= 2;
 	else
 		readingTimeout += readingTimeout / 2;
+}
+
+void Socket::setState(State newState) {
+	switch (newState) {
+		case ESTABLISHED:
+			if (state != ESTABLISHED)
+				startThreads();
+			break;
+			
+		case DISCONNECTED:
+			if (state == ESTABLISHED)
+				stopThreads();
+			break;
+	}
+}
+
+void Socket::startThreads() {
+	readingThread = thread(&Socket::readingLoop, this);
+	writingThread = thread(&Socket::writingLoop, this);
+}
+
+void Socket::stopThreads() {
+	readingThread.join();
+	writingThread.join();
+}
+
+void Socket::readingLoop() {
+	while (state == ESTABLISHED) {
+		 if (!peakSegment(10))
+			 continue;
+		
+		if (!peakedSegment.isValid()) {
+			receiveSegment(1);
+			continue;
+		}
+		
+		if (readBuffer.canFitWholeSegment() && peakedSegment.type() == Segment::Type::DATA) {
+			receiveSegment();
+			
+			if (lastAcknowledged + 1 == receivedSegment.sequenceNumber()) {
+				sendSegment(Segment(receivedSegment.sequenceNumber()));
+				lastAcknowledged++;
+				readBuffer.add(receivedSegment);
+				break;
+			} else if (lastAcknowledged == receivedSegment.sequenceNumber()) {
+				sendSegment(Segment(receivedSegment.sequenceNumber()));
+			}
+			
+			continue;
+		}
+		
+		if (peakedSegment.type() == Segment::Type::ACK) {
+			receiveSegment();
+			
+			if (receivedSegment.acceptanceNumber() >= leastNotAcknowledged)
+				leastNotAcknowledged = receivedSegment.acceptanceNumber();
+		}
+		
+		// ---- read data into buffer if available space
+		// ---- reply with ACKS and mark lastAcked
+		// ---- read ACKS and mark leastNotAckaed
+	}
+}
+
+void Socket::writingLoop() {
+	while (state == ESTABLISHED) {
+		// write data from buffer
+		// wait for ACK
+	}
 }

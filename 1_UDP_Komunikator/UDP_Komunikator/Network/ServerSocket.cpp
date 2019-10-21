@@ -29,7 +29,7 @@ Socket ServerSocket::accept() {
 	sendSYNACK();
 	receiveACK();
 	
-	return Socket(fileDescriptor, address, readingTimeout);
+	return Socket(fileDescriptor, address, readingTimeout, State::ESTABLISHED);
 }
 
 void ServerSocket::receiveSYN() {

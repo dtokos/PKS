@@ -6,8 +6,9 @@ void ServerApp::run() {
 	
 	try {
 		ServerSocket server = ServerSocket::fromPort(port);
+		cout << "accepting" << endl;
 		Socket s = server.accept();
-		cout << "connected " << endl;
+		cout << "connected" << endl;
 		while (true) {
 			int len = s.read(buffer, 20);
 			buffer[len] = '\0';

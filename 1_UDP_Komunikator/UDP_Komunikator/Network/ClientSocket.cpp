@@ -18,7 +18,7 @@ ClientSocket ClientSocket::fromIPAndPort(IP ip, Port port) {
 	return ClientSocket(fd, address);
 }
 void ClientSocket::connect() {
-	readingTimeout = 1;
+	readingTimeout = InitialReadingTimeout;
 	
 	sendSYN();
 	receiveSYNACK();
@@ -27,7 +27,7 @@ void ClientSocket::connect() {
 }
 
 void ClientSocket::sendSYN() {
-	sendSegment(Segment::makeSYN());
+	sendSegment(Segment(Segment::Type::SYN));
 }
 
 void ClientSocket::receiveSYNACK() {
@@ -39,7 +39,7 @@ void ClientSocket::receiveSYNACK() {
 		if (receivedResult && receivedSegment.type() == Segment::Type::SYNACK)
 			return;
 		
-		readingTimeout *= 2;
+		increaseReadingTimeout();
 		sendSYN();
 	}
 	
@@ -50,12 +50,12 @@ void ClientSocket::sendACK() {
 	int retries = 0;
 	
 	while (retries++ < maxRetries) {
-		sendSegment(Segment::makeACK());
+		sendSegment(Segment(Segment::Type::ACK));
 		
 		if (!receiveSegment(readingTimeout))
 			return;
 
-		readingTimeout += 2;
+		increaseReadingTimeout();
 	}
 	
 	throw SocketConnectError("RDP handshake failed");

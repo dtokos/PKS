@@ -23,11 +23,13 @@ ServerSocket ServerSocket::fromPort(Port port) {
 }
 
 Socket ServerSocket::accept() {
+	readingTimeout = InitialReadingTimeout;
+	
 	receiveSYN();
 	sendSYNACK();
 	receiveACK();
 	
-	return Socket(fileDescriptor, address);
+	return Socket(fileDescriptor, address, readingTimeout);
 }
 
 void ServerSocket::receiveSYN() {
@@ -39,7 +41,7 @@ void ServerSocket::receiveSYN() {
 }
 
 void ServerSocket::sendSYNACK() {
-	sendSegment(Segment::makeSYNACK());
+	sendSegment(Segment(Segment::Type::SYNACK));
 }
 
 void ServerSocket::receiveACK() {
@@ -52,7 +54,7 @@ void ServerSocket::receiveACK() {
 		if (receiveResult && receivedSegment.type() == Segment::Type::ACK)
 			return;
 		
-		readingTimeout *= 2;
+		increaseReadingTimeout();
 		sendSYNACK();
 	}
 	

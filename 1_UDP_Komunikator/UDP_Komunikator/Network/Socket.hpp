@@ -9,8 +9,7 @@
 #include <sys/poll.h>
 #include <arpa/inet.h>
 #include "./Segment.hpp"
-
-//#define ReadBufferSize (SegmentMaxLength * 8)
+#include "./ReadBuffer.hpp"
 
 using namespace std;
 
@@ -31,25 +30,32 @@ public:
 		SocketCreateError(string message) : SocketError(message) {}
 	};
 	
-	Socket(int fileDescriptor, sockaddr_in address);
+	class SocketWriteError : public SocketError {
+	public:
+		SocketWriteError(string message) : SocketError(message) {}
+	};
+	
+	static const int InitialReadingTimeout = 200;
+	
+	Socket(int fileDescriptor, sockaddr_in address, int readingTimeout = InitialReadingTimeout);
 	void write(const void *data, size_t length);
 	int read(void *buffer, int count);
 	
 protected:
-	
 	int fileDescriptor, readingTimeout;
 	sockaddr_in address;
 	socklen_t addressLength;
 	Segment receivedSegment;
-	char peakBuffer[SegmentHeaderLength];
+	char peakBuffer[Segment::HeaderLength];
+	Segment *peakedSegment;
 	uint32_t lastAcknowledged = 0, leastNotAcknowledged = 1;
-	array<char, SegmentMaxLength * 8> readBuffer = {0};
-	uint16_t unreadCount = 0, readBufferIndex = 0;
+	ReadBuffer readBuffer;
 	
 	void sendSegment(const Segment &segment);
 	void receiveSegment();
 	bool receiveSegment(int timeout);
-	Segment::Type peakSegmentType();
+	bool peakSegment(int timeout);
+	void increaseReadingTimeout();
 };
 
 #endif

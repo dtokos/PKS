@@ -24,6 +24,8 @@ void ClientApp::run() {
 	} catch (ClientSocket::SocketConnectError e) {
 		cerr << "[ERR] Could not connect to address" << endl;
 		cerr << "[ERR] " << e.what() << endl;
+	} catch (ClientSocket::SocketWriteError e) {
+		cerr << "[ERR] " << e.what() << endl;
 	}
 }
 
@@ -32,8 +34,8 @@ IP ClientApp::getIP() {
 	
 	while (true) {
 		cout << "Enter IPv4 address: ";
-		//cin >> ip;
-		ip = "127.0.0.1";
+		cin >> ip;
+		//ip = "127.0.0.1";
 		
 		try {
 			return IP::fromString(ip);

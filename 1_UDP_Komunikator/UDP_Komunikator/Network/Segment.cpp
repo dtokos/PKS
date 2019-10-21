@@ -1,28 +1,32 @@
 #include "Segment.hpp"
 
-Segment Segment::makeHeaderOnly(Type type) {
-	Segment s;
-	s.setType(type);
-	s.setChecksum();
-	
-	return s;
+#define SegmentType ((Type *)data)
+#define SegmentChecksum ((uint16_t *)(data + sizeof(Type)))
+#define SegmentSequenceNumber ((uint32_t *)(data + sizeof(Type) + sizeof(uint16_t)))
+#define SegmentAcceptanceNumber ((uint32_t *)(data + sizeof(Type) + sizeof(uint16_t) + sizeof(uint32_t)))
+#define SegmentDataLength ((uint16_t *)(data + sizeof(Type) + sizeof(uint16_t) + sizeof(uint32_t) + sizeof(uint32_t)))
+#define SegmentData ((char *)(data + sizeof(Type) + sizeof(uint16_t) + sizeof(uint32_t) + sizeof(uint32_t) + sizeof(uint16_t)))
+
+const size_t Segment::HeaderLength;
+const size_t Segment::MaxLength;
+const size_t Segment::MaxDataLength;
+
+Segment::Segment(Type type)  {
+	setType(type);
+	setChecksum();
 }
 
-Segment Segment::makeSYN() {
-	return Segment::makeHeaderOnly(Type::SYN);
+Segment::Segment(uint32_t acceptanceNumber) {
+	setType(Type::ACK);
+	setAcceptanceNumber(acceptanceNumber);
+	setChecksum();
 }
 
-Segment Segment::makeSYNACK() {
-	return Segment::makeHeaderOnly(Type::SYNACK);
-}
-
-Segment Segment::makeACK(uint32_t acceptanceNumber) {
-	Segment s;
-	s.setType(Type::ACK);
-	s.setAcceptanceNumber(acceptanceNumber);
-	s.setChecksum();
-	
-	return s;
+Segment::Segment(uint32_t sequenceNumber, const void *segmentData, uint16_t length) {
+	setType(Type::DATA);
+	setSequenceNumber(sequenceNumber);
+	setData(segmentData, length);
+	setChecksum();
 }
 
 Segment::Type Segment::type() {
@@ -100,13 +104,18 @@ void Segment::setData(const void *newData, uint16_t length) {
 	memcpy(SegmentData, newData, length);
 }
 
-int Segment::copyData(void *buffer, uint16_t length) {
-	length = min(length, *SegmentDataLength);
-	memcpy(buffer, SegmentData, length);
+int Segment::copyData(void *buffer, uint16_t length, uint16_t offset) {
+	uint16_t remainingDataLength = *SegmentDataLength - offset;
+	length = min(length, remainingDataLength);
+	memcpy(buffer, SegmentData + offset, length);
 	
 	return length;
 }
 
+char* Segment::getData() {
+	return SegmentData;
+}
+
 size_t Segment::length() const {
-	return SegmentHeaderLength + *SegmentDataLength;
+	return HeaderLength + *SegmentDataLength;
 }

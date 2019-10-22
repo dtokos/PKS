@@ -64,6 +64,7 @@
 		9821AEF12354D2120075F06F /* Socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hpp; sourceTree = "<group>"; };
 		98891841235CE65600CD0479 /* Segment.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Segment.cpp; sourceTree = "<group>"; };
 		98891842235CE65600CD0479 /* Segment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Segment.hpp; sourceTree = "<group>"; };
+		989A5AAC235F312900F2ED54 /* Message.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Message.hpp; sourceTree = "<group>"; };
 		98CF8538235D8EF400DBFC26 /* ReadBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ReadBuffer.cpp; sourceTree = "<group>"; };
 		98CF8539235D8EF400DBFC26 /* ReadBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ReadBuffer.hpp; sourceTree = "<group>"; };
 		98CF853B235D9A7400DBFC26 /* TestReadBuffer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestReadBuffer.mm; sourceTree = "<group>"; };
@@ -129,6 +130,7 @@
 		9821AED6235492150075F06F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				989A5AAC235F312900F2ED54 /* Message.hpp */,
 				9821AED8235492270075F06F /* ServerApp.hpp */,
 				9821AED7235492270075F06F /* ServerApp.cpp */,
 				9821AEDB235492940075F06F /* ClientApp.hpp */,

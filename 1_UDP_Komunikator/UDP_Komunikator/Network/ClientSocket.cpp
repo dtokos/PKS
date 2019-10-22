@@ -1,7 +1,5 @@
 #include "ClientSocket.hpp"
 
-#define maxRetries 10
-
 ClientSocket::ClientSocket(int fileDescriptor, sockaddr_in address) : Socket(fileDescriptor, address) {}
 
 ClientSocket ClientSocket::fromIPAndPort(IP ip, Port port) {

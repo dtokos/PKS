@@ -15,7 +15,7 @@ public:
 	};
 	
 	static const size_t HeaderLength = (sizeof(Segment::Type) + sizeof(uint16_t) * 2 + sizeof(uint32_t) * 2);
-	static const size_t MaxLength = 1472;
+	static const size_t MaxLength = 1472; // 1500 - IP header - UDP header
 	static const size_t MaxDataLength = MaxLength - HeaderLength;
 	
 	Segment(Type type);

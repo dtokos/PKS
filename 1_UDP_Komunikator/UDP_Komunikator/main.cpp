@@ -1,20 +1,23 @@
 #include <iostream>
+#include <unistd.h>
+#include <libgen.h>
 #include "App/ServerApp.hpp"
 #include "App/ClientApp.hpp"
 
 using namespace std;
 
 void printMenu();
-char getChoice();
 
 int main(int argc, const char * argv[]) {
-	char choice;
+	string choice;
 	
-	do {
+	while (true) {
 		printMenu();
-		choice = getChoice();
+		getline(cin, choice);
+		if (choice.length() != 1)
+			continue;
 		
-		switch (choice) {
+		switch (choice[0]) {
 			case '1':
 				ServerApp().run();
 				break;
@@ -22,23 +25,18 @@ int main(int argc, const char * argv[]) {
 			case '2':
 				ClientApp().run();
 				break;
+				
+			case '0':
+				return 0;
 		}
-		
-	} while (choice != '0');
-	
-	return 0;
+	}
 }
 
 void printMenu() {
-	cout << "[1] Lauch server" << endl
+	cout << "### Main Menu ###" << endl
+		<< "[1] Lauch server" << endl
 		<< "[2] Launch client" << endl
-		<< "[0] Exit" << endl;
-}
-
-char getChoice() {
-	char choice;
-	cout << "Your choice: ";
-	cin >> choice;
-	
-	return choice;
+		<< "[0] Exit" << endl
+		<< "Your choice: ";
+	cout.flush();
 }

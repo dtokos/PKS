@@ -48,7 +48,7 @@ void ServerSocket::receiveACK() {
 	int retries = 0;
 	bool receiveResult;
 	
-	while (retries++ < 10) {
+	while (retries++ < maxRetries) {
 		receiveResult = receiveSegment(readingTimeout);
 		
 		if (receiveResult && receivedSegment.type() == Segment::Type::ACK)

@@ -1,5 +1,10 @@
 #include "Socket.hpp"
 
+//TODO: implement disconect handling
+//TODO: implement ping pong messages
+//TODO: implement sliding window GBN
+//TODO: implement NAK sending + retransmission
+
 Socket::Socket(int fileDescriptor, sockaddr_in address, int readingTimeout, State state) :
 	fileDescriptor(fileDescriptor),
 	address(address),
@@ -39,7 +44,7 @@ void Socket::write(const void *data, size_t length) {
 		s.setChecksum();
 		length -= s.dataLength();
 		
-		while (++retries < 10) {
+		while (++retries < maxRetries) {
 			sendSegment(s);
 			
 			unique_lock<mutex> lock(writingMutex);
@@ -54,7 +59,7 @@ void Socket::write(const void *data, size_t length) {
 			increaseReadingTimeout();
 		}
 		
-		if (retries == 10)
+		if (retries == maxRetries)
 			throw SocketWriteError("Could not send data");
 		
 		d += s.dataLength();
@@ -63,18 +68,20 @@ void Socket::write(const void *data, size_t length) {
 }
 
 int Socket::read(void *buffer, int length) {
-	if (!readBuffer.hasData()) {
-		unique_lock<mutex> lock(readingMutex);
-		readingCV.wait_for(lock, chrono::milliseconds(1000), [this] {
-			return readBuffer.hasData();
-		});
+	unique_lock<mutex> lock(readingMutex);
+	bool hasData = readingCV.wait_for(lock, chrono::milliseconds(1000), [this] {
+		return readBuffer.hasData();
+	});
+	
+	if (!hasData) {
 		lock.unlock();
+		return 0;
 	}
 	
-	if (!readBuffer.hasData())
-		return 0;
+	int bytesRed = readBuffer.read((char *)buffer, length);
+	lock.unlock();
 	
-	return readBuffer.read((char *)buffer, length);
+	return bytesRed;
 }
 
 void Socket::sendSegment(const Segment &segment) {
@@ -125,10 +132,7 @@ bool Socket::peakSegment(int timeout) {
 }
 
 void Socket::increaseReadingTimeout() {
-	if (readingTimeout < 5000)
-		readingTimeout *= 2;
-	else
-		readingTimeout += readingTimeout / 2;
+	readingTimeout += readingTimeout / 2;
 }
 
 void Socket::setState(State newState) {
@@ -194,17 +198,6 @@ void Socket::readingLoop() {
 				writingCV.notify_all();
 			}
 		}
-		
-		// ---- read data into buffer if available space
-		// ---- reply with ACKS and mark lastAcked
-		// ---- read ACKS and mark leastNotAckaed
-	}
-}
-
-void Socket::writingLoop() {
-	while (state == ESTABLISHED) {
-		// write data from buffer
-		// wait for ACK
 	}
 }
 

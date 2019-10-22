@@ -62,6 +62,7 @@ protected:
 	thread readingThread;
 	condition_variable writingCV, readingCV;
 	mutable mutex writingMutex, readingMutex;
+	int maxRetries = 10;
 	
 	void sendSegment(const Segment &segment);
 	void receiveSegment();
@@ -72,7 +73,6 @@ protected:
 	void startThreads();
 	void stopThreads();
 	void readingLoop();
-	void writingLoop();
 };
 
 #endif

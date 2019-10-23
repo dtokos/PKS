@@ -18,15 +18,15 @@ public:
 		SocketAcceptError(string message) : SocketError(message) {}
 	};
 	
-	static ServerSocket fromPort(Port port);
+	static ServerSocket fromPort(Port port,  size_t maxSegmentSize);
 	Socket accept();
-	void close();
 	
 private:
-	ServerSocket(int fileDescriptor, sockaddr_in address);
+	ServerSocket(int fileDescriptor, sockaddr_in address, size_t maxSegmentSize);
 	void receiveSYN();
 	void sendSYNACK();
-	void receiveACK();
+	void receiveACKSYN();
+	
 };
 
 #endif

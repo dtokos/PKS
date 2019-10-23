@@ -1,14 +1,16 @@
 #include <iostream>
 #include <unistd.h>
 #include <libgen.h>
+#include <mach-o/dyld.h>
 #include "App/ServerApp.hpp"
 #include "App/ClientApp.hpp"
 
 using namespace std;
 
 void printMenu();
+string getDirname();
 
-int main(int argc, const char * argv[]) {
+int main() {
 	string choice;
 	
 	while (true) {
@@ -19,11 +21,11 @@ int main(int argc, const char * argv[]) {
 		
 		switch (choice[0]) {
 			case '1':
-				ServerApp().run();
+				ServerApp(getDirname()).run();
 				break;
 				
 			case '2':
-				ClientApp().run();
+				ClientApp(getDirname()).run();
 				break;
 				
 			case '0':
@@ -39,4 +41,26 @@ void printMenu() {
 		<< "[0] Exit" << endl
 		<< "Your choice: ";
 	cout.flush();
+}
+
+string getDirname() {
+	char path[PATH_MAX];
+	uint32_t pathSize = 1024;
+	
+	if (_NSGetExecutablePath(path, &pathSize) == -1) {
+		cout << "[ERR][APP] Could not get executable path" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	char realPath[PATH_MAX];
+	
+	if (realpath(path, realPath) == NULL) {
+		cout << "[ERR][APP] Could real path of executable" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	string dirPath(dirname(realPath));
+	dirPath += '/';
+	
+	return dirPath;
 }

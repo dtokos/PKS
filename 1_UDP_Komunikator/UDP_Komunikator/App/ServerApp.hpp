@@ -13,10 +13,8 @@ using namespace std;
 
 class ServerApp : public App {
 public:
+	ServerApp(string directory);
 	void run();
-	
-private:
-	Port getPort();
 };
 
 #endif

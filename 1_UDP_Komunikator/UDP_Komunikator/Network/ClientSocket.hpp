@@ -19,15 +19,14 @@ public:
 		SocketConnectError(string message) : SocketError(message) {}
 	};
 	
-	static ClientSocket fromIPAndPort(IP ip, Port port);
+	static ClientSocket fromIPAndPort(IP ip, Port port, size_t maxSegmentSize);
 	void connect();
-	
 private:
-	ClientSocket(int fileDescriptor, sockaddr_in address);
+	ClientSocket(int fileDescriptor, sockaddr_in address, size_t maxSegmentSize);
 
 	void sendSYN();
 	void receiveSYNACK();
-	void sendACK();
+	void sendACKSYN();
 };
 
 #endif

@@ -5,22 +5,28 @@
 #include <fstream>
 #include <exception>
 #include "../Network/Socket.hpp"
+#include "../Network/Port.hpp"
 #include "Message.hpp"
 
 class App {
 public:
+	App(string directory);
 	virtual void run() = 0;
 	
 protected:
 	struct AppNotOpenError : public exception {
 		const char * what () const throw () {
-			return "App is already closed";
+			return "Cannot read/write while app is closed";
 		}
 	};
 	
+	string directory;
 	thread readingThread;
 	bool isOpen = true;
+	bool didDisconnect = false;
 	
+	Port getPort();
+	size_t getMaxSegmentSize();
 	void comunicate(Socket &socket);
 	void printMenu();
 	void readLoop(Socket &socket);

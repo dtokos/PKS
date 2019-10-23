@@ -10,13 +10,20 @@ public:
 	enum Type : uint16_t {
 		SYN = 0,
 		SYNACK,
+		ACKSYN,
 		ACK,
 		DATA,
+		PING,
+		PONG,
+		FIN,
+		FINACK,
+		ACKFIN,
 	};
 	
 	static const size_t HeaderLength = (sizeof(Segment::Type) + sizeof(uint16_t) * 2 + sizeof(uint32_t) * 2);
 	static const size_t MaxLength = 1472; // 1500 - IP header - UDP header
 	static const size_t MaxDataLength = MaxLength - HeaderLength;
+	static const size_t MinDataLength = 1;
 	
 	Segment(Type type);
 	Segment(uint32_t acceptanceNumber = 0);

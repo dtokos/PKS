@@ -18,6 +18,9 @@ public:
 		}
 	};
 	
+	static const uint16_t MinPortNumber = 1024;
+	static const uint16_t MaxPortNumber = 65535;
+	
 	static Port fromNumber(int number);
 	unsigned short getNumber();
 	unsigned short getNormalizedNumber();

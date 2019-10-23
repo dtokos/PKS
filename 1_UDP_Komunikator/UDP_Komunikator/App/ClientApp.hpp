@@ -15,11 +15,12 @@ using namespace std;
 
 class ClientApp : public App {
 public:
+	ClientApp(string directory);
+	~ClientApp();
 	void run();
 	
 private:
 	IP getIP();
-	Port getPort();
 };
 
 #endif

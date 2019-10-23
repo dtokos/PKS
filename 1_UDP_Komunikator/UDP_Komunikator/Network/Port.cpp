@@ -3,7 +3,7 @@
 Port::Port(int number) : number(number) {}
 
 Port Port::fromNumber(int number) {
-	if (number < 1024 || number > 65535)
+	if (number < MinPortNumber || number > MaxPortNumber)
 		throw PortOutOfRange(number);
 	
 	return Port(number);

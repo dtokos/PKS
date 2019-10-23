@@ -1,8 +1,8 @@
 #include "ClientSocket.hpp"
 
-ClientSocket::ClientSocket(int fileDescriptor, sockaddr_in address) : Socket(fileDescriptor, address) {}
+ClientSocket::ClientSocket(int fileDescriptor, sockaddr_in address, size_t maxSegmentSize) : Socket(fileDescriptor, address, maxSegmentSize) {}
 
-ClientSocket ClientSocket::fromIPAndPort(IP ip, Port port) {
+ClientSocket ClientSocket::fromIPAndPort(IP ip, Port port, size_t maxSegmentSize) {
 	int fd;
 	sockaddr_in address = sockaddr_in{
 		.sin_family = AF_INET,
@@ -13,14 +13,14 @@ ClientSocket ClientSocket::fromIPAndPort(IP ip, Port port) {
 	if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
 		throw SocketCreateError("Could not get socket file descriptor");
 	
-	return ClientSocket(fd, address);
+	return ClientSocket(fd, address, maxSegmentSize);
 }
 void ClientSocket::connect() {
 	readingTimeout = InitialReadingTimeout;
 	
 	sendSYN();
 	receiveSYNACK();
-	sendACK();
+	sendACKSYN();
 	setState(State::ESTABLISHED);
 }
 
@@ -44,11 +44,11 @@ void ClientSocket::receiveSYNACK() {
 	throw SocketConnectError("RDP handshake failed");
 }
 
-void ClientSocket::sendACK() {
+void ClientSocket::sendACKSYN() {
 	int retries = 0;
 	
 	while (retries++ < maxRetries) {
-		sendSegment(Segment(Segment::Type::ACK));
+		sendSegment(Segment(Segment::Type::ACKSYN));
 		
 		if (!receiveSegment(readingTimeout))
 			return;

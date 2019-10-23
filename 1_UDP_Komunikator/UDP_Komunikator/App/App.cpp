@@ -1,5 +1,53 @@
 #include "App.hpp"
 
+App::App(string directory) : directory(directory) {}
+
+Port App::getPort() {
+	int portNumber;
+	
+	while (true) {
+		cout << "Enter port(" << Port::MinPortNumber << " - " << Port::MaxPortNumber << "): ";
+		cout.flush();
+		//cin >> portNumber;
+		portNumber = 9001;
+		
+		try {
+			return Port::fromNumber(portNumber);
+		} catch (Port::PortOutOfRange e) {
+			cerr << "[APP][ERR] Port " << e.portNumber << " is invalid" << endl;
+			
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore(1000, '\n');
+			}
+		}
+	}
+}
+
+size_t App::getMaxSegmentSize() {
+	size_t maxSegmentSize;
+	
+	while (true) {
+		cout << "Enter max segment size(" << Segment::MinDataLength << " - " << Segment::MaxLength << "): ";
+		cout.flush();
+		//cin >> maxSegmentSize;
+		//maxSegmentSize = Segment::MaxDataLength;
+		maxSegmentSize = 10;
+		
+		if (cin.fail() || maxSegmentSize < Segment::MinDataLength || maxSegmentSize > Segment::MaxDataLength) {
+			cerr << "[APP][ERR] Segment size " << maxSegmentSize << " is invalid" << endl;
+			
+			cin.clear();
+			cin.ignore(1000, '\n');
+		} else {
+			if (maxSegmentSize <= 10)
+				cout << "[Easter Egg] Really?! Max segment size of " << maxSegmentSize << " B?" << endl;
+			
+			return maxSegmentSize;
+		}
+	}
+}
+
 void App::comunicate(Socket &socket) {
 	try {
 		readingThread = thread(&App::readLoop, this, ref(socket));
@@ -32,7 +80,14 @@ void App::readLoop(Socket &socket) {
 					break;
 			}
 		}
-	} catch (AppNotOpenError e) {}
+	} catch (AppNotOpenError e) {
+		if (!didDisconnect)
+			cerr << "[APP][ERR] " << e.what() << endl;
+	} catch (Socket::SocketDisconnectedError e) {
+		cerr << "[RDP][ERR] " << e.what() << endl;
+	}
+	
+	isOpen = false;
 }
 
 Message::Type App::receiveMessageType(Socket &socket) {
@@ -65,9 +120,9 @@ void App::receiveFileMessage(Socket &socket) {
 	receiveBytes(socket, (char *)&fileSize, sizeof(fileSize));
 	uint64_t fileBlock = fileSize / 20;
 	
-	cout << "Receiving file(" << fileSize / 1024 << " KB): " << fileName << " will be stored at: ./" << fileName << endl;
+	cout << "Receiving file(" << fileSize / 1024 << " KB): " << fileName << " will be stored at: " << directory << fileName << endl;
 	
-	ofstream file(fileName);
+	ofstream file(directory + fileName);
 	uint64_t bytesRed, blockRed = 0;
 	char buffer[10240];
 	
@@ -109,7 +164,7 @@ void App::writeLoop(Socket &socket) {
 	try {
 		while (isOpen) {
 			printMenu();
-			getline(cin, choice);
+			readUserInput(choice);
 			if (choice.length() != 1)
 				continue;
 			
@@ -127,7 +182,14 @@ void App::writeLoop(Socket &socket) {
 					return;
 			}
 		}
-	} catch (AppNotOpenError e) {}
+	} catch (AppNotOpenError e) {
+		if (!didDisconnect)
+			cerr << "[APP][ERR] " << e.what() << endl;
+	} catch (Socket::SocketDisconnectedError e) {
+		cerr << "[RDP][ERR] " << e.what() << endl;
+	}
+	
+	isOpen = false;
 }
 
 void App::printMenu() {
@@ -161,17 +223,21 @@ void App::writeTextMessage(Socket &socket, const Message::Text &message) {
 }
 
 void App::sendFileMessage(Socket &socket) {
-	cout << "Enter filename: ";
+	cout << "Enter filepath: ";
 	cout.flush();
 	string filePath;
 	
 	readUserInput(filePath);
 	string fileName = getFileName(filePath);
 	
+	if (fileName.length() == 0) {
+		cerr << "[APP][ERR] Invalid file path" << endl;
+		return;
+	}
+	
 	ifstream file(filePath);
 	if (!file.is_open()) {
-		cerr << "[ERR] Could not open file " << filePath << endl;
-		cerr << "Error: " << strerror(errno);
+		cerr << "[APP][ERR] Could not open file " << filePath << endl;
 		return;
 	}
 	

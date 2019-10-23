@@ -1,8 +1,8 @@
 #include "ServerSocket.hpp"
 
-ServerSocket::ServerSocket(int fileDescriptor, sockaddr_in address) : Socket(fileDescriptor, address) {}
+ServerSocket::ServerSocket(int fileDescriptor, sockaddr_in address,  size_t maxSegmentSize) : Socket(fileDescriptor, address, maxSegmentSize) {}
 
-ServerSocket ServerSocket::fromPort(Port port) {
+ServerSocket ServerSocket::fromPort(Port port, size_t maxSegmentSize) {
 	int fd, options = 1;
 	sockaddr_in address = sockaddr_in {
 		.sin_family = AF_INET,
@@ -19,7 +19,7 @@ ServerSocket ServerSocket::fromPort(Port port) {
 	if (::bind(fd, (struct sockaddr *)&address, sizeof(address)) < 0)
 		throw SocketCreateError("Could not bind socket to address");
 	
-	return ServerSocket(fd, address);
+	return ServerSocket(fd, address, maxSegmentSize);
 }
 
 Socket ServerSocket::accept() {
@@ -27,9 +27,9 @@ Socket ServerSocket::accept() {
 	
 	receiveSYN();
 	sendSYNACK();
-	receiveACK();
+	receiveACKSYN();
 	
-	return Socket(fileDescriptor, address, readingTimeout, State::ESTABLISHED);
+	return Socket(fileDescriptor, address, maxSegmentSize, readingTimeout, State::ESTABLISHED);
 }
 
 void ServerSocket::receiveSYN() {
@@ -44,14 +44,14 @@ void ServerSocket::sendSYNACK() {
 	sendSegment(Segment(Segment::Type::SYNACK));
 }
 
-void ServerSocket::receiveACK() {
+void ServerSocket::receiveACKSYN() {
 	int retries = 0;
 	bool receiveResult;
 	
 	while (retries++ < maxRetries) {
 		receiveResult = receiveSegment(readingTimeout);
 		
-		if (receiveResult && receivedSegment.type() == Segment::Type::ACK)
+		if (receiveResult && receivedSegment.type() == Segment::Type::ACKSYN)
 			return;
 		
 		increaseReadingTimeout();
@@ -59,8 +59,4 @@ void ServerSocket::receiveACK() {
 	}
 	
 	throw SocketAcceptError("RDP handshake failed");
-}
-
-void ServerSocket::close() {
-	::close(fileDescriptor);
 }

@@ -48,10 +48,10 @@ public:
 		SocketDisconnectedError() : SocketError("Cant read/write on disconnected socket") {}
 	};
 	
-	static const int InitialReadingTimeout = 200;
+	static const int MinReadingTimeout = 200;
 	static const int MaxReadingTimeout = 5000;
 	
-	Socket(int fileDescriptor, sockaddr_in address, size_t maxSegmentSize, int readingTimeout = InitialReadingTimeout, State state = DISCONNECTED);
+	Socket(int fileDescriptor, sockaddr_in address, size_t maxSegmentSize, int readingTimeout = MinReadingTimeout, State state = DISCONNECTED);
 	Socket(Socket const& other);
 	~Socket();
 	void write(const void *data, size_t length);
@@ -71,7 +71,7 @@ protected:
 	condition_variable writingCV, readingCV, pingCV, pingSleepCV, disconnectCV;
 	mutable mutex writingMutex, readingMutex, pingMutex, pingSleepMutex, disconnectMutex;
 	const int maxRetries = 10;
-	bool didReceivePingACK = true;
+	bool didReceivePingACK = true, didReceiveNAK = false;
 	bool didJoinRead = false, didJoinPing = false, didStartRead = false, didStartPing = false;
 	
 	void sendSegment(const Segment &segment);
@@ -79,6 +79,7 @@ protected:
 	bool receiveSegment(int timeout);
 	bool peakSegment(int timeout);
 	void increaseReadingTimeout();
+	void decreaseReadingTimeout();
 	void setState(State newState);
 	void startThreads();
 	virtual void stopThreads();
@@ -86,6 +87,7 @@ protected:
 	void pingLoop();
 	void sendFINAndReceiveFINACK();
 	void sendACKFIN();
+	bool shouldScrambleSegment();
 	
 	enum SenderDisconnectState {
 		SendingFIN,

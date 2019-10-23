@@ -23,7 +23,7 @@ ServerSocket ServerSocket::fromPort(Port port, size_t maxSegmentSize) {
 }
 
 Socket ServerSocket::accept() {
-	readingTimeout = InitialReadingTimeout;
+	readingTimeout = MinReadingTimeout;
 	
 	receiveSYN();
 	sendSYNACK();

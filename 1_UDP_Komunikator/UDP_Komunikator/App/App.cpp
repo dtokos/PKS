@@ -31,8 +31,8 @@ size_t App::getMaxSegmentSize() {
 		cout << "Enter max segment size(" << Segment::MinDataLength << " - " << Segment::MaxLength << "): ";
 		cout.flush();
 		//cin >> maxSegmentSize;
-		//maxSegmentSize = Segment::MaxDataLength;
-		maxSegmentSize = 10;
+		maxSegmentSize = Segment::MaxDataLength;
+		//maxSegmentSize = 10;
 		
 		if (cin.fail() || maxSegmentSize < Segment::MinDataLength || maxSegmentSize > Segment::MaxDataLength) {
 			cerr << "[APP][ERR] Segment size " << maxSegmentSize << " is invalid" << endl;

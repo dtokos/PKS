@@ -16,7 +16,7 @@ ClientSocket ClientSocket::fromIPAndPort(IP ip, Port port, size_t maxSegmentSize
 	return ClientSocket(fd, address, maxSegmentSize);
 }
 void ClientSocket::connect() {
-	readingTimeout = InitialReadingTimeout;
+	readingTimeout = MinReadingTimeout;
 	
 	sendSYN();
 	receiveSYNACK();

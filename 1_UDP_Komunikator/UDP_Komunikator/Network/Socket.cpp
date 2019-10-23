@@ -1,8 +1,8 @@
 #include "Socket.hpp"
 
 //TODO: implement sliding window GBN
-//TODO: implement NAK sending + retransmission
 
+const int Socket::MinReadingTimeout;
 const int Socket::MaxReadingTimeout;
 
 Socket::Socket(int fileDescriptor, sockaddr_in address, size_t maxSegmentSize, int readingTimeout, State state) :
@@ -52,15 +52,18 @@ void Socket::write(const void *data, size_t length) {
 		length -= s.dataLength();
 		
 		while (++retries < maxRetries && state == ESTABLISHED) {
+			s.scramble(shouldScrambleSegment());
 			sendSegment(s);
 			
 			unique_lock<mutex> lock(writingMutex);
+			didReceiveNAK = false;
 			bool didReceiveACK = writingCV.wait_for(lock, chrono::milliseconds(readingTimeout), [this, s] {
-				return leastNotAcknowledged > s.sequenceNumber();
+				return leastNotAcknowledged > s.sequenceNumber() || didReceiveNAK;
 			});
+			
 			lock.unlock();
 			
-			if (didReceiveACK)
+			if (didReceiveACK && !didReceiveNAK)
 				break;
 			
 			increaseReadingTimeout();
@@ -118,7 +121,9 @@ bool Socket::receiveSegment(int timeout) {
 		default:
 			::recvfrom(fileDescriptor, &receivedSegment, Segment::MaxLength, MSG_WAITALL, (sockaddr *)&address, &addressLength);
 			if (!receivedSegment.isValid()) {
-				/* TODO: send NAK */
+				if (receivedSegment.type() == Segment::Type::DATA)
+					sendSegment(Segment(Segment::Type::NAK, receivedSegment.sequenceNumber()));
+				
 				return false;
 			}
 			
@@ -145,6 +150,11 @@ bool Socket::peakSegment(int timeout) {
 void Socket::increaseReadingTimeout() {
 	readingTimeout += readingTimeout / 2;
 	readingTimeout = min(readingTimeout, MaxReadingTimeout);
+}
+
+void Socket::decreaseReadingTimeout() {
+	readingTimeout -= readingTimeout / 4;
+	readingTimeout = max(readingTimeout, MinReadingTimeout);
 }
 
 void Socket::setState(State newState) {
@@ -198,6 +208,8 @@ void Socket::readingLoop() {
 			continue;
 		}
 		
+		decreaseReadingTimeout();
+		
 		if (readBuffer.canFitWholeSegment() && peakedSegment.type() == Segment::Type::DATA) {
 			receiveSegment();
 			
@@ -222,6 +234,19 @@ void Socket::readingLoop() {
 				{
 					lock_guard<mutex> lock(writingMutex);
 					leastNotAcknowledged = receivedSegment.acceptanceNumber() + 1;
+				}
+				writingCV.notify_all();
+			}
+			
+			continue;
+		}
+		
+		if (peakedSegment.type() == Segment::Type::NAK) {
+			receiveSegment();
+			if (receivedSegment.acceptanceNumber() == leastNotAcknowledged) {
+				{
+					lock_guard<mutex> lock(writingMutex);
+					didReceiveNAK = true;
 				}
 				writingCV.notify_all();
 			}
@@ -361,4 +386,8 @@ void Socket::sendACKFIN() {
 	
 	if (retries == maxRetries)
 		setState(DISCONNECTED);
+}
+
+bool Socket::shouldScrambleSegment() {
+	return (rand() % 100) < 5;
 }

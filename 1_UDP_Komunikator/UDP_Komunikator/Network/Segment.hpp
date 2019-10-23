@@ -12,6 +12,7 @@ public:
 		SYNACK,
 		ACKSYN,
 		ACK,
+		NAK,
 		DATA,
 		PING,
 		PONG,
@@ -26,6 +27,7 @@ public:
 	static const size_t MinDataLength = 1;
 	
 	Segment(Type type);
+	Segment(Type type, uint32_t acceptanceNumber);
 	Segment(uint32_t acceptanceNumber = 0);
 	Segment(uint32_t sequenceNumber, const void *segmentData, uint16_t length);
 	
@@ -51,8 +53,11 @@ public:
 	
 	size_t length() const;
 	
+	void scramble(bool shoudScramble);
+	
 private:
 	char data[MaxLength] = {0};
+	bool isSrambled = false;
 };
 
 #endif

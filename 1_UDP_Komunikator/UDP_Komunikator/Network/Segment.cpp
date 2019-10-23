@@ -16,6 +16,12 @@ Segment::Segment(Type type)  {
 	setChecksum();
 }
 
+Segment::Segment(Type type, uint32_t acceptanceNumber) {
+	setType(type);
+	setAcceptanceNumber(acceptanceNumber);
+	setChecksum();
+}
+
 Segment::Segment(uint32_t acceptanceNumber) {
 	setType(Type::ACK);
 	setAcceptanceNumber(acceptanceNumber);
@@ -118,4 +124,11 @@ char* Segment::getData() {
 
 size_t Segment::length() const {
 	return HeaderLength + *SegmentDataLength;
+}
+
+void Segment::scramble(bool shoudScramble) {
+	if ((isSrambled && !shoudScramble) || (!isSrambled && shoudScramble)) {
+		*SegmentChecksum = *SegmentChecksum ^ 0x1;
+		isSrambled = !isSrambled;
+	}
 }

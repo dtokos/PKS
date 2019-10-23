@@ -70,7 +70,7 @@ protected:
 	thread readingThread, pingThread;
 	condition_variable writingCV, readingCV, pingCV, pingSleepCV, disconnectCV;
 	mutable mutex writingMutex, readingMutex, pingMutex, pingSleepMutex, disconnectMutex;
-	const int maxRetries = 10;
+	const int maxRetries = 15;
 	bool didReceivePingACK = true, didReceiveNAK = false;
 	bool didJoinRead = false, didJoinPing = false, didStartRead = false, didStartPing = false;
 	

@@ -32,8 +32,7 @@ IP ClientApp::getIP() {
 	while (true) {
 		cout << "Enter IPv4 address: ";
 		cout.flush();
-		//cin >> ip;
-		ip = "127.0.0.1";
+		cin >> ip;
 		
 		try {
 			return IP::fromString(ip);

@@ -1,7 +1,5 @@
 #include "Socket.hpp"
 
-//TODO: implement sliding window GBN
-
 const int Socket::MinReadingTimeout;
 const int Socket::MaxReadingTimeout;
 

@@ -8,8 +8,7 @@ Port App::getPort() {
 	while (true) {
 		cout << "Enter port(" << Port::MinPortNumber << " - " << Port::MaxPortNumber << "): ";
 		cout.flush();
-		//cin >> portNumber;
-		portNumber = 9001;
+		cin >> portNumber;
 		
 		try {
 			return Port::fromNumber(portNumber);
@@ -28,11 +27,9 @@ size_t App::getMaxSegmentSize() {
 	size_t maxSegmentSize;
 	
 	while (true) {
-		cout << "Enter max segment size(" << Segment::MinDataLength << " - " << Segment::MaxLength << "): ";
+		cout << "Enter max data segment size(" << Segment::MinDataLength << " - " << Segment::MaxDataLength << "): ";
 		cout.flush();
-		//cin >> maxSegmentSize;
-		maxSegmentSize = Segment::MaxDataLength;
-		//maxSegmentSize = 10;
+		cin >> maxSegmentSize;
 		
 		if (cin.fail() || maxSegmentSize < Segment::MinDataLength || maxSegmentSize > Segment::MaxDataLength) {
 			cerr << "[APP][ERR] Segment size " << maxSegmentSize << " is invalid" << endl;

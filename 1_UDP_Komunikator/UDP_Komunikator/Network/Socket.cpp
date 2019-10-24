@@ -50,6 +50,7 @@ void Socket::write(const void *data, size_t length) {
 		length -= s.dataLength();
 		
 		while (++retries < maxRetries && state == ESTABLISHED) {
+			cout << "Sending segment with data size: " << s.dataLength() << " bytes" << endl;
 			s.scramble(shouldScrambleSegment());
 			sendSegment(s);
 			

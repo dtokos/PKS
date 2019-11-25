@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		98296398238BCC7400F88524 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98296397238BCC7400F88524 /* main.cpp */; };
-		982963A5238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.m in Sources */ = {isa = PBXBuildFile; fileRef = 982963A4238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.m */; };
+		982963AC238BCCD500F88524 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982963AA238BCCD500F88524 /* ConfigParser.cpp */; };
+		982963AD238BCCD500F88524 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982963AA238BCCD500F88524 /* ConfigParser.cpp */; };
+		982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 982963AE238BD25200F88524 /* TestConfigParser.mm */; };
+		982963B2238BD42800F88524 /* PcapParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982963B0238BD42800F88524 /* PcapParser.cpp */; };
+		982963B3238BD42800F88524 /* PcapParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982963B0238BD42800F88524 /* PcapParser.cpp */; };
+		982963B7238BD84C00F88524 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 982963B5238BD7D100F88524 /* libpcap.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +32,13 @@
 		98296394238BCC7400F88524 /* 2_Analyza_ramcov_hlavicky */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 2_Analyza_ramcov_hlavicky; sourceTree = BUILT_PRODUCTS_DIR; };
 		98296397238BCC7400F88524 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		982963A2238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_2_Analyza_ramcov_hlavicky.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		982963A4238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test_2_Analyza_ramcov_hlavicky.m; sourceTree = "<group>"; };
 		982963A6238BCC8900F88524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		982963AA238BCCD500F88524 /* ConfigParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigParser.cpp; sourceTree = "<group>"; };
+		982963AB238BCCD500F88524 /* ConfigParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConfigParser.hpp; sourceTree = "<group>"; };
+		982963AE238BD25200F88524 /* TestConfigParser.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestConfigParser.mm; sourceTree = "<group>"; };
+		982963B0238BD42800F88524 /* PcapParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PcapParser.cpp; sourceTree = "<group>"; };
+		982963B1238BD42800F88524 /* PcapParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PcapParser.hpp; sourceTree = "<group>"; };
+		982963B5238BD7D100F88524 /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				982963B7238BD84C00F88524 /* libpcap.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +66,7 @@
 				98296396238BCC7400F88524 /* 2_Analyza_ramcov_hlavicky */,
 				982963A3238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky */,
 				98296395238BCC7400F88524 /* Products */,
+				982963B4238BD7D100F88524 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +83,10 @@
 			isa = PBXGroup;
 			children = (
 				98296397238BCC7400F88524 /* main.cpp */,
+				982963AB238BCCD500F88524 /* ConfigParser.hpp */,
+				982963AA238BCCD500F88524 /* ConfigParser.cpp */,
+				982963B1238BD42800F88524 /* PcapParser.hpp */,
+				982963B0238BD42800F88524 /* PcapParser.cpp */,
 			);
 			path = 2_Analyza_ramcov_hlavicky;
 			sourceTree = "<group>";
@@ -78,10 +94,18 @@
 		982963A3238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky */ = {
 			isa = PBXGroup;
 			children = (
-				982963A4238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.m */,
+				982963AE238BD25200F88524 /* TestConfigParser.mm */,
 				982963A6238BCC8900F88524 /* Info.plist */,
 			);
 			path = Test_2_Analyza_ramcov_hlavicky;
+			sourceTree = "<group>";
+		};
+		982963B4238BD7D100F88524 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				982963B5238BD7D100F88524 /* libpcap.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,7 +195,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				982963AC238BCCD500F88524 /* ConfigParser.cpp in Sources */,
 				98296398238BCC7400F88524 /* main.cpp in Sources */,
+				982963B2238BD42800F88524 /* PcapParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +205,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				982963A5238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.m in Sources */,
+				982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */,
+				982963AD238BCCD500F88524 /* ConfigParser.cpp in Sources */,
+				982963B3238BD42800F88524 /* PcapParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "./ConfigParser.hpp"
-#include "./PcapParser.hpp"
+#include "./App/App.hpp"
 
 int main(int argc, const char * argv[]) {
 	if (argc < 2) {
@@ -11,10 +11,10 @@ int main(int argc, const char * argv[]) {
 	ConfigParser configParser;
 	try {
 		Config l2config = configParser.parse("l2.cfg");
-		cout << "L2CFG: " << l2config[123] << " " << l2config[421] << endl;
-		
 		PcapParser parser(l2config);
-		parser.parse(argv[1]);
+		App app(parser);
+		
+		app.run(argv[1]);
 	} catch (ConfigParser::ParsingError &error) {
 		cerr << error.what() << endl;
 	} catch (PcapParser::ParsingError &error) {

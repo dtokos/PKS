@@ -1,9 +1,12 @@
 #ifndef PcapParser_hpp
 #define PcapParser_hpp
 
+#include <iostream>
+#include <vector>
 #include <string>
 #include <map>
 #include <pcap.h>
+#include "./Network.hpp"
 
 using namespace std;
 using Config = map<int, string>;
@@ -21,10 +24,20 @@ public:
 	};
 	
 	PcapParser(Config l2Config);
-	void parse(const string &fileName);
+	vector<Frame *> parse(const string &fileName);
+	
+	pcap_pkthdr *parsingHeader;
+	const u_char *parsingData;
+	unsigned serialNumber;
 	
 private:
 	Config l2Config;
+	
+	pcap_t *openPcapFile(const string &fileName);
+	Frame *parseFrame();
+	uint16_t parseFrameLength();
+	Frame *parseIeee802_3Frame();
+	uint8_t parseDSAP();
 };
 
 #endif

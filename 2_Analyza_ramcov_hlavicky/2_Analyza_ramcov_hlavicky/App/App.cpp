@@ -26,7 +26,7 @@ void App::printAllFrameData(Frame *frame) {
 	uint8_t *byte = frame->raw;
 	int i;
 	
-	for (i = 0; i < frame->pcapLength; i++, byte++) {
+	for (i = 0; i < frame->capturedLength; i++, byte++) {
 		cout << setfill('0') << setw(2) << hex << static_cast<int>(*byte) << " ";
 		
 		if (i == 0)

@@ -17,6 +17,8 @@
 		9844E18F238D4F3400E92F86 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E18D238D4F3400E92F86 /* App.cpp */; };
 		9844E190238D4F3400E92F86 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E18D238D4F3400E92F86 /* App.cpp */; };
 		9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E191238D562C00E92F86 /* trace-1.pcap */; };
+		9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9844E193238D7EC900E92F86 /* TestFrame.mm */; };
+		9844E195238D7F4D00E92F86 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 982963B5238BD7D100F88524 /* libpcap.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,6 +58,7 @@
 		9844E18D238D4F3400E92F86 /* App.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
 		9844E18E238D4F3400E92F86 /* App.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
 		9844E191238D562C00E92F86 /* trace-1.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-1.pcap"; sourceTree = "<group>"; };
+		9844E193238D7EC900E92F86 /* TestFrame.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestFrame.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9844E195238D7F4D00E92F86 /* libpcap.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +125,7 @@
 		982963A3238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky */ = {
 			isa = PBXGroup;
 			children = (
+				9844E193238D7EC900E92F86 /* TestFrame.mm */,
 				982963AE238BD25200F88524 /* TestConfigParser.mm */,
 				982963A6238BCC8900F88524 /* Info.plist */,
 			);
@@ -266,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9844E190238D4F3400E92F86 /* App.cpp in Sources */,
+				9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */,
 				982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */,
 				982963B3238BD42800F88524 /* PcapParser.cpp in Sources */,
 			);

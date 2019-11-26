@@ -26,12 +26,13 @@ public:
 	PcapParser(Config l2Config);
 	vector<Frame *> parse(const string &fileName);
 	
-	pcap_pkthdr *parsingHeader;
-	const u_char *parsingData;
-	unsigned serialNumber;
-	
 private:
 	Config l2Config;
+	pcap_pkthdr *parsingHeader;
+	const u_char *parsingDataBuffer;
+	unsigned serialNumber;
+	uint8_t *parsingData;
+	
 	
 	pcap_t *openPcapFile(const string &fileName);
 	Frame *parseFrame();

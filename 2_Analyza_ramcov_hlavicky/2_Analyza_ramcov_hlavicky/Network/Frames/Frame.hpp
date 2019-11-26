@@ -39,7 +39,7 @@ public:
 			return stream.str();
 		}
 	};
-	Frame(unsigned serialNumber, uint32_t pcapLength, uint8_t *data, uint32_t dataLength) : serialNumber(serialNumber), pcapLength(pcapLength), raw(new uint8_t[dataLength]) {memcpy(raw, data, dataLength);}
+	Frame(unsigned serialNumber, uint32_t pcapLength, uint8_t *data, uint32_t capturedLength) : serialNumber(serialNumber), pcapLength(pcapLength), capturedLength(capturedLength), raw(new uint8_t[capturedLength]) {memcpy(raw, data, capturedLength);}
 	~Frame() {delete[] raw;}
 	
 	MACAddress destination() {return getField<MACAddress>(0);}
@@ -51,7 +51,7 @@ public:
 	virtual uint8_t *data() = 0;
 	
 	unsigned serialNumber;
-	uint32_t pcapLength;
+	uint32_t pcapLength, capturedLength;
 	uint8_t *raw;
 };
 

@@ -16,6 +16,9 @@ vector<Frame *> PcapParser::parse(const string &fileName) {
 	}
 	
 	if (readingResult == PCAP_ERROR) {
+		for (Frame *frame : frames)
+			delete frame; 
+		
 		string readingError(pcap_geterr(file));
 		throw ParsingError("Packet could not be red\n" + readingError);
 	}

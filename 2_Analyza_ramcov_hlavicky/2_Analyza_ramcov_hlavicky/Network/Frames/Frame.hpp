@@ -40,7 +40,7 @@ public:
 		}
 	};
 	Frame(unsigned serialNumber, uint32_t pcapLength, uint8_t *data, uint32_t capturedLength) : serialNumber(serialNumber), pcapLength(pcapLength), capturedLength(capturedLength), raw(new uint8_t[capturedLength]) {memcpy(raw, data, capturedLength);}
-	~Frame() {delete[] raw;}
+	virtual ~Frame() {delete[] raw;}
 	
 	MACAddress destination() {return getField<MACAddress>(0);}
 	MACAddress source() {return getField<Frame::MACAddress>(6);}

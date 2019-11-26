@@ -29,8 +29,8 @@ private:
 	bool hasContext;
 	PcapParser::Context currentContext;
 	regex whitespacePattern = regex(R"(^\s*$)");
-	regex contextPattern = regex(R"(^\s*#\s*(Ethernet|LSAP|IP|TCP,UDP)\s*$)");
-	regex configPattern = regex(R"(^\s*(\d+)\s*(.*[^\s])\s*$)");
+	regex contextPattern = regex(R"(^\s*#\s*(Ethernet|LSAP|IP|TCP|UDP)\s*$)");
+	regex configPattern = regex(R"(^\s*(0x[a-fA-F0-9]+|\d+)\s+(.*[^\s])\s*$)");
 	static const map<string, PcapParser::Context> convertMap;
 	
 	bool parseLine(PcapParser::ContextConfig &config, const string &line);

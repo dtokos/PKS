@@ -49,4 +49,15 @@
 	XCTAssertThrows(parser.parse(configStream));
 }
 
+- (void)testParseHexString {
+	string configString = "#Ethernet\n0xFF foo\n0x3E bar";
+	istringstream configStream(configString);
+	ConfigParser parser;
+	PcapParser::ContextConfig config = parser.parse(configStream);
+	XCTAssertEqual(config.size(), 1);
+	XCTAssertEqual(config[PcapParser::Ethernet].size(), 2);
+	XCTAssertEqual(config[PcapParser::Ethernet][0xFF], "foo");
+	XCTAssertEqual(config[PcapParser::Ethernet][0x3E], "bar");
+}
+
 @end

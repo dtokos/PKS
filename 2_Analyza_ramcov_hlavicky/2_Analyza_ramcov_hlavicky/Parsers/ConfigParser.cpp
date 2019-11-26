@@ -70,7 +70,7 @@ bool ConfigParser::parseConfig(PcapParser::ContextConfig &config, const string &
 int ConfigParser::parseConfigNumber(const string &strNumber) {
 	size_t hexIndex = strNumber.rfind("0x", 0);
 	if (hexIndex == 0)
-		return stoi(strNumber.substr(hexIndex), 0, 16);
+		return stoi(strNumber.substr(2), 0, 16);
 	
 	return stoi(strNumber);
 }

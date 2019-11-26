@@ -13,13 +13,40 @@
 }
 
 - (void)testParseString {
-	string configString = "123 foo\ninvalid line\n456 bar";
+	string configString = "#Ethernet\n123 foo\n456 bar\n#LSAP\n789 baz";
 	istringstream configStream(configString);
 	ConfigParser parser;
-	map<int, string> config = parser.parse(configStream);
+	PcapParser::ContextConfig config = parser.parse(configStream);
 	XCTAssertEqual(config.size(), 2);
-	XCTAssertEqual(config[123], "foo");
-	XCTAssertEqual(config[456], "bar");
+	XCTAssertEqual(config[PcapParser::Ethernet].size(), 2);
+	XCTAssertEqual(config[PcapParser::Ethernet][123], "foo");
+	XCTAssertEqual(config[PcapParser::Ethernet][456], "bar");
+	XCTAssertEqual(config[PcapParser::LSAP][789], "baz");
+}
+
+- (void)testParseStringWithWhitespaces {
+	string configString = "\n\t #\t Ethernet \t\n \t123 \t foo \t\n \t456\t bar";
+	istringstream configStream(configString);
+	ConfigParser parser;
+	PcapParser::ContextConfig config = parser.parse(configStream);
+	XCTAssertEqual(config.size(), 1);
+	XCTAssertEqual(config[PcapParser::Ethernet].size(), 2);
+	XCTAssertEqual(config[PcapParser::Ethernet][123], "foo");
+	XCTAssertEqual(config[PcapParser::Ethernet][456], "bar");
+}
+
+- (void)testParseEmptyString {
+	string configString = "\n\t ";
+	istringstream configStream(configString);
+	ConfigParser parser;
+	XCTAssertNoThrow(parser.parse(configStream));
+}
+
+- (void)testParseEmptyInvalidString {
+	string configString = "#Etherngfdet\n123 foo\n456 bar\n#LSdsfAP\n789 baz";
+	istringstream configStream(configString);
+	ConfigParser parser;
+	XCTAssertThrows(parser.parse(configStream));
 }
 
 @end

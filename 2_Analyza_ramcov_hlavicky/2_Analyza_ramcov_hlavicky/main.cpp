@@ -1,6 +1,5 @@
 #include <iostream>
-#include "./ConfigParser.hpp"
-#include "./Parsers/ContextConfigParser.hpp"
+#include "./Parsers/ConfigParser.hpp"
 #include "./App/App.hpp"
 
 int main(int argc, const char * argv[]) {
@@ -10,11 +9,9 @@ int main(int argc, const char * argv[]) {
 	}
 	
 	ConfigParser configParser;
-	ContextConfigParser ccParser;
 	try {
-		PcapParser::ContextConfig q = ccParser.parse("config.cfg");
-		PcapParser::Config l2config = configParser.parse("l2.cfg");
-		PcapParser parser(l2config);
+		PcapParser::ContextConfig config = configParser.parse("config.cfg");
+		PcapParser parser(config);
 		App app(parser);
 		
 		app.run(argv[1]);
@@ -22,8 +19,7 @@ int main(int argc, const char * argv[]) {
 		cerr << error.what() << endl;
 	} catch (PcapParser::ParsingError &error) {
 		cerr << error.what() << endl;
-	} catch (ContextConfigParser::ParsingError &error) {
-		cerr << error.what() << endl;
 	}
+	
 	return 0;
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		98251485238C4FAB00579BC8 /* l2.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98251483238C4F6300579BC8 /* l2.cfg */; };
 		98251487238C4FF300579BC8 /* eth-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98251486238C4FEE00579BC8 /* eth-1.pcap */; };
 		98296398238BCC7400F88524 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98296397238BCC7400F88524 /* main.cpp */; };
 		982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 982963AE238BD25200F88524 /* TestConfigParser.mm */; };
@@ -19,8 +18,8 @@
 		9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E191238D562C00E92F86 /* trace-1.pcap */; };
 		9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9844E193238D7EC900E92F86 /* TestFrame.mm */; };
 		9844E195238D7F4D00E92F86 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 982963B5238BD7D100F88524 /* libpcap.tbd */; };
-		9844E199238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */; };
-		9844E19A238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */; };
+		9844E199238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
+		9844E19A238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E19B238DA34700E92F86 /* config.cfg */; };
 /* End PBXBuildFile section */
 
@@ -34,20 +33,17 @@
 				9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */,
 				9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */,
 				98251487238C4FF300579BC8 /* eth-1.pcap in CopyFiles */,
-				98251485238C4FAB00579BC8 /* l2.cfg in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		98251483238C4F6300579BC8 /* l2.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = l2.cfg; sourceTree = "<group>"; };
 		98251486238C4FEE00579BC8 /* eth-1.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "eth-1.pcap"; sourceTree = "<group>"; };
 		98296394238BCC7400F88524 /* 2_Analyza_ramcov_hlavicky */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 2_Analyza_ramcov_hlavicky; sourceTree = BUILT_PRODUCTS_DIR; };
 		98296397238BCC7400F88524 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		982963A2238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_2_Analyza_ramcov_hlavicky.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		982963A6238BCC8900F88524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		982963AB238BCCD500F88524 /* ConfigParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConfigParser.hpp; sourceTree = "<group>"; };
 		982963AE238BD25200F88524 /* TestConfigParser.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestConfigParser.mm; sourceTree = "<group>"; };
 		982963B0238BD42800F88524 /* PcapParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PcapParser.cpp; sourceTree = "<group>"; };
 		982963B1238BD42800F88524 /* PcapParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PcapParser.hpp; sourceTree = "<group>"; };
@@ -63,8 +59,8 @@
 		9844E18E238D4F3400E92F86 /* App.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
 		9844E191238D562C00E92F86 /* trace-1.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-1.pcap"; sourceTree = "<group>"; };
 		9844E193238D7EC900E92F86 /* TestFrame.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestFrame.mm; sourceTree = "<group>"; };
-		9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContextConfigParser.cpp; sourceTree = "<group>"; };
-		9844E198238D9B7C00E92F86 /* ContextConfigParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ContextConfigParser.hpp; sourceTree = "<group>"; };
+		9844E197238D9B7C00E92F86 /* ConfigParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigParser.cpp; sourceTree = "<group>"; };
+		9844E198238D9B7C00E92F86 /* ConfigParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConfigParser.hpp; sourceTree = "<group>"; };
 		9844E19B238DA34700E92F86 /* config.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.cfg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,7 +87,6 @@
 		98251482238C4F4E00579BC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				98251483238C4F6300579BC8 /* l2.cfg */,
 				9844E19B238DA34700E92F86 /* config.cfg */,
 				98251486238C4FEE00579BC8 /* eth-1.pcap */,
 				9844E191238D562C00E92F86 /* trace-1.pcap */,
@@ -126,7 +121,6 @@
 				9844E196238D9B6000E92F86 /* Parsers */,
 				9844E18C238D4F2900E92F86 /* App */,
 				98296397238BCC7400F88524 /* main.cpp */,
-				982963AB238BCCD500F88524 /* ConfigParser.hpp */,
 			);
 			path = 2_Analyza_ramcov_hlavicky;
 			sourceTree = "<group>";
@@ -183,8 +177,8 @@
 		9844E196238D9B6000E92F86 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				9844E198238D9B7C00E92F86 /* ContextConfigParser.hpp */,
-				9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */,
+				9844E198238D9B7C00E92F86 /* ConfigParser.hpp */,
+				9844E197238D9B7C00E92F86 /* ConfigParser.cpp */,
 				982963B1238BD42800F88524 /* PcapParser.hpp */,
 				982963B0238BD42800F88524 /* PcapParser.cpp */,
 			);
@@ -278,7 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9844E199238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */,
+				9844E199238D9B7C00E92F86 /* ConfigParser.cpp in Sources */,
 				9844E18F238D4F3400E92F86 /* App.cpp in Sources */,
 				98296398238BCC7400F88524 /* main.cpp in Sources */,
 				982963B2238BD42800F88524 /* PcapParser.cpp in Sources */,
@@ -290,7 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9844E190238D4F3400E92F86 /* App.cpp in Sources */,
-				9844E19A238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */,
+				9844E19A238D9B7C00E92F86 /* ConfigParser.cpp in Sources */,
 				9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */,
 				982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */,
 				982963B3238BD42800F88524 /* PcapParser.cpp in Sources */,

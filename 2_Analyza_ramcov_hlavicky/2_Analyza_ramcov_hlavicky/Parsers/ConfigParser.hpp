@@ -1,5 +1,5 @@
-#ifndef ContextConfigParser_hpp
-#define ContextConfigParser_hpp
+#ifndef ConfigParser_hpp
+#define ConfigParser_hpp
 
 #include <exception>
 #include <fstream>
@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class ContextConfigParser {
+class ConfigParser {
 public:
 	class ParsingError : public exception {
 	public:
@@ -36,8 +36,8 @@ private:
 	bool parseLine(PcapParser::ContextConfig &config, const string &line);
 	bool parseWhiteSpace(PcapParser::ContextConfig &config, const string &line);
 	bool parseContext(PcapParser::ContextConfig &config, const string &line);
-	void setContext(const string &context);
 	bool parseConfig(PcapParser::ContextConfig &config, const string &line);
+	int parseConfigNumber(const string &strNumber);
 };
 
 #endif

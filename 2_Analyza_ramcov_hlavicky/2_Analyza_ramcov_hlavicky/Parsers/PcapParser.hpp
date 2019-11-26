@@ -27,11 +27,11 @@ public:
 		}
 	};
 	
-	PcapParser(Config l2Config);
+	PcapParser(ContextConfig config);
 	vector<Frame *> parse(const string &fileName);
 	
 private:
-	Config l2Config;
+	ContextConfig config;
 	pcap_pkthdr *parsingHeader;
 	const u_char *parsingDataBuffer;
 	unsigned serialNumber;

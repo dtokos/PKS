@@ -1,6 +1,6 @@
 #include "PcapParser.hpp"
 
-PcapParser::PcapParser(Config l2Config) : l2Config(l2Config) {};
+PcapParser::PcapParser(ContextConfig config) : config(config) {};
 
 vector<Frame *> PcapParser::parse(const string &fileName) {
 	serialNumber = 1;

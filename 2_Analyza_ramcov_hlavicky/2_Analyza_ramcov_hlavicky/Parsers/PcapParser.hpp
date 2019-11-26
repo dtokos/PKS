@@ -43,6 +43,11 @@ private:
 	uint16_t parseFrameLength();
 	Frame *parseIeee802_3Frame();
 	uint8_t parseDSAP();
+	
+	template<typename Type>
+	constexpr Type getField(uint32_t offset) {
+		return *reinterpret_cast<Type *>(parsingData + offset);
+	}
 };
 
 #endif

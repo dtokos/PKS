@@ -20,7 +20,7 @@ vector<Frame *> PcapParser::parse(const string &fileName) {
 			delete frame; 
 		
 		string readingError(pcap_geterr(file));
-		throw ParsingError("Packet could not be red\n" + readingError);
+		throw ParsingError("Packet could not be read\n" + readingError);
 	}
 	
 	return frames;
@@ -44,22 +44,22 @@ Frame *PcapParser::parseFrame() {
 }
 
 uint16_t PcapParser::parseFrameLength() {
-	return ntohs(*(uint16_t *)(parsingDataBuffer + 12));
+	return ntohs(getField<uint16_t>(12));
 }
 
 Frame *PcapParser::parseIeee802_3Frame() {
 	switch (parseDSAP()) {
 		case 0xFF:
-			return new Ieee802_3RawFrame(serialNumber, parsingHeader->len, (uint8_t *)parsingDataBuffer, parsingHeader->caplen);
+			return new Ieee802_3RawFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
 			
 		case 0xAA:
-			return new Ieee802_3LlcSnapFrame(serialNumber, parsingHeader->len, (uint8_t *)parsingDataBuffer, parsingHeader->caplen);
+			return new Ieee802_3LlcSnapFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
 			
 		default:
-			return new Ieee802_3LlcFrame(serialNumber, parsingHeader->len, (uint8_t *)parsingDataBuffer, parsingHeader->caplen);
+			return new Ieee802_3LlcFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
 	}
 }
 
 uint8_t PcapParser::parseDSAP() {
-	return *(parsingDataBuffer + 13);
+	return getField<uint8_t>(13);
 }

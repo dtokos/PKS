@@ -19,6 +19,9 @@
 		9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E191238D562C00E92F86 /* trace-1.pcap */; };
 		9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9844E193238D7EC900E92F86 /* TestFrame.mm */; };
 		9844E195238D7F4D00E92F86 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 982963B5238BD7D100F88524 /* libpcap.tbd */; };
+		9844E199238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */; };
+		9844E19A238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */; };
+		9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E19B238DA34700E92F86 /* config.cfg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +31,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */,
 				9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */,
 				98251487238C4FF300579BC8 /* eth-1.pcap in CopyFiles */,
 				98251485238C4FAB00579BC8 /* l2.cfg in CopyFiles */,
@@ -59,6 +63,9 @@
 		9844E18E238D4F3400E92F86 /* App.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
 		9844E191238D562C00E92F86 /* trace-1.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-1.pcap"; sourceTree = "<group>"; };
 		9844E193238D7EC900E92F86 /* TestFrame.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestFrame.mm; sourceTree = "<group>"; };
+		9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContextConfigParser.cpp; sourceTree = "<group>"; };
+		9844E198238D9B7C00E92F86 /* ContextConfigParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ContextConfigParser.hpp; sourceTree = "<group>"; };
+		9844E19B238DA34700E92F86 /* config.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.cfg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				98251483238C4F6300579BC8 /* l2.cfg */,
+				9844E19B238DA34700E92F86 /* config.cfg */,
 				98251486238C4FEE00579BC8 /* eth-1.pcap */,
 				9844E191238D562C00E92F86 /* trace-1.pcap */,
 			);
@@ -115,6 +123,7 @@
 			children = (
 				98251482238C4F4E00579BC8 /* Resources */,
 				9844E169238D217100E92F86 /* Network */,
+				9844E196238D9B6000E92F86 /* Parsers */,
 				9844E18C238D4F2900E92F86 /* App */,
 				98296397238BCC7400F88524 /* main.cpp */,
 				982963AB238BCCD500F88524 /* ConfigParser.hpp */,
@@ -145,8 +154,6 @@
 			children = (
 				9844E186238D4E6E00E92F86 /* Frames */,
 				9844E188238D4E8A00E92F86 /* Network.hpp */,
-				982963B1238BD42800F88524 /* PcapParser.hpp */,
-				982963B0238BD42800F88524 /* PcapParser.cpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -171,6 +178,17 @@
 				9844E18D238D4F3400E92F86 /* App.cpp */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		9844E196238D9B6000E92F86 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				9844E198238D9B7C00E92F86 /* ContextConfigParser.hpp */,
+				9844E197238D9B7C00E92F86 /* ContextConfigParser.cpp */,
+				982963B1238BD42800F88524 /* PcapParser.hpp */,
+				982963B0238BD42800F88524 /* PcapParser.cpp */,
+			);
+			path = Parsers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9844E199238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */,
 				9844E18F238D4F3400E92F86 /* App.cpp in Sources */,
 				98296398238BCC7400F88524 /* main.cpp in Sources */,
 				982963B2238BD42800F88524 /* PcapParser.cpp in Sources */,
@@ -271,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9844E190238D4F3400E92F86 /* App.cpp in Sources */,
+				9844E19A238D9B7C00E92F86 /* ContextConfigParser.cpp in Sources */,
 				9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */,
 				982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */,
 				982963B3238BD42800F88524 /* PcapParser.cpp in Sources */,

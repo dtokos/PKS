@@ -1,7 +1,7 @@
 #ifndef App_hpp
 #define App_hpp
 
-#include "../Network/PcapParser.hpp"
+#include "../Parsers/PcapParser.hpp"
 
 class App {
 public:

@@ -6,13 +6,17 @@
 #include <string>
 #include <map>
 #include <pcap.h>
-#include "./Network.hpp"
+#include "../Network/Network.hpp"
 
 using namespace std;
-using Config = map<int, string>;
 
 class PcapParser {
 public:
+	enum Context {Ethernet, LSAP, IP, TCP, UDP};
+	
+	using Config = map<int, string>;
+	using ContextConfig = map<Context, Config>;
+	
 	class ParsingError : public exception {
 	public:
 		string message;

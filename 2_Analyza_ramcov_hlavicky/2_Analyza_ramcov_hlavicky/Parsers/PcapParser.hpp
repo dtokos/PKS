@@ -76,6 +76,11 @@ private:
 	
 	Packet *parseL3Packet(EthernetIIFrame *frame);
 	
+	Segment *parseL4Segment(IPv4Packet *packet);
+	
+	Message *parseL5Message(TCPSegment *segment);
+	Message *parseL5Message(UDPSegment *segment);
+	
 	template<typename Type>
 	constexpr Type getField(uint32_t offset) {
 		return *reinterpret_cast<Type *>(parsingData + offset);

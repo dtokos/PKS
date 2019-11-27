@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		981AD809238EF3E5006330C1 /* trace-2.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 981AD808238EF3D7006330C1 /* trace-2.pcap */; };
 		98251487238C4FF300579BC8 /* eth-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98251486238C4FEE00579BC8 /* eth-1.pcap */; };
 		98296398238BCC7400F88524 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98296397238BCC7400F88524 /* main.cpp */; };
 		982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 982963AE238BD25200F88524 /* TestConfigParser.mm */; };
@@ -22,6 +23,7 @@
 		9844E199238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19A238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E19B238DA34700E92F86 /* config.cfg */; };
+		98EB91C8238F17400036C57A /* trace-3.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98EB91C7238F17380036C57A /* trace-3.pcap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				98EB91C8238F17400036C57A /* trace-3.pcap in CopyFiles */,
+				981AD809238EF3E5006330C1 /* trace-2.pcap in CopyFiles */,
 				9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */,
 				9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */,
 				98251487238C4FF300579BC8 /* eth-1.pcap in CopyFiles */,
@@ -40,6 +44,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		981AD7F5238EEC58006330C1 /* Segment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Segment.hpp; sourceTree = "<group>"; };
+		981AD7F9238EECDC006330C1 /* Segments.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Segments.hpp; sourceTree = "<group>"; };
+		981AD7FD238EED7C006330C1 /* TCPSegment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TCPSegment.hpp; sourceTree = "<group>"; };
+		981AD801238EEEB5006330C1 /* UDPSegment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UDPSegment.hpp; sourceTree = "<group>"; };
+		981AD805238EEEED006330C1 /* ICMPSegment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ICMPSegment.hpp; sourceTree = "<group>"; };
+		981AD808238EF3D7006330C1 /* trace-2.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-2.pcap"; sourceTree = "<group>"; };
+		981AD80C238EF49F006330C1 /* Message.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Message.hpp; sourceTree = "<group>"; };
 		98251486238C4FEE00579BC8 /* eth-1.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "eth-1.pcap"; sourceTree = "<group>"; };
 		98296394238BCC7400F88524 /* 2_Analyza_ramcov_hlavicky */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 2_Analyza_ramcov_hlavicky; sourceTree = BUILT_PRODUCTS_DIR; };
 		98296397238BCC7400F88524 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -74,6 +85,7 @@
 		9844E1A3238DC08700E92F86 /* Parsers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Parsers.hpp; sourceTree = "<group>"; };
 		9844E1A7238DC14900E92F86 /* PrintFramesCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PrintFramesCommand.hpp; sourceTree = "<group>"; };
 		9844E1AB238DCBCD00E92F86 /* Commands.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commands.hpp; sourceTree = "<group>"; };
+		98EB91C7238F17380036C57A /* trace-3.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-3.pcap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,12 +108,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		981AD7F3238EEC45006330C1 /* Segments */ = {
+			isa = PBXGroup;
+			children = (
+				981AD7F9238EECDC006330C1 /* Segments.hpp */,
+				981AD7F5238EEC58006330C1 /* Segment.hpp */,
+				981AD7FD238EED7C006330C1 /* TCPSegment.hpp */,
+				981AD801238EEEB5006330C1 /* UDPSegment.hpp */,
+				981AD805238EEEED006330C1 /* ICMPSegment.hpp */,
+			);
+			path = Segments;
+			sourceTree = "<group>";
+		};
+		981AD80A238EF481006330C1 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				981AD80C238EF49F006330C1 /* Message.hpp */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
 		98251482238C4F4E00579BC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				9844E19B238DA34700E92F86 /* config.cfg */,
 				98251486238C4FEE00579BC8 /* eth-1.pcap */,
 				9844E191238D562C00E92F86 /* trace-1.pcap */,
+				981AD808238EF3D7006330C1 /* trace-2.pcap */,
+				98EB91C7238F17380036C57A /* trace-3.pcap */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -174,6 +208,8 @@
 			children = (
 				9844E186238D4E6E00E92F86 /* Frames */,
 				98368A54238EC22F004FAE55 /* Packets */,
+				981AD7F3238EEC45006330C1 /* Segments */,
+				981AD80A238EF481006330C1 /* Messages */,
 				9844E188238D4E8A00E92F86 /* Network.hpp */,
 			);
 			path = Network;

@@ -3,5 +3,6 @@
 
 #include "./Frames/Frames.hpp"
 #include "./Packets/Packets.hpp"
+#include "./Segments/Segments.hpp"
 
 #endif

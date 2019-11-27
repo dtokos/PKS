@@ -89,12 +89,65 @@ Packet *PcapParser::parseL3Packet(EthernetIIFrame *frame) {
 	int arp = config.get(Config::Ethernet, "arp");
 	uint16_t type = frame->type();
 	
-	if (type == ipv4)
-		return new IPv4Packet(frame->data(), config.get(Config::Ethernet, ipv4));
-	else if (type == config.get(Config::Ethernet, "arp"))
+	if (type == ipv4) {
+		IPv4Packet *packet = new IPv4Packet(frame->data(), config.get(Config::Ethernet, ipv4));
+		packet->segment = parseL4Segment(packet);
+		
+		return packet;
+	} else if (type == config.get(Config::Ethernet, "arp"))
 		return new ArpPacket(frame->data(), config.get(Config::Ethernet, arp));
 	else if (config.has(Config::Ethernet, type))
 		return new OtherPacket(NULL, config.get(Config::Ethernet, type));
+	
+	return NULL;
+}
+
+Segment *PcapParser::parseL4Segment(IPv4Packet *packet) {
+	uint8_t protocol = packet->protocol();
+	int tcp = config.get(Config::IP, "tcp");
+	int udp = config.get(Config::IP, "udp");
+	int icmp = config.get(Config::IP, "icmp");
+	
+	if (protocol == tcp) {
+		TCPSegment *segment = new TCPSegment(packet->data(), config.get(Config::IP, tcp));
+		segment->message = parseL5Message(segment);
+		
+		return segment;
+	} else if (protocol == udp) {
+		UDPSegment *segment = new UDPSegment(packet->data(), config.get(Config::IP, udp));
+		segment->message = parseL5Message(segment);
+		
+		return segment;
+	} else if (protocol == icmp)
+		return new ICMPSegment(packet->data(), config.get(Config::IP, icmp));
+	else if (config.has(Config::IP, protocol))
+		return new Segment(NULL, config.get(Config::IP, protocol));
+	
+	return NULL;
+}
+
+Message *PcapParser::parseL5Message(TCPSegment *segment) {
+	uint16_t source = segment->sourcePort();
+	uint16_t destination = segment->destinationPort();
+	
+	// TODO: implement segment->data()
+	if (config.has(Config::TCP, source))
+		return new Message(NULL, config.get(Config::TCP, source));
+	else if (config.has(Config::TCP, destination))
+		return new Message(NULL, config.get(Config::TCP, destination));
+	
+	return NULL;
+}
+
+Message *PcapParser::parseL5Message(UDPSegment *segment) {
+	uint16_t source = segment->sourcePort();
+	uint16_t destination = segment->destinationPort();
+	
+	// TODO: implement segment->data()
+	if (config.has(Config::UDP, source))
+		return new Message(NULL, config.get(Config::UDP, source));
+	else if (config.has(Config::UDP, destination))
+		return new Message(NULL, config.get(Config::UDP, destination));
 	
 	return NULL;
 }

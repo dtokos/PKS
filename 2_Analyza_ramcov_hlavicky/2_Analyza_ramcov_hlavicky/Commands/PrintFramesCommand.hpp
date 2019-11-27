@@ -18,14 +18,14 @@ private:
 	void printFrameHeader(Frame *frame) {
 		cout << dec
 			<< "rámec " << frame->serialNumber << endl
-			<< "dĺžka rámca poskytnutá pcap API –  " << frame->pcapLength << " B" << endl
+			<< "dĺžka rámca poskytnutá pcap API  – " << frame->pcapLength << " B" << endl
 			<< "dĺžka rámca prenášaného po médiu – " << frame->wireLength() << " B" << endl
 			<< frame->name() << endl
 			<< "Zdrojová MAC adresa: " << frame->source().asString(' ') << endl
 			<< "Cieľová MAC adresa:  " << frame->destination().asString(' ') << endl;
 		
 		if (frame->packet != NULL)
-			cout << frame->packet->name() << endl;
+			printPacket(frame->packet);
 	}
 	
 	void printAllFrameData(Frame *frame) {
@@ -47,6 +47,55 @@ private:
 		
 		if (i % 16 != 0)
 			cout << endl;
+	}
+	
+	void printPacket(Packet *packet) {
+		cout << packet->name() << endl;
+		
+		if (packet->packetType() == Packet::IPv4)
+			printIPv4Packet((IPv4Packet *)packet);
+	}
+	
+	void printIPv4Packet(IPv4Packet *packet) {
+		cout << "zdrojová IP adresa: " << packet->sourceAddress().asString() << endl
+			<< "cieľová IP adresa:  " << packet->destinationAddress().asString() << endl;
+		
+		if (packet->segment != NULL)
+			printSegment(packet->segment);
+	}
+	
+	void printSegment(Segment *segment) {
+		cout << segment->name() << endl;
+		
+		Segment::Type type = segment->segmentType();
+		
+		if (type == Segment::TCP)
+			printTCPSegment((TCPSegment *)segment);
+		else if (type == Segment::UDP)
+			printUDPSegment((UDPSegment *)segment);
+	}
+	
+	void printTCPSegment(TCPSegment *segment) {
+		printPorts(segment->sourcePort(), segment->destinationPort());
+		
+		if (segment->message != NULL)
+			printMessage(segment->message);
+	}
+	
+	void printUDPSegment(UDPSegment *segment) {
+		printPorts(segment->sourcePort(), segment->destinationPort());
+		
+		if (segment->message != NULL)
+			printMessage(segment->message);
+	}
+	
+	void printPorts(int source, int destination) {
+		cout << "zdrojový port: " << source << endl
+			<< "cieľový port:  " << destination << endl;
+	}
+	
+	void printMessage(Message *message) {
+		cout << message->name() << endl;
 	}
 };
 

@@ -78,6 +78,14 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "trace-1.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-2.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-3.pcap"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

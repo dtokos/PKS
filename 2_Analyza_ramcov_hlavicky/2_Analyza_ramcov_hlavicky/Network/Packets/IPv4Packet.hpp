@@ -29,8 +29,12 @@ public:
 	Type packetType() {return Packet::IPv4;}
 	string name() {return _name;}
 	
+	uint8_t version() {return (getField<uint8_t>(0) & 0xF0) >> 4;}
+	uint8_t ihl() {return getField<uint8_t>(0) & 0x0F;}
+	uint8_t protocol() {return getField<uint8_t>(9);}
 	IPAddress sourceAddress() {return getField<IPAddress>(12);}
 	IPAddress destinationAddress() {return getField<IPAddress>(16);}
+	uint8_t *data() {return raw + ihl() * 4;}
 	
 private:
 	string _name;

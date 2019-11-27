@@ -23,21 +23,23 @@ public:
 		}
 	};
 	
-	PcapParser::ContextConfig parse(const string &fileName);
-	PcapParser::ContextConfig parse(istream &data);
+	PcapParser::Config parse(const string &fileName);
+	PcapParser::Config parse(istream &data);
 private:
 	bool hasContext;
-	PcapParser::Context currentContext;
+	PcapParser::Config::Context currentContext;
 	regex whitespacePattern = regex(R"(^\s*$)");
 	regex contextPattern = regex(R"(^\s*#\s*(Ethernet|LSAP|IP|TCP|UDP)\s*$)");
 	regex configPattern = regex(R"(^\s*(0x[a-fA-F0-9]+|\d+)\s+(.*[^\s])\s*$)");
-	static const map<string, PcapParser::Context> convertMap;
+	static const map<string, PcapParser::Config::Context> convertMap;
+	static const map<PcapParser::Config::Context, vector<string>> requiredProtocols;
 	
-	bool parseLine(PcapParser::ContextConfig &config, const string &line);
-	bool parseWhiteSpace(PcapParser::ContextConfig &config, const string &line);
-	bool parseContext(PcapParser::ContextConfig &config, const string &line);
-	bool parseConfig(PcapParser::ContextConfig &config, const string &line);
+	bool parseLine(PcapParser::Config &config, const string &line);
+	bool parseWhiteSpace(PcapParser::Config &config, const string &line);
+	bool parseContext(PcapParser::Config &config, const string &line);
+	bool parseConfig(PcapParser::Config &config, const string &line);
 	int parseConfigNumber(const string &strNumber);
+	bool verifyRequiredProtocols(PcapParser::Config &config);
 };
 
 #endif

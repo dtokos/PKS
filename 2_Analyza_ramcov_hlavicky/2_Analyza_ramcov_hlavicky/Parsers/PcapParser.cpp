@@ -1,6 +1,6 @@
 #include "PcapParser.hpp"
 
-PcapParser::PcapParser(ContextConfig config) : config(config) {};
+PcapParser::PcapParser(Config config) : config(config) {};
 
 vector<Frame *> PcapParser::parse(const string &fileName) {
 	serialNumber = 1;
@@ -11,7 +11,7 @@ vector<Frame *> PcapParser::parse(const string &fileName) {
 	
 	while ((readingResult = pcap_next_ex(file, &parsingHeader, &parsingDataBuffer)) == 1) {
 		parsingData = (uint8_t *)(parsingDataBuffer);
-		frames.push_back(parseFrame());
+		frames.push_back(parseL2Frame());
 		serialNumber++;
 	}
 	
@@ -36,19 +36,27 @@ pcap_t *PcapParser::openPcapFile(const string &fileName) {
 	return file;
 }
 
-Frame *PcapParser::parseFrame() {
-	if (parseFrameLength() > 1500)
-		return new EthernetIIFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+Frame *PcapParser::parseL2Frame() {
+	int frameLength = parseL2FrameLength();
+	
+	if (frameLength > 1500)
+		parsingFrame = new EthernetIIFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
 	else
-		return parseIeee802_3Frame();
+		parsingFrame = parseL2Ieee802_3Frame();
+	
+	parsingFrame->packet = parseL3Packet();
+	
+	return parsingFrame;
 }
 
-uint16_t PcapParser::parseFrameLength() {
+uint16_t PcapParser::parseL2FrameLength() {
 	return ntohs(getField<uint16_t>(12));
 }
 
-Frame *PcapParser::parseIeee802_3Frame() {
-	switch (parseDSAP()) {
+Frame *PcapParser::parseL2Ieee802_3Frame() {
+	int dsap = parseL2DSAP();
+	
+	switch (dsap) {
 		case 0xFF:
 			return new Ieee802_3RawFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
 			
@@ -60,6 +68,27 @@ Frame *PcapParser::parseIeee802_3Frame() {
 	}
 }
 
-uint8_t PcapParser::parseDSAP() {
+uint8_t PcapParser::parseL2DSAP() {
 	return getField<uint8_t>(13);
 }
+
+Packet *PcapParser::parseL3Packet() {
+	int dsap = parseL2DSAP();
+	if (parsingFrame->frameType() != Frame::EthernetII && config.has(Config::LSAP, dsap))
+		return new OtherPacket(NULL, config.get(Config::LSAP, dsap));
+	
+	EthernetIIFrame *frame = (EthernetIIFrame *)parsingFrame;
+	int ipv4 = config.get(Config::Ethernet, "ipv4");
+	int arp = config.get(Config::Ethernet, "arp");
+	uint16_t type = frame->type();
+	
+	if (type == ipv4)
+		return new IPv4Packet(frame->data(), config.get(Config::Ethernet, ipv4));
+	else if (type == config.get(Config::Ethernet, "arp"))
+		return new ArpPacket(frame->data(), config.get(Config::Ethernet, arp));
+	else if (config.has(Config::Ethernet, type))
+		return new OtherPacket(NULL, config.get(Config::Ethernet, type));
+	
+	return NULL;
+}
+

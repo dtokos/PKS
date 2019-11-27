@@ -23,6 +23,9 @@ private:
 			<< frame->name() << endl
 			<< "Zdrojová MAC adresa: " << frame->source().asString(' ') << endl
 			<< "Cieľová MAC adresa:  " << frame->destination().asString(' ') << endl;
+		
+		if (frame->packet != NULL)
+			cout << frame->packet->name() << endl;
 	}
 	
 	void printAllFrameData(Frame *frame) {

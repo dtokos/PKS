@@ -13,6 +13,7 @@
 		982963B2238BD42800F88524 /* PcapParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982963B0238BD42800F88524 /* PcapParser.cpp */; };
 		982963B3238BD42800F88524 /* PcapParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982963B0238BD42800F88524 /* PcapParser.cpp */; };
 		982963B7238BD84C00F88524 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 982963B5238BD7D100F88524 /* libpcap.tbd */; };
+		98368A53238EB81C004FAE55 /* TestConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 98368A52238EB81C004FAE55 /* TestConfig.mm */; };
 		9844E18F238D4F3400E92F86 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E18D238D4F3400E92F86 /* App.cpp */; };
 		9844E190238D4F3400E92F86 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E18D238D4F3400E92F86 /* App.cpp */; };
 		9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E191238D562C00E92F86 /* trace-1.pcap */; };
@@ -48,6 +49,12 @@
 		982963B0238BD42800F88524 /* PcapParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PcapParser.cpp; sourceTree = "<group>"; };
 		982963B1238BD42800F88524 /* PcapParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PcapParser.hpp; sourceTree = "<group>"; };
 		982963B5238BD7D100F88524 /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
+		98368A52238EB81C004FAE55 /* TestConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestConfig.mm; sourceTree = "<group>"; };
+		98368A56238EC23C004FAE55 /* Packet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Packet.hpp; sourceTree = "<group>"; };
+		98368A5A238EC320004FAE55 /* IPv4Packet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPv4Packet.hpp; sourceTree = "<group>"; };
+		98368A5E238EC39D004FAE55 /* OtherPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherPacket.hpp; sourceTree = "<group>"; };
+		98368A62238EC720004FAE55 /* Packets.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Packets.hpp; sourceTree = "<group>"; };
+		98368A66238EC773004FAE55 /* ArpPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ArpPacket.hpp; sourceTree = "<group>"; };
 		9844E16B238D219200E92F86 /* Frame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Frame.hpp; sourceTree = "<group>"; };
 		9844E16F238D3B9F00E92F86 /* EthernetIIFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EthernetIIFrame.hpp; sourceTree = "<group>"; };
 		9844E17B238D4B6F00E92F86 /* Ieee802_3RawFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ieee802_3RawFrame.hpp; sourceTree = "<group>"; };
@@ -133,6 +140,7 @@
 		982963A3238BCC8900F88524 /* Test_2_Analyza_ramcov_hlavicky */ = {
 			isa = PBXGroup;
 			children = (
+				98368A52238EB81C004FAE55 /* TestConfig.mm */,
 				9844E193238D7EC900E92F86 /* TestFrame.mm */,
 				982963AE238BD25200F88524 /* TestConfigParser.mm */,
 				982963A6238BCC8900F88524 /* Info.plist */,
@@ -148,10 +156,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		98368A54238EC22F004FAE55 /* Packets */ = {
+			isa = PBXGroup;
+			children = (
+				98368A62238EC720004FAE55 /* Packets.hpp */,
+				98368A56238EC23C004FAE55 /* Packet.hpp */,
+				98368A5A238EC320004FAE55 /* IPv4Packet.hpp */,
+				98368A66238EC773004FAE55 /* ArpPacket.hpp */,
+				98368A5E238EC39D004FAE55 /* OtherPacket.hpp */,
+			);
+			path = Packets;
+			sourceTree = "<group>";
+		};
 		9844E169238D217100E92F86 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				9844E186238D4E6E00E92F86 /* Frames */,
+				98368A54238EC22F004FAE55 /* Packets */,
 				9844E188238D4E8A00E92F86 /* Network.hpp */,
 			);
 			path = Network;
@@ -304,6 +325,7 @@
 				9844E194238D7EC900E92F86 /* TestFrame.mm in Sources */,
 				982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */,
 				982963B3238BD42800F88524 /* PcapParser.cpp in Sources */,
+				98368A53238EB81C004FAE55 /* TestConfig.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

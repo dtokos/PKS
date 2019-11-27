@@ -12,10 +12,37 @@ using namespace std;
 
 class PcapParser {
 public:
-	enum Context {Ethernet, LSAP, IP, TCP, UDP};
-	
-	using Config = map<int, string>;
-	using ContextConfig = map<Context, Config>;
+	class Config {
+	public:
+		enum Context {Ethernet, LSAP, IP, TCP, UDP};
+		
+		void add(const Context &context, const int &number, const string &name) {
+			byNumber[context][number] = name;
+			byName[context][lowercase(name)] = number;
+		}
+		
+		bool has(const Context &context, const int &number) {
+			return byNumber.count(context) && byNumber.at(context).count(number);
+		}
+		
+		bool has(const Context &context, const string &name) {
+			return byName.count(context) && byName.at(context).count(lowercase(name));
+		}
+		
+		string get(const Context &context, const int &number) {return byNumber.at(context).at(number);};
+		int get(const Context &context, const string &name) {return byName.at(context).at(name);};
+		
+	private:
+		map<Context, map<int, string>> byNumber;
+		map<Context, map<string, int>> byName;
+		
+		string lowercase(const string& name) {
+			string result(name.size(), ' ');
+			transform(name.begin(), name.end(), result.begin(), ::tolower);
+			
+			return result;
+		}
+	};
 	
 	class ParsingError : public exception {
 	public:
@@ -27,22 +54,26 @@ public:
 		}
 	};
 	
-	PcapParser(ContextConfig config);
+	PcapParser(Config config);
 	vector<Frame *> parse(const string &fileName);
 	
 private:
-	ContextConfig config;
+	Config config;
 	pcap_pkthdr *parsingHeader;
 	const u_char *parsingDataBuffer;
 	unsigned serialNumber;
 	uint8_t *parsingData;
+	Frame *parsingFrame;
 	
 	
 	pcap_t *openPcapFile(const string &fileName);
-	Frame *parseFrame();
-	uint16_t parseFrameLength();
-	Frame *parseIeee802_3Frame();
-	uint8_t parseDSAP();
+	
+	Frame   *parseL2Frame();
+	uint16_t parseL2FrameLength();
+	Frame   *parseL2Ieee802_3Frame();
+	uint8_t  parseL2DSAP();
+	
+	Packet *parseL3Packet();
 	
 	template<typename Type>
 	constexpr Type getField(uint32_t offset) {

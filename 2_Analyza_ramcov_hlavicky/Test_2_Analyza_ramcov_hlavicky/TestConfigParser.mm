@@ -12,52 +12,52 @@
 	XCTAssertThrows(parser.parse("gfdkjgnfd.cfg"));
 }
 
-- (void)testParseString {
+- (void)testParseWithoutRequiredProtocolsShouldThrow {
 	string configString = "#Ethernet\n123 foo\n456 bar\n#LSAP\n789 baz";
-	istringstream configStream(configString);
-	ConfigParser parser;
-	PcapParser::ContextConfig config = parser.parse(configStream);
-	XCTAssertEqual(config.size(), 2);
-	XCTAssertEqual(config[PcapParser::Ethernet].size(), 2);
-	XCTAssertEqual(config[PcapParser::Ethernet][123], "foo");
-	XCTAssertEqual(config[PcapParser::Ethernet][456], "bar");
-	XCTAssertEqual(config[PcapParser::LSAP][789], "baz");
-}
-
-- (void)testParseStringWithWhitespaces {
-	string configString = "\n\t #\t Ethernet \t\n \t123 \t foo \t\n \t456\t bar";
-	istringstream configStream(configString);
-	ConfigParser parser;
-	PcapParser::ContextConfig config = parser.parse(configStream);
-	XCTAssertEqual(config.size(), 1);
-	XCTAssertEqual(config[PcapParser::Ethernet].size(), 2);
-	XCTAssertEqual(config[PcapParser::Ethernet][123], "foo");
-	XCTAssertEqual(config[PcapParser::Ethernet][456], "bar");
-}
-
-- (void)testParseEmptyString {
-	string configString = "\n\t ";
-	istringstream configStream(configString);
-	ConfigParser parser;
-	XCTAssertNoThrow(parser.parse(configStream));
-}
-
-- (void)testParseEmptyInvalidString {
-	string configString = "#Etherngfdet\n123 foo\n456 bar\n#LSdsfAP\n789 baz";
 	istringstream configStream(configString);
 	ConfigParser parser;
 	XCTAssertThrows(parser.parse(configStream));
 }
 
-- (void)testParseHexString {
-	string configString = "#Ethernet\n0xFF foo\n0x3E bar";
+- (void)testParseString {
+	string configString = "# Ethernet\n"
+	"0x0800 IPv4\n"
+	"0x0806 ARP\n"
+	"0x08dd IPv6\n"
+	
+	"#LSAP\n"
+	"0x42 STP\n"
+	"0xaa SNAP\n"
+	"0xe0 IPX\n"
+	
+	"# IP\n"
+	"0x01 ICMP\n"
+	"0x06 TCP\n"
+	"0x11 UDP\n"
+	
+	"# TCP\n"
+	"80 HTTP\n"
+	"443 HTTPS\n"
+	"23 TELNET\n"
+	"22 SSH\n"
+	"21 FTP\n"
+	
+	"# UDP\n"
+	"53 DNS\n"
+	"69 TFTP\n"
+	"\t 123 \t foo \t\n";
+	
 	istringstream configStream(configString);
 	ConfigParser parser;
-	PcapParser::ContextConfig config = parser.parse(configStream);
-	XCTAssertEqual(config.size(), 1);
-	XCTAssertEqual(config[PcapParser::Ethernet].size(), 2);
-	XCTAssertEqual(config[PcapParser::Ethernet][0xFF], "foo");
-	XCTAssertEqual(config[PcapParser::Ethernet][0x3E], "bar");
+	PcapParser::Config config;
+	XCTAssertNoThrow((config = parser.parse(configStream)));
+	XCTAssertTrue(config.has(PcapParser::Config::Ethernet, 0x0800));
+	XCTAssertTrue(config.has(PcapParser::Config::Ethernet, "ipv4"));
+	XCTAssertTrue(config.has(PcapParser::Config::TCP, 80));
+	XCTAssertTrue(config.has(PcapParser::Config::TCP, "http"));
+	XCTAssertTrue(config.has(PcapParser::Config::UDP, 123));
+	XCTAssertTrue(config.has(PcapParser::Config::UDP, "foo"));
 }
+
 
 @end

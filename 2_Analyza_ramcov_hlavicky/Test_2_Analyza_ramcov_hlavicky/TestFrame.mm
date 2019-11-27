@@ -3,7 +3,9 @@
 
 class MockFrame : public Frame {
 public:
-	MockFrame(unsigned serialNumber, uint32_t pcapLength, uint8_t *data, uint32_t dataLength) : Frame(serialNumber, pcapLength, data, dataLength) {}
+	MockFrame(unsigned serialNumber, uint32_t pcapLength, uint8_t *data, uint32_t dataLength) :
+		Frame(serialNumber, pcapLength, data, dataLength) {}
+	Type frameType() {return Frame::EthernetII;}
 	string name() {return "MockFrame";}
 	uint8_t *data() {return raw + 14;}
 };
@@ -25,7 +27,9 @@ public:
 	XCTAssertEqual(frame.serialNumber, 1);
 	XCTAssertEqual(frame.pcapLength, 54);
 	XCTAssertTrue(frame.source().asString() == "00:00:c0:d7:80:c2");
+	XCTAssertEqual(frame.source().asInt(), 0x0000C0D780C2);
 	XCTAssertTrue(frame.destination().asString() == "00:04:76:a4:e4:8c");
+	XCTAssertEqual(frame.destination().asInt(), 0x000476A4E48C);
 	XCTAssertEqual(frame.length(), 0x0800);
 	XCTAssertEqual(frame.wireLength(), 64);
 }

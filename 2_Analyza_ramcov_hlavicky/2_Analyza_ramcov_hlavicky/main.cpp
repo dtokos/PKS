@@ -15,7 +15,7 @@ int main(int argc, const char * argv[]) {
 	
 	try {
 		ConfigParser configParser;
-		PcapParser::ContextConfig config = configParser.parse("config.cfg");
+		PcapParser::Config config = configParser.parse("config.cfg");
 		PcapParser parser(config);
 		App app(parser, {new PrintFramesCommand()});
 		

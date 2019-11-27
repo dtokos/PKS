@@ -57,7 +57,11 @@ public:
 		capturedLength(capturedLength),
 		raw(new uint8_t[capturedLength])
 		{memcpy(raw, data, capturedLength);}
-	virtual ~Frame() {delete[] raw;}
+	virtual ~Frame() {
+		delete[] raw;
+		if (packet != NULL)
+			delete packet;
+	}
 	
 	MACAddress destination() {return getField<MACAddress>(0);}
 	MACAddress source() {return getField<Frame::MACAddress>(6);}

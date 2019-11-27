@@ -17,7 +17,7 @@ int main(int argc, const char * argv[]) {
 		ConfigParser configParser;
 		PcapParser::Config config = configParser.parse("config.cfg");
 		PcapParser parser(config);
-		App app(parser, {new PrintFramesCommand()});
+		App app(parser, {new PrintFramesCommand(), new TopIPsCommand()});
 		
 		app.run(inputFile);
 	} catch (ConfigParser::ParsingError &error) {

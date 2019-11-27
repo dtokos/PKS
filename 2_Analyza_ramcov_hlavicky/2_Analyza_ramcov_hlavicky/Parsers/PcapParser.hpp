@@ -70,10 +70,11 @@ private:
 	
 	Frame   *parseL2Frame();
 	uint16_t parseL2FrameLength();
+	Frame   *parseL2EthernetIIFrame();
 	Frame   *parseL2Ieee802_3Frame();
 	uint8_t  parseL2DSAP();
 	
-	Packet *parseL3Packet();
+	Packet *parseL3Packet(EthernetIIFrame *frame);
 	
 	template<typename Type>
 	constexpr Type getField(uint32_t offset) {

@@ -3,5 +3,6 @@
 
 #include "./Command.hpp"
 #include "./PrintFramesCommand.hpp"
+#include "./TopIPsCommand.hpp"
 
 #endif

@@ -40,44 +40,51 @@ Frame *PcapParser::parseL2Frame() {
 	int frameLength = parseL2FrameLength();
 	
 	if (frameLength > 1500)
-		parsingFrame = new EthernetIIFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+		return parseL2EthernetIIFrame();
 	else
-		parsingFrame = parseL2Ieee802_3Frame();
-	
-	parsingFrame->packet = parseL3Packet();
-	
-	return parsingFrame;
+		return parseL2Ieee802_3Frame();
 }
 
 uint16_t PcapParser::parseL2FrameLength() {
 	return ntohs(getField<uint16_t>(12));
 }
 
+Frame *PcapParser::parseL2EthernetIIFrame() {
+	EthernetIIFrame *frame = new EthernetIIFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+	frame->packet = parseL3Packet(frame);
+	
+	return frame;
+}
+
 Frame *PcapParser::parseL2Ieee802_3Frame() {
 	int dsap = parseL2DSAP();
+	Frame *frame;
 	
 	switch (dsap) {
 		case 0xFF:
-			return new Ieee802_3RawFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+			frame = new Ieee802_3RawFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+			break;
 			
 		case 0xAA:
-			return new Ieee802_3LlcSnapFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+			frame = new Ieee802_3LlcSnapFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+			break;
 			
 		default:
-			return new Ieee802_3LlcFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+			frame = new Ieee802_3LlcFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
+			break;
 	}
+	
+	if (config.has(Config::LSAP, dsap))
+		frame->packet = new OtherPacket(NULL, config.get(Config::LSAP, dsap));
+	
+	return frame;
 }
 
 uint8_t PcapParser::parseL2DSAP() {
 	return getField<uint8_t>(13);
 }
 
-Packet *PcapParser::parseL3Packet() {
-	int dsap = parseL2DSAP();
-	if (parsingFrame->frameType() != Frame::EthernetII && config.has(Config::LSAP, dsap))
-		return new OtherPacket(NULL, config.get(Config::LSAP, dsap));
-	
-	EthernetIIFrame *frame = (EthernetIIFrame *)parsingFrame;
+Packet *PcapParser::parseL3Packet(EthernetIIFrame *frame) {
 	int ipv4 = config.get(Config::Ethernet, "ipv4");
 	int arp = config.get(Config::Ethernet, "arp");
 	uint16_t type = frame->type();

@@ -12,11 +12,11 @@
 	XCTAssertThrows(parser.parse("gfdkjgnfd.cfg"));
 }
 
-- (void)testParseWithoutRequiredProtocolsShouldThrow {
-	string configString = "#Ethernet\n123 foo\n456 bar\n#LSAP\n789 baz";
+- (void)testParseWithoutProtocolsShouldNotThrow {
+	string configString = "";
 	istringstream configStream(configString);
 	ConfigParser parser;
-	XCTAssertThrows(parser.parse(configStream));
+	XCTAssertNoThrow(parser.parse(configStream));
 }
 
 - (void)testParseString {

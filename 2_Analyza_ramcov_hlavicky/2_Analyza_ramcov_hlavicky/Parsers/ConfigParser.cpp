@@ -36,8 +36,8 @@ PcapParser::Config ConfigParser::parse(istream &data) {
 		lineNumber++;
 	}
 	
-	if (!verifyRequiredProtocols(config))
-		throw ParsingError("Could not parse all required protocols");
+	//if (!verifyRequiredProtocols(config))
+		//throw ParsingError("Could not parse all required protocols: IPv4, ARP, HTTP, HTTPS, TELNET, SSH, FTP, TFTP, ICMP");
 	
 	return config;
 }

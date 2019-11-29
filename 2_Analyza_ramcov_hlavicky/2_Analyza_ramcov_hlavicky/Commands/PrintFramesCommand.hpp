@@ -8,14 +8,21 @@ public:
 	~PrintFramesCommand() {}
 	
 	void process(Frame *frame) {
-		printFrameHeader(frame);
-		printAllFrameData(frame);
+		Command::process(frame);
+		printFrameHeader();
+		if (packet)
+			printPacket();
+		if (segment)
+			printSegment();
+		if (message)
+			printMessage();
+		printAllFrameData();
 	}
 	
 	void endProcessing() {}
 	
 private:
-	void printFrameHeader(Frame *frame) {
+	void printFrameHeader() {
 		cout << dec
 			<< "rámec " << frame->serialNumber << endl
 			<< "dĺžka rámca poskytnutá pcap API  – " << frame->pcapLength << " B" << endl
@@ -23,12 +30,9 @@ private:
 			<< frame->name() << endl
 			<< "Zdrojová MAC adresa: " << frame->source().asString(' ') << endl
 			<< "Cieľová MAC adresa:  " << frame->destination().asString(' ') << endl;
-		
-		if (frame->packet != NULL)
-			printPacket(frame->packet);
 	}
 	
-	void printAllFrameData(Frame *frame) {
+	void printAllFrameData() {
 		uint8_t *byte = frame->raw;
 		int i;
 		
@@ -49,7 +53,7 @@ private:
 			cout << endl;
 	}
 	
-	void printPacket(Packet *packet) {
+	void printPacket() {
 		cout << packet->name() << endl;
 		
 		if (packet->packetType() == Packet::IPv4)
@@ -59,12 +63,9 @@ private:
 	void printIPv4Packet(IPv4Packet *packet) {
 		cout << "zdrojová IP adresa: " << packet->sourceAddress().asString() << endl
 			<< "cieľová IP adresa:  " << packet->destinationAddress().asString() << endl;
-		
-		if (packet->segment != NULL)
-			printSegment(packet->segment);
 	}
 	
-	void printSegment(Segment *segment) {
+	void printSegment() {
 		cout << segment->name() << endl;
 		
 		Segment::Type type = segment->segmentType();
@@ -77,16 +78,10 @@ private:
 	
 	void printTCPSegment(TCPSegment *segment) {
 		printPorts(segment->sourcePort(), segment->destinationPort());
-		
-		if (segment->message != NULL)
-			printMessage(segment->message);
 	}
 	
 	void printUDPSegment(UDPSegment *segment) {
 		printPorts(segment->sourcePort(), segment->destinationPort());
-		
-		if (segment->message != NULL)
-			printMessage(segment->message);
 	}
 	
 	void printPorts(int source, int destination) {
@@ -94,7 +89,7 @@ private:
 			<< "cieľový port:  " << destination << endl;
 	}
 	
-	void printMessage(Message *message) {
+	void printMessage() {
 		cout << message->name() << endl;
 	}
 };

@@ -86,6 +86,26 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "trace-3.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-22.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-25.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-26.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-27.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "http.pcap"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

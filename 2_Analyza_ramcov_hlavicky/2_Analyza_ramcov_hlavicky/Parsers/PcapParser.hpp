@@ -32,6 +32,16 @@ public:
 		string get(const Context &context, const int &number) {return byNumber.at(context).at(number);};
 		int get(const Context &context, const string &name) {return byName.at(context).at(name);};
 		
+		bool get(const Context &context, const string &name, string &protocol, int &number) {
+			if (!has(context, name))
+				return false;
+			
+			number = get(context, name);
+			protocol = get(context, number);
+			
+			return true;
+		}
+		
 	private:
 		map<Context, map<int, string>> byNumber;
 		map<Context, map<string, int>> byName;
@@ -72,7 +82,7 @@ private:
 	uint16_t parseL2FrameLength();
 	Frame   *parseL2EthernetIIFrame();
 	Frame   *parseL2Ieee802_3Frame();
-	uint8_t  parseL2DSAP();
+	uint8_t  parseL2LSAP();
 	
 	Packet *parseL3Packet(EthernetIIFrame *frame);
 	

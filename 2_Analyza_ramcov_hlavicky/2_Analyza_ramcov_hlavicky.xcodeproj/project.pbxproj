@@ -23,6 +23,11 @@
 		9844E199238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19A238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E19B238DA34700E92F86 /* config.cfg */; };
+		98A1B168238FAB0600FFCE9A /* trace-22.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98A1B167238FAAFA00FFCE9A /* trace-22.pcap */; };
+		98B693F62391A4100079E954 /* trace-27.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98B693F52391A40B0079E954 /* trace-27.pcap */; };
+		98B693F82391A4A90079E954 /* trace-26.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98B693F72391A4A40079E954 /* trace-26.pcap */; };
+		98B693FA2391A5C20079E954 /* trace-25.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98B693F92391A5B80079E954 /* trace-25.pcap */; };
+		98B693FF2391C95D0079E954 /* http.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98B693FE2391C9580079E954 /* http.pcap */; };
 		98EB91C8238F17400036C57A /* trace-3.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98EB91C7238F17380036C57A /* trace-3.pcap */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +38,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				98B693FF2391C95D0079E954 /* http.pcap in CopyFiles */,
+				98B693FA2391A5C20079E954 /* trace-25.pcap in CopyFiles */,
+				98B693F82391A4A90079E954 /* trace-26.pcap in CopyFiles */,
+				98B693F62391A4100079E954 /* trace-27.pcap in CopyFiles */,
+				98A1B168238FAB0600FFCE9A /* trace-22.pcap in CopyFiles */,
 				98EB91C8238F17400036C57A /* trace-3.pcap in CopyFiles */,
 				981AD809238EF3E5006330C1 /* trace-2.pcap in CopyFiles */,
 				9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */,
@@ -63,7 +73,6 @@
 		98368A52238EB81C004FAE55 /* TestConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TestConfig.mm; sourceTree = "<group>"; };
 		98368A56238EC23C004FAE55 /* Packet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Packet.hpp; sourceTree = "<group>"; };
 		98368A5A238EC320004FAE55 /* IPv4Packet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPv4Packet.hpp; sourceTree = "<group>"; };
-		98368A5E238EC39D004FAE55 /* OtherPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherPacket.hpp; sourceTree = "<group>"; };
 		98368A62238EC720004FAE55 /* Packets.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Packets.hpp; sourceTree = "<group>"; };
 		98368A66238EC773004FAE55 /* ArpPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ArpPacket.hpp; sourceTree = "<group>"; };
 		98368A6A238ED4B8004FAE55 /* TopIPsCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TopIPsCommand.hpp; sourceTree = "<group>"; };
@@ -71,7 +80,6 @@
 		9844E16F238D3B9F00E92F86 /* EthernetIIFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EthernetIIFrame.hpp; sourceTree = "<group>"; };
 		9844E17B238D4B6F00E92F86 /* Ieee802_3RawFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ieee802_3RawFrame.hpp; sourceTree = "<group>"; };
 		9844E17F238D4D2600E92F86 /* Ieee802_3LlcFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ieee802_3LlcFrame.hpp; sourceTree = "<group>"; };
-		9844E183238D4D5F00E92F86 /* Ieee802_3LlcSnapFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ieee802_3LlcSnapFrame.hpp; sourceTree = "<group>"; };
 		9844E188238D4E8A00E92F86 /* Network.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Network.hpp; sourceTree = "<group>"; };
 		9844E18B238D4EA600E92F86 /* Frames.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Frames.hpp; sourceTree = "<group>"; };
 		9844E18D238D4F3400E92F86 /* App.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
@@ -85,6 +93,12 @@
 		9844E1A3238DC08700E92F86 /* Parsers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Parsers.hpp; sourceTree = "<group>"; };
 		9844E1A7238DC14900E92F86 /* PrintFramesCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PrintFramesCommand.hpp; sourceTree = "<group>"; };
 		9844E1AB238DCBCD00E92F86 /* Commands.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commands.hpp; sourceTree = "<group>"; };
+		98A1B167238FAAFA00FFCE9A /* trace-22.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-22.pcap"; sourceTree = "<group>"; };
+		98B693F52391A40B0079E954 /* trace-27.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-27.pcap"; sourceTree = "<group>"; };
+		98B693F72391A4A40079E954 /* trace-26.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-26.pcap"; sourceTree = "<group>"; };
+		98B693F92391A5B80079E954 /* trace-25.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-25.pcap"; sourceTree = "<group>"; };
+		98B693FC2391B44F0079E954 /* CommunicationCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommunicationCommand.hpp; sourceTree = "<group>"; };
+		98B693FE2391C9580079E954 /* http.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = http.pcap; sourceTree = "<group>"; };
 		98EB91C7238F17380036C57A /* trace-3.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-3.pcap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +150,11 @@
 				9844E191238D562C00E92F86 /* trace-1.pcap */,
 				981AD808238EF3D7006330C1 /* trace-2.pcap */,
 				98EB91C7238F17380036C57A /* trace-3.pcap */,
+				98A1B167238FAAFA00FFCE9A /* trace-22.pcap */,
+				98B693F92391A5B80079E954 /* trace-25.pcap */,
+				98B693F72391A4A40079E954 /* trace-26.pcap */,
+				98B693F52391A40B0079E954 /* trace-27.pcap */,
+				98B693FE2391C9580079E954 /* http.pcap */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -198,7 +217,6 @@
 				98368A56238EC23C004FAE55 /* Packet.hpp */,
 				98368A5A238EC320004FAE55 /* IPv4Packet.hpp */,
 				98368A66238EC773004FAE55 /* ArpPacket.hpp */,
-				98368A5E238EC39D004FAE55 /* OtherPacket.hpp */,
 			);
 			path = Packets;
 			sourceTree = "<group>";
@@ -223,7 +241,6 @@
 				9844E16F238D3B9F00E92F86 /* EthernetIIFrame.hpp */,
 				9844E17B238D4B6F00E92F86 /* Ieee802_3RawFrame.hpp */,
 				9844E17F238D4D2600E92F86 /* Ieee802_3LlcFrame.hpp */,
-				9844E183238D4D5F00E92F86 /* Ieee802_3LlcSnapFrame.hpp */,
 			);
 			path = Frames;
 			sourceTree = "<group>";
@@ -256,6 +273,7 @@
 				9844E19F238DC07000E92F86 /* Command.hpp */,
 				9844E1A7238DC14900E92F86 /* PrintFramesCommand.hpp */,
 				98368A6A238ED4B8004FAE55 /* TopIPsCommand.hpp */,
+				98B693FC2391B44F0079E954 /* CommunicationCommand.hpp */,
 			);
 			path = Commands;
 			sourceTree = "<group>";

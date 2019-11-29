@@ -4,5 +4,6 @@
 #include "./Command.hpp"
 #include "./PrintFramesCommand.hpp"
 #include "./TopIPsCommand.hpp"
+#include "./CommunicationCommand.hpp"
 
 #endif

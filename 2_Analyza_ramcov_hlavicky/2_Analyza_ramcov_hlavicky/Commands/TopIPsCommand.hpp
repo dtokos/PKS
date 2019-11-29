@@ -8,13 +8,15 @@ public:
 	TopIPsCommand() {}
 	
 	void process(Frame *frame) {
-		if (frame->frameType() != Frame::EthernetII || frame->packet == NULL || frame->packet->packetType() != Packet::IPv4)
-			return;
-		
-		updateCount((IPv4Packet *)frame->packet);
+		Command::process(frame);
+		if (packet && packet->packetType() == Packet::IPv4)
+			updateCount((IPv4Packet *)frame->packet);
 	}
 	
 	void endProcessing() {
+		if (counts.size() == 0)
+			return;
+		
 		printAllIPs();
 		printTopIP();
 	}
@@ -31,7 +33,7 @@ private:
 		else
 			counts[source] = 1;
 		
-		if (counts.size() == 1 || counts.count(source) > counts.count(topIP))
+		if (counts.size() == 1 || (counts.count(source) && counts.at(source) > counts.at(topIP)))
 			topIP = source;
 	}
 	
@@ -46,8 +48,8 @@ private:
 	
 	void printTopIP() {
 		if (counts.size() > 0)
-			cout << "Adresa uzla s najväčším počtom odoslaných paketov:" << endl
-				<< topIP << "\t" << counts.at(topIP) << " paketov" << endl;
+			cout << dec << "Adresa uzla s najväčším počtom odoslaných paketov:" << endl
+				<< topIP << "\t" << (int)counts.at(topIP) << " paketov" << endl;
 	}
 };
 

@@ -57,16 +57,12 @@ Frame *PcapParser::parseL2EthernetIIFrame() {
 }
 
 Frame *PcapParser::parseL2Ieee802_3Frame() {
-	int dsap = parseL2DSAP();
+	int lsap = parseL2LSAP();
 	Frame *frame;
 	
-	switch (dsap) {
+	switch (lsap) {
 		case 0xFF:
 			frame = new Ieee802_3RawFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
-			break;
-			
-		case 0xAA:
-			frame = new Ieee802_3LlcSnapFrame(serialNumber, parsingHeader->len, parsingData, parsingHeader->caplen);
 			break;
 			
 		default:
@@ -74,52 +70,51 @@ Frame *PcapParser::parseL2Ieee802_3Frame() {
 			break;
 	}
 	
-	if (config.has(Config::LSAP, dsap))
-		frame->packet = new OtherPacket(NULL, config.get(Config::LSAP, dsap));
+	if (config.has(Config::LSAP, lsap))
+		frame->packet = new Packet(NULL, config.get(Config::LSAP, lsap));
 	
 	return frame;
 }
 
-uint8_t PcapParser::parseL2DSAP() {
-	return getField<uint8_t>(13);
+uint8_t PcapParser::parseL2LSAP() {
+	return getField<uint8_t>(14);
 }
 
 Packet *PcapParser::parseL3Packet(EthernetIIFrame *frame) {
-	int ipv4 = config.get(Config::Ethernet, "ipv4");
-	int arp = config.get(Config::Ethernet, "arp");
 	uint16_t type = frame->type();
+	string typeName;
+	int typeNumber;
 	
-	if (type == ipv4) {
-		IPv4Packet *packet = new IPv4Packet(frame->data(), config.get(Config::Ethernet, ipv4));
+	if (config.get(Config::Ethernet, "ipv4", typeName, typeNumber) && type == typeNumber) {
+		IPv4Packet *packet = new IPv4Packet(frame->data(), typeName);
 		packet->segment = parseL4Segment(packet);
 		
 		return packet;
-	} else if (type == config.get(Config::Ethernet, "arp"))
-		return new ArpPacket(frame->data(), config.get(Config::Ethernet, arp));
+	} else if (config.get(Config::Ethernet, "arp", typeName, typeNumber) && type == typeNumber)
+		return new ArpPacket(frame->data(), typeName);
 	else if (config.has(Config::Ethernet, type))
-		return new OtherPacket(NULL, config.get(Config::Ethernet, type));
+		return new Packet(NULL, config.get(Config::Ethernet, type));
 	
 	return NULL;
 }
 
 Segment *PcapParser::parseL4Segment(IPv4Packet *packet) {
 	uint8_t protocol = packet->protocol();
-	int tcp = config.get(Config::IP, "tcp");
-	int udp = config.get(Config::IP, "udp");
-	int icmp = config.get(Config::IP, "icmp");
+	string protocolName;
+	int protocolNumber;
 	
-	if (protocol == tcp) {
-		TCPSegment *segment = new TCPSegment(packet->data(), config.get(Config::IP, tcp));
+	if (config.get(Config::IP, "tcp", protocolName, protocolNumber) && protocol == protocolNumber) {
+		TCPSegment *segment = new TCPSegment(packet->data(), protocolName);
 		segment->message = parseL5Message(segment);
 		
 		return segment;
-	} else if (protocol == udp) {
-		UDPSegment *segment = new UDPSegment(packet->data(), config.get(Config::IP, udp));
+	} else if (config.get(Config::IP, "udp", protocolName, protocolNumber) && protocol == protocolNumber) {
+		UDPSegment *segment = new UDPSegment(packet->data(), protocolName);
 		segment->message = parseL5Message(segment);
 		
 		return segment;
-	} else if (protocol == icmp)
-		return new ICMPSegment(packet->data(), config.get(Config::IP, icmp));
+	} else if (config.get(Config::IP, "icmp", protocolName, protocolNumber) && protocol == protocolNumber)
+		return new ICMPSegment(packet->data(), protocolName);
 	else if (config.has(Config::IP, protocol))
 		return new Segment(NULL, config.get(Config::IP, protocol));
 	

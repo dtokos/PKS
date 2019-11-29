@@ -7,8 +7,19 @@ class Command {
 public:
 	virtual ~Command() {};
 	
-	virtual void process(Frame *frame) = 0;
+	virtual void process(Frame *frame) {
+		this->frame = frame;
+		this->packet = frame->packet;
+		this->segment = packet == NULL ? NULL : packet->segment;
+		this->message = segment == NULL ? NULL : segment->message;
+	};
 	virtual void endProcessing() = 0;
+	
+protected:
+	Frame *frame;
+	Packet *packet;
+	Segment *segment;
+	Message *message;
 };
 
 #endif

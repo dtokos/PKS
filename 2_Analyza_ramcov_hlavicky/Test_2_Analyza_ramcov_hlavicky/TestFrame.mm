@@ -63,11 +63,4 @@ public:
 	XCTAssertTrue(frame.data() == frame.raw + 17);
 }
 
-- (void)testIeee802_3LlcSnapFrame {
-	uint8_t rawFrame = 0;
-	Ieee802_3LlcSnapFrame frame(1, 1, &rawFrame, 1);
-	XCTAssertTrue(frame.name() == "IEEE 802.3 LLC + SNAP");
-	XCTAssertTrue(frame.data() == frame.raw + 22);
-}
-
 @end

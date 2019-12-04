@@ -28,7 +28,7 @@ public:
 		printFrames(length);
 	}
 	
-private:
+protected:
 	vector<Frame *> frames;
 	IPv4Packet *packet;
 	UDPSegment *segment;

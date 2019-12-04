@@ -67,7 +67,7 @@ private:
 	}
 	
 	bool shouldPrint(Communication *communication, bool &complete, bool &incomplete) {
-		if (communication->usesConnection() && (!complete || !incomplete)) {
+		if (communication->usesConnection() && ((!complete && communication->isComplete()) || (!incomplete && !communication->isComplete()))) {
 			complete |= communication->isComplete();
 			incomplete |= !communication->isComplete();
 			

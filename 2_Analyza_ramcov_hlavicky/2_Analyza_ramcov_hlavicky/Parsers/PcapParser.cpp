@@ -88,6 +88,7 @@ Packet *PcapParser::parseL3Packet(EthernetIIFrame *frame) {
 	if (config.get(Config::Ethernet, "ipv4", typeName, typeNumber) && type == typeNumber) {
 		IPv4Packet *packet = new IPv4Packet(frame->data(), typeName);
 		packet->segment = parseL4Segment(packet);
+		frame->segment = packet->segment;
 		
 		return packet;
 	} else if (config.get(Config::Ethernet, "arp", typeName, typeNumber) && type == typeNumber)

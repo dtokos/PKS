@@ -2,114 +2,76 @@
 #define CommunicationCommand_hpp
 
 #include "./Command.hpp"
-
-using Flags = TCPSegment::Flags;
+#include "./Communications/Communications.hpp"
+#include "./Print.hpp"
 
 class CommunicationCommand : public Command {
 public:
 	CommunicationCommand(int lengthLimit) : lengthLimit(lengthLimit) {}
+	~CommunicationCommand() {for (Communication * communication : communications) delete communication;}
 	
 	void process(Frame *frame) {
 		Command::process(frame);
 		
-		if (segment && segment->segmentType() == Segment::Type::TCP)
-			addToCommunication((TCPSegment *)segment);
+		if (!addToCommunication())
+			newCommunication();
 	}
 	
 	void endProcessing() {
-		cout << "Comm " << (int)comm->isComplete() << endl;
+		bool didPrintTCPComplete = false, didPrintTCPIncomplete = false;
+		int index = 1;
+		
+		for (Communication *communication : communications) {
+			if (shouldPrint(communication, didPrintTCPComplete, didPrintTCPIncomplete)) {
+				cout << "Komunikacia č. " << dec << index++ << endl;
+				communication->print(lengthLimit);
+			}
+		}
 	}
 	
 private:
-	class Communication {
-	public:
-		Communication(TCPSegment *segment) : segments({segment}) {};
-		
-		void add(TCPSegment *segment) {
-			segments.push_back(segment);
-			
-			switch (currentState) {
-				case Opened:
-					cout << "Current State Opened" << endl;
-					handleOpened(segment);
-					break;
-					
-				case SenderFIN:
-					cout << "Current State SenderFIN" << endl;
-					handleSenderFIN(segment);
-					break;
-					
-				case ReceiverACK:
-					cout << "Current State ReceiverACK" << endl;
-					handleReceiverACK(segment);
-					break;
-					
-				case ReceiverFIN:
-					cout << "Current State ReceiverFIN" << endl;
-					handleReceiverFIN(segment);
-					break;
-					
-				case Closed:
-					cout << "Current State Closed" << endl;
-					break;
-			}
-		}
-		
-		bool isComplete() {return currentState == Closed;}
-	private:
-		enum State {Opened, SenderFIN, ReceiverACK, ReceiverFIN, Closed};
-		vector<TCPSegment *> segments;
-		State currentState = Opened;
-		
-		void handleOpened(TCPSegment *segment) {
-			if (segment->flags().is(Flags::RST)) {
-				cout << "Received RST Next State Closed" << endl;
-				currentState = Closed;
-			} else if (segment->flags().is(Flags::FIN)) {
-				cout << "Received FIN Next State SenderFIN" << endl;
-				currentState = SenderFIN;
-			}
-		}
-		
-		void handleSenderFIN(TCPSegment *segment) {
-			if (segment->flags().is(Flags::RST)) {
-				cout << "Received RST Next State Closed" << endl;
-				currentState = Closed;
-			} else if (segment->flags().is(Flags::FIN) && segment->flags().is(Flags::ACK)) {
-				cout << "Received FIN_ACK Next State ReceiverFIN" << endl;
-				currentState = ReceiverFIN;
-			} else if (segment->flags().is(Flags::ACK)) {
-				cout << "Received ACK Next State ReceiverACK" << endl;
-				currentState = ReceiverACK;
-			}
-		}
-		
-		void handleReceiverACK(TCPSegment *segment) {
-			if (segment->flags().is(Flags::RST)) {
-				cout << "Received RST Next State Closed" << endl;
-				currentState = Closed;
-			} else if (segment->flags().is(Flags::FIN)) {
-				cout << "Received FIN Next State ReceiverFIN" << endl;
-				currentState = ReceiverFIN;
-			}
-		}
-		
-		void handleReceiverFIN(TCPSegment *segment) {
-			if (segment->flags().is(Flags::RST) || segment->flags().is(Flags::ACK)) {
-				cout << "Received RST | ACK Next State Closed" << endl;
-				currentState = Closed;
-			}
-		}
-	};
-	
 	int lengthLimit;
-	Communication *comm = NULL;
+	vector<Communication *>communications;
 	
-	void addToCommunication(TCPSegment *segment) {
-		if (comm == NULL)
-			comm = new Communication(segment);
-		else
-			comm->add(segment);
+	bool addToCommunication() {
+		for (Communication *communication : communications)
+			if (communication->add(frame))
+				return true;
+		
+		return false;
+	}
+	
+	void newCommunication() {
+		if (segment != NULL) {
+			switch (segment->segmentType()) {
+				case Segment::TCP:
+					communications.push_back((Communication *)new TCPCommunication(frame));
+					break;
+				
+				case Segment::UDP:
+					communications.push_back((Communication *)new UDPCommunication(frame));
+					break;
+					
+				case Segment::ICMP:
+					communications.push_back((Communication *)new ICMPCommunication(frame));
+					break;
+					
+				default:
+					break;
+			}
+		}
+	}
+	
+	bool shouldPrint(Communication *communication, bool &complete, bool &incomplete) {
+		if (communication->usesConnection() && (!complete || !incomplete)) {
+			complete |= communication->isComplete();
+			incomplete |= !communication->isComplete();
+			
+			return true;
+		} else if (!communication->usesConnection())
+			return true;
+		
+		return false;
 	}
 };
 

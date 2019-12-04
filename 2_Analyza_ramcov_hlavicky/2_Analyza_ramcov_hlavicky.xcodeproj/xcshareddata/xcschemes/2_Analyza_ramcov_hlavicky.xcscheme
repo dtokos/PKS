@@ -89,6 +89,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "trace-6.pcap"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "trace-22.pcap"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -106,7 +110,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "http.pcap"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

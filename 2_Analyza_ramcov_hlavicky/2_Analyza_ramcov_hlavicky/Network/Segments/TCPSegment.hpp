@@ -23,6 +23,11 @@ public:
 	uint16_t destinationPort() {return ntohs(getField<uint16_t>(2));}
 	
 	Flags flags() {return getField<Flags>(13);}
+	
+	bool sameEndpoints(TCPSegment *segment) {
+		return (sourcePort() == segment->sourcePort() && destinationPort() == segment->destinationPort()) ||
+			(sourcePort() == segment->destinationPort() && destinationPort() == segment->sourcePort());
+	}
 };
 
 #endif

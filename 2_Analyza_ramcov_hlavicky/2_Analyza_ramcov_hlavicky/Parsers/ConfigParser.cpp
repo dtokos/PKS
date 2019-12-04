@@ -8,13 +8,6 @@ const map<string, PcapParser::Config::Context> ConfigParser::convertMap = {
 	{"UDP", PcapParser::Config::UDP},
 };
 
-const map<PcapParser::Config::Context, vector<string>> ConfigParser::requiredProtocols {
-	{PcapParser::Config::Ethernet, {"ipv4", "arp"}},
-	{PcapParser::Config::IP, {"icmp", "tcp", "udp"}},
-	{PcapParser::Config::TCP, {"http", "https", "telnet", "ssh", "ftp"}},
-	{PcapParser::Config::UDP, {"tftp"}},
-};
-
 PcapParser::Config ConfigParser::parse(const string &fileName) {
 	ifstream file(fileName);
 	if (!file.is_open())
@@ -35,9 +28,6 @@ PcapParser::Config ConfigParser::parse(istream &data) {
 		
 		lineNumber++;
 	}
-	
-	//if (!verifyRequiredProtocols(config))
-		//throw ParsingError("Could not parse all required protocols: IPv4, ARP, HTTP, HTTPS, TELNET, SSH, FTP, TFTP, ICMP");
 	
 	return config;
 }
@@ -85,11 +75,3 @@ int ConfigParser::parseConfigNumber(const string &strNumber) {
 	return stoi(strNumber);
 }
 
-bool ConfigParser::verifyRequiredProtocols(PcapParser::Config &config) {
-	for (const auto &pair : requiredProtocols)
-		for (string protocolName : requiredProtocols.at(pair.first))
-			if (!config.has(pair.first, protocolName))
-				return false;
-	
-	return true;
-}

@@ -77,6 +77,7 @@ public:
 	uint8_t *raw;
 	
 	Packet *packet = NULL;
+	Segment *segment = NULL;
 };
 
 #endif

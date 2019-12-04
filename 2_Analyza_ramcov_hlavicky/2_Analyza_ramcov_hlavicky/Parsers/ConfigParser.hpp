@@ -32,14 +32,12 @@ private:
 	regex contextPattern = regex(R"(^\s*#\s*(Ethernet|LSAP|IP|TCP|UDP)\s*$)");
 	regex configPattern = regex(R"(^\s*(0x[a-fA-F0-9]+|\d+)\s+(.*[^\s])\s*$)");
 	static const map<string, PcapParser::Config::Context> convertMap;
-	static const map<PcapParser::Config::Context, vector<string>> requiredProtocols;
 	
 	bool parseLine(PcapParser::Config &config, const string &line);
 	bool parseWhiteSpace(PcapParser::Config &config, const string &line);
 	bool parseContext(PcapParser::Config &config, const string &line);
 	bool parseConfig(PcapParser::Config &config, const string &line);
 	int parseConfigNumber(const string &strNumber);
-	bool verifyRequiredProtocols(PcapParser::Config &config);
 };
 
 #endif

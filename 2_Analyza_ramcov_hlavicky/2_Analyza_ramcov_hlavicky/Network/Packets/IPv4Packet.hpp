@@ -21,7 +21,9 @@ public:
 			return stream.str();
 		}
 		
-		uint32_t asInt() {return *(uint32_t *)this;}
+		uint32_t asInt() const {return *(uint32_t *)this;}
+		
+		bool operator ==(const IPAddress &b) const {return asInt() == b.asInt();}
 	};
 	
 	IPv4Packet(uint8_t *raw, string name) : Packet(raw, name) {}
@@ -34,6 +36,11 @@ public:
 	IPAddress sourceAddress() {return getField<IPAddress>(12);}
 	IPAddress destinationAddress() {return getField<IPAddress>(16);}
 	uint8_t *data() {return raw + ihl() * 4;}
+	
+	bool sameEndpoints(IPv4Packet *packet) {
+		return (sourceAddress() == packet->sourceAddress() && destinationAddress() == packet->destinationAddress()) ||
+			(sourceAddress() == packet->destinationAddress() && destinationAddress() == packet->sourceAddress());
+	}
 };
 
 #endif

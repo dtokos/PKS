@@ -22,6 +22,16 @@ public:
 			<< "cieľová IP adresa:  " << packet->destinationAddress().asString() << endl;
 	}
 	
+	static void arpPacket(ArpPacket *packet) {
+		if (packet->opcode() == ArpPacket::Request)
+			cout << "Request" << endl;
+		else if (packet->opcode() == ArpPacket::Response)
+			cout << "Response" << endl;
+		
+		cout << "zdrojová IP adresa: " << packet->senderIPAddress().asString() << endl
+		<< "cieľová IP adresa:  " << packet->targetIPAddress().asString() << endl;
+	}
+	
 	static void segment(TCPSegment *segment) {
 		ports(segment->sourcePort(), segment->destinationPort());
 	}
@@ -83,6 +93,8 @@ private:
 		
 		if (_packet->packetType() == Packet::IPv4)
 			ipv4Packet((IPv4Packet *)_packet);
+		else if (_packet->packetType() == Packet::ARP)
+			arpPacket((ArpPacket *)_packet);
 	}
 	
 	static void segment() {

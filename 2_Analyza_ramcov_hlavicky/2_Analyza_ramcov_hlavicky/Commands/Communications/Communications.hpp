@@ -6,5 +6,6 @@
 #include "./UDPCommunication.hpp"
 #include "./ICMPCommunication.hpp"
 #include "./TFTPCommunication.hpp"
+#include "./ArpCommunication.hpp"
 
 #endif

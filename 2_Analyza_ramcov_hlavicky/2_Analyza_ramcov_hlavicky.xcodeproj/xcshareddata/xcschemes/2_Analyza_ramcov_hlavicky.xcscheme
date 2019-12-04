@@ -74,7 +74,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "eth-1.pcap"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "eth-6.pcap"
@@ -90,7 +90,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "trace-2.pcap"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "trace-3.pcap"
@@ -98,6 +98,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "trace-6.pcap"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "trace-15.pcap"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

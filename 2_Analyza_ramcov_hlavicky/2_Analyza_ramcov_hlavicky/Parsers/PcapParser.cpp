@@ -127,7 +127,6 @@ Message *PcapParser::parseL5Message(TCPSegment *segment) {
 	uint16_t source = segment->sourcePort();
 	uint16_t destination = segment->destinationPort();
 	
-	// TODO: implement segment->data()
 	if (config.has(Config::TCP, source))
 		return new Message(Message::Other, NULL, config.get(Config::TCP, source));
 	else if (config.has(Config::TCP, destination))
@@ -140,7 +139,6 @@ Message *PcapParser::parseL5Message(UDPSegment *segment) {
 	uint16_t source = segment->sourcePort();
 	uint16_t destination = segment->destinationPort();
 	
-	// TODO: implement segment->data()
 	if (config.has(Config::UDP, source))
 		return new Message(Message::Other, NULL, config.get(Config::UDP, source));
 	else if (config.has(Config::UDP, destination)) {

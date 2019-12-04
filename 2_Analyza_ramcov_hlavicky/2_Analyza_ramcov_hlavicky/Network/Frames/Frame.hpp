@@ -42,7 +42,7 @@ public:
 			return stream.str();
 		}
 		
-		uint64_t asInt() {
+		uint64_t asInt() const {
 			return static_cast<uint64_t>(octet1) << 40 |
 				static_cast<uint64_t>(octet2) << 32 |
 				static_cast<uint64_t>(octet3) << 24 |
@@ -50,6 +50,8 @@ public:
 				static_cast<uint64_t>(octet5) << 8 |
 				static_cast<uint64_t>(octet6);
 		}
+		
+		bool operator ==(const MACAddress &b) const {return asInt() == b.asInt();}
 	};
 	Frame(unsigned serialNumber, uint32_t pcapLength, uint8_t *data, uint32_t capturedLength) :
 		serialNumber(serialNumber),

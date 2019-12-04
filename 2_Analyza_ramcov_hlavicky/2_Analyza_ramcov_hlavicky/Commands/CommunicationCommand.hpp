@@ -63,6 +63,15 @@ private:
 				default:
 					break;
 			}
+		} else if (packet != NULL) {
+			switch (packet->packetType()) {
+				case Packet::ARP:
+					communications.push_back((Communication *)new ArpCommunication(frame));
+					break;
+					
+				default:
+					break;
+			}
 		}
 	}
 	

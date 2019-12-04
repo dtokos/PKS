@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		981AD809238EF3E5006330C1 /* trace-2.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 981AD808238EF3D7006330C1 /* trace-2.pcap */; };
+		9821B5FC23982C3F002D27BF /* trace-15.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9821B5FB23982C23002D27BF /* trace-15.pcap */; };
 		98251487238C4FF300579BC8 /* eth-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98251486238C4FEE00579BC8 /* eth-1.pcap */; };
 		98296398238BCC7400F88524 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98296397238BCC7400F88524 /* main.cpp */; };
 		982963AF238BD25200F88524 /* TestConfigParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 982963AE238BD25200F88524 /* TestConfigParser.mm */; };
@@ -42,6 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				9821B5FC23982C3F002D27BF /* trace-15.pcap in CopyFiles */,
 				9844BB52239813D800AA702C /* eth-6.pcap in CopyFiles */,
 				9844BB482397F94100AA702C /* eth-8.pcap in CopyFiles */,
 				9844BB422397F78E00AA702C /* icmp.pcap in CopyFiles */,
@@ -69,6 +71,8 @@
 		981AD805238EEEED006330C1 /* ICMPSegment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ICMPSegment.hpp; sourceTree = "<group>"; };
 		981AD808238EF3D7006330C1 /* trace-2.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-2.pcap"; sourceTree = "<group>"; };
 		981AD80C238EF49F006330C1 /* Message.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Message.hpp; sourceTree = "<group>"; };
+		9821B5F82398277E002D27BF /* ArpCommunication.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ArpCommunication.hpp; sourceTree = "<group>"; };
+		9821B5FB23982C23002D27BF /* trace-15.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-15.pcap"; sourceTree = "<group>"; };
 		98251486238C4FEE00579BC8 /* eth-1.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "eth-1.pcap"; sourceTree = "<group>"; };
 		98296394238BCC7400F88524 /* 2_Analyza_ramcov_hlavicky */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 2_Analyza_ramcov_hlavicky; sourceTree = BUILT_PRODUCTS_DIR; };
 		98296397238BCC7400F88524 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 				981AD808238EF3D7006330C1 /* trace-2.pcap */,
 				98EB91C7238F17380036C57A /* trace-3.pcap */,
 				9844BB3F2397D99800AA702C /* trace-6.pcap */,
+				9821B5FB23982C23002D27BF /* trace-15.pcap */,
 				98A1B167238FAAFA00FFCE9A /* trace-22.pcap */,
 				98B693F92391A5B80079E954 /* trace-25.pcap */,
 				98B693F72391A4A40079E954 /* trace-26.pcap */,
@@ -255,6 +260,7 @@
 				9844BB342397C51200AA702C /* UDPCommunication.hpp */,
 				9844BB382397D78400AA702C /* ICMPCommunication.hpp */,
 				9844BB442397F88400AA702C /* TFTPCommunication.hpp */,
+				9821B5F82398277E002D27BF /* ArpCommunication.hpp */,
 			);
 			path = Communications;
 			sourceTree = "<group>";

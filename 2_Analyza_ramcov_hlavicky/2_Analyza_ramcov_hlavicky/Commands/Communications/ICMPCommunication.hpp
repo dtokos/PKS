@@ -37,14 +37,11 @@ private:
 			return false;
 		
 		ICMPSegment *segment = (ICMPSegment *)frame->segment;
-		//cout << frame->serialNumber << endl;
 		
-		// TODO: implement TTL handling
-		return packet->sameEndpoints((IPv4Packet *)frame->packet) ||
-			(
-			 (segment->type() == ICMPSegment::TimeExceeded || segment->type() == ICMPSegment::DestinationUnreachable) &&
-			 	packet->sameEndpoints(segment->ipHeader)
-			 );
+		return packet->sameEndpoints((IPv4Packet *)frame->packet) || (
+			(segment->type() == ICMPSegment::TimeExceeded || segment->type() == ICMPSegment::DestinationUnreachable) &&
+			packet->sameEndpoints(segment->ipHeader)
+		);
 	}
 	
 	void printHeader() {

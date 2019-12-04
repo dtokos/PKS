@@ -16,6 +16,8 @@
 		982963B7238BD84C00F88524 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 982963B5238BD7D100F88524 /* libpcap.tbd */; };
 		98368A53238EB81C004FAE55 /* TestConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 98368A52238EB81C004FAE55 /* TestConfig.mm */; };
 		9844BB402397D99D00AA702C /* trace-6.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844BB3F2397D99800AA702C /* trace-6.pcap */; };
+		9844BB422397F78E00AA702C /* icmp.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844BB412397F78500AA702C /* icmp.pcap */; };
+		9844BB482397F94100AA702C /* eth-8.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844BB472397F93900AA702C /* eth-8.pcap */; };
 		9844E18F238D4F3400E92F86 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E18D238D4F3400E92F86 /* App.cpp */; };
 		9844E190238D4F3400E92F86 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E18D238D4F3400E92F86 /* App.cpp */; };
 		9844E192238D565100E92F86 /* trace-1.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E191238D562C00E92F86 /* trace-1.pcap */; };
@@ -39,6 +41,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				9844BB482397F94100AA702C /* eth-8.pcap in CopyFiles */,
+				9844BB422397F78E00AA702C /* icmp.pcap in CopyFiles */,
 				9844BB402397D99D00AA702C /* trace-6.pcap in CopyFiles */,
 				98B693FF2391C95D0079E954 /* http.pcap in CopyFiles */,
 				98B693FA2391A5C20079E954 /* trace-25.pcap in CopyFiles */,
@@ -85,6 +89,10 @@
 		9844BB382397D78400AA702C /* ICMPCommunication.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ICMPCommunication.hpp; sourceTree = "<group>"; };
 		9844BB3C2397D7DF00AA702C /* Communications.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Communications.hpp; sourceTree = "<group>"; };
 		9844BB3F2397D99800AA702C /* trace-6.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-6.pcap"; sourceTree = "<group>"; };
+		9844BB412397F78500AA702C /* icmp.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = icmp.pcap; sourceTree = "<group>"; };
+		9844BB442397F88400AA702C /* TFTPCommunication.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TFTPCommunication.hpp; sourceTree = "<group>"; };
+		9844BB472397F93900AA702C /* eth-8.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "eth-8.pcap"; sourceTree = "<group>"; };
+		9844BB4E2397FA7F00AA702C /* Messages.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hpp; sourceTree = "<group>"; };
 		9844E16B238D219200E92F86 /* Frame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Frame.hpp; sourceTree = "<group>"; };
 		9844E16F238D3B9F00E92F86 /* EthernetIIFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EthernetIIFrame.hpp; sourceTree = "<group>"; };
 		9844E17B238D4B6F00E92F86 /* Ieee802_3RawFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ieee802_3RawFrame.hpp; sourceTree = "<group>"; };
@@ -146,6 +154,7 @@
 		981AD80A238EF481006330C1 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				9844BB4E2397FA7F00AA702C /* Messages.hpp */,
 				981AD80C238EF49F006330C1 /* Message.hpp */,
 			);
 			path = Messages;
@@ -156,6 +165,7 @@
 			children = (
 				9844E19B238DA34700E92F86 /* config.cfg */,
 				98251486238C4FEE00579BC8 /* eth-1.pcap */,
+				9844BB472397F93900AA702C /* eth-8.pcap */,
 				9844E191238D562C00E92F86 /* trace-1.pcap */,
 				981AD808238EF3D7006330C1 /* trace-2.pcap */,
 				98EB91C7238F17380036C57A /* trace-3.pcap */,
@@ -165,6 +175,7 @@
 				98B693F72391A4A40079E954 /* trace-26.pcap */,
 				98B693F52391A40B0079E954 /* trace-27.pcap */,
 				98B693FE2391C9580079E954 /* http.pcap */,
+				9844BB412397F78500AA702C /* icmp.pcap */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -239,6 +250,7 @@
 				9844BB302397C21000AA702C /* TCPCommunication.hpp */,
 				9844BB342397C51200AA702C /* UDPCommunication.hpp */,
 				9844BB382397D78400AA702C /* ICMPCommunication.hpp */,
+				9844BB442397F88400AA702C /* TFTPCommunication.hpp */,
 			);
 			path = Communications;
 			sourceTree = "<group>";

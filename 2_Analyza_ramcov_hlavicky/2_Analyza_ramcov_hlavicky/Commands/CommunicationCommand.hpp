@@ -49,7 +49,11 @@ private:
 					break;
 				
 				case Segment::UDP:
-					communications.push_back((Communication *)new UDPCommunication(frame));
+					communications.push_back(
+						segment->message != NULL && segment->message->messageType() == Message::TFTP ?
+							(Communication *)new TFTPCommunication(frame) :
+							(Communication *)new UDPCommunication(frame)
+					);
 					break;
 					
 				case Segment::ICMP:

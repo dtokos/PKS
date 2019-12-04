@@ -7,17 +7,18 @@ using namespace std;
 
 class Message {
 public:
-	enum Type {TCP, UDP, ICMP, Other};
+	enum Type {TFTP = 0, Other = 1};
 	
-	Message(uint8_t *raw, string name) : raw(raw), _name(name) {}
+	Message(Type type, uint8_t *raw, string name) : _type(type), raw(raw), _name(name) {}
 	virtual ~Message() {};
 	
-	virtual Type messageType() {return Other;}
+	virtual Type messageType() {return _type;}
 	virtual string name() {return _name;}
 	
 protected:
 	uint8_t *raw;
 	string _name;
+	Type _type;
 	
 	template<typename Type>
 	constexpr Type getField(uint32_t offset) {

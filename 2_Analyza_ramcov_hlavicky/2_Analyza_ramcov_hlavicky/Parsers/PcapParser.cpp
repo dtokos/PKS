@@ -89,6 +89,7 @@ Packet *PcapParser::parseL3Packet(EthernetIIFrame *frame) {
 		IPv4Packet *packet = new IPv4Packet(frame->data(), typeName);
 		packet->segment = parseL4Segment(packet);
 		frame->segment = packet->segment;
+		frame->message = frame->segment == NULL ? NULL : frame->segment->message;
 		
 		return packet;
 	} else if (config.get(Config::Ethernet, "arp", typeName, typeNumber) && type == typeNumber)
@@ -128,9 +129,9 @@ Message *PcapParser::parseL5Message(TCPSegment *segment) {
 	
 	// TODO: implement segment->data()
 	if (config.has(Config::TCP, source))
-		return new Message(NULL, config.get(Config::TCP, source));
+		return new Message(Message::Other, NULL, config.get(Config::TCP, source));
 	else if (config.has(Config::TCP, destination))
-		return new Message(NULL, config.get(Config::TCP, destination));
+		return new Message(Message::Other, NULL, config.get(Config::TCP, destination));
 	
 	return NULL;
 }
@@ -141,9 +142,13 @@ Message *PcapParser::parseL5Message(UDPSegment *segment) {
 	
 	// TODO: implement segment->data()
 	if (config.has(Config::UDP, source))
-		return new Message(NULL, config.get(Config::UDP, source));
-	else if (config.has(Config::UDP, destination))
-		return new Message(NULL, config.get(Config::UDP, destination));
+		return new Message(Message::Other, NULL, config.get(Config::UDP, source));
+	else if (config.has(Config::UDP, destination)) {
+		if (config.has(Config::UDP, "tftp") && config.get(Config::UDP, "tftp") == destination)
+			return new Message(Message::TFTP, NULL, config.get(Config::UDP, destination));
+		else
+			return new Message(Message::Other, NULL, config.get(Config::UDP, destination));
+	}
 	
 	return NULL;
 }

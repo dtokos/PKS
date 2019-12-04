@@ -5,5 +5,6 @@
 #include "./TCPCommunication.hpp"
 #include "./UDPCommunication.hpp"
 #include "./ICMPCommunication.hpp"
+#include "./TFTPCommunication.hpp"
 
 #endif

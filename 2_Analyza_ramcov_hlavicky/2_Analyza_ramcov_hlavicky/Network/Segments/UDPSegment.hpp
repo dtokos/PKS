@@ -15,7 +15,7 @@ public:
 	
 	bool sameEndpoints(UDPSegment *segment) {
 		return (sourcePort() == segment->sourcePort() && destinationPort() == segment->destinationPort()) ||
-		(sourcePort() == segment->destinationPort() && destinationPort() == segment->sourcePort());
+			(sourcePort() == segment->destinationPort() && destinationPort() == segment->sourcePort());
 	}
 };
 

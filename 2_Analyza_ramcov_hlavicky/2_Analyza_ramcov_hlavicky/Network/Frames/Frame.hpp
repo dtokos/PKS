@@ -78,6 +78,7 @@ public:
 	
 	Packet *packet = NULL;
 	Segment *segment = NULL;
+	Message *message = NULL;
 };
 
 #endif

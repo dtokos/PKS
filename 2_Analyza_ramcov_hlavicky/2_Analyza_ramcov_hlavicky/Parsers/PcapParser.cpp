@@ -128,7 +128,10 @@ Message *PcapParser::parseL5Message(TCPSegment *segment) {
 	uint16_t destination = segment->destinationPort();
 	
 	if (config.has(Config::TCP, source))
-		return new Message(Message::Other, NULL, config.get(Config::TCP, source));
+		if (config.has(Config::TCP, "ftp-data") && config.get(Config::TCP, "ftp-data") == source)
+			return new Message(Message::FTP, NULL, config.get(Config::TCP, source));
+		else
+			return new Message(Message::Other, NULL, config.get(Config::TCP, source));
 	else if (config.has(Config::TCP, destination))
 		return new Message(Message::Other, NULL, config.get(Config::TCP, destination));
 	

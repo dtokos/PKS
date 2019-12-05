@@ -28,6 +28,7 @@
 		9844E199238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19A238D9B7C00E92F86 /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9844E197238D9B7C00E92F86 /* ConfigParser.cpp */; };
 		9844E19C238DA36400E92F86 /* config.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9844E19B238DA34700E92F86 /* config.cfg */; };
+		9883C6842398E5F600E951CB /* eth-4.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9883C6832398E5F000E951CB /* eth-4.pcap */; };
 		98A1B168238FAB0600FFCE9A /* trace-22.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98A1B167238FAAFA00FFCE9A /* trace-22.pcap */; };
 		98B693F62391A4100079E954 /* trace-27.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98B693F52391A40B0079E954 /* trace-27.pcap */; };
 		98B693F82391A4A90079E954 /* trace-26.pcap in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98B693F72391A4A40079E954 /* trace-26.pcap */; };
@@ -43,6 +44,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				9883C6842398E5F600E951CB /* eth-4.pcap in CopyFiles */,
 				9821B5FC23982C3F002D27BF /* trace-15.pcap in CopyFiles */,
 				9844BB52239813D800AA702C /* eth-6.pcap in CopyFiles */,
 				9844BB482397F94100AA702C /* eth-8.pcap in CopyFiles */,
@@ -117,6 +119,8 @@
 		9844E1A3238DC08700E92F86 /* Parsers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Parsers.hpp; sourceTree = "<group>"; };
 		9844E1A7238DC14900E92F86 /* PrintFramesCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PrintFramesCommand.hpp; sourceTree = "<group>"; };
 		9844E1AB238DCBCD00E92F86 /* Commands.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commands.hpp; sourceTree = "<group>"; };
+		9883C6802398E3A100E951CB /* FTPCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FTPCommand.hpp; sourceTree = "<group>"; };
+		9883C6832398E5F000E951CB /* eth-4.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "eth-4.pcap"; sourceTree = "<group>"; };
 		98A1B167238FAAFA00FFCE9A /* trace-22.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-22.pcap"; sourceTree = "<group>"; };
 		98B693F52391A40B0079E954 /* trace-27.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-27.pcap"; sourceTree = "<group>"; };
 		98B693F72391A4A40079E954 /* trace-26.pcap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trace-26.pcap"; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 			children = (
 				9844E19B238DA34700E92F86 /* config.cfg */,
 				98251486238C4FEE00579BC8 /* eth-1.pcap */,
+				9883C6832398E5F000E951CB /* eth-4.pcap */,
 				9844BB51239813CF00AA702C /* eth-6.pcap */,
 				9844BB472397F93900AA702C /* eth-8.pcap */,
 				9844E191238D562C00E92F86 /* trace-1.pcap */,
@@ -320,6 +325,7 @@
 				9844E1A7238DC14900E92F86 /* PrintFramesCommand.hpp */,
 				98368A6A238ED4B8004FAE55 /* TopIPsCommand.hpp */,
 				98B693FC2391B44F0079E954 /* CommunicationCommand.hpp */,
+				9883C6802398E3A100E951CB /* FTPCommand.hpp */,
 			);
 			path = Commands;
 			sourceTree = "<group>";

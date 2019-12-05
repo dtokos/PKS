@@ -7,7 +7,7 @@ using namespace std;
 
 class Message {
 public:
-	enum Type {TFTP = 0, Other = 1};
+	enum Type {TFTP = 0, Other = 1, FTP = 2};
 	
 	Message(Type type, uint8_t *raw, string name) : _type(type), raw(raw), _name(name) {}
 	virtual ~Message() {};
